@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.controllers.MenuController">
+   <children>
+      <Label layoutX="52.0" layoutY="35.0" text="Bienvenido a CashMoney, ¿Qué desea hacer hoy?">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnDepositos" layoutX="80.0" layoutY="108.0" mnemonicParsing="false" onAction="#irADepositos" prefHeight="66.0" prefWidth="99.0" text="Depósitos" textAlignment="CENTER" />
+      <Button fx:id="btnRetiros" layoutX="194.0" layoutY="108.0" mnemonicParsing="false" onAction="#irARetiros" prefHeight="66.0" prefWidth="99.0" text="Retiros" textAlignment="CENTER" />
+      <Button fx:id="btnTransferencias" layoutX="306.0" layoutY="108.0" mnemonicParsing="false" onAction="#irATransferencias" prefHeight="66.0" prefWidth="99.0" text="Transferencias" textAlignment="CENTER" />
+      <Button fx:id="btnConsultaSaldos" layoutX="421.0" layoutY="108.0" mnemonicParsing="false" onAction="#irAConsultaSaldos" prefHeight="66.0" prefWidth="99.0" text="Consulta de saldos" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="btnConsultaHistorial" layoutX="154.0" layoutY="200.0" mnemonicParsing="false" onAction="#irAConsultaHistorial" prefHeight="66.0" prefWidth="99.0" text="Consulta de historial de transacciones" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="btnPuntos" layoutX="347.0" layoutY="200.0" mnemonicParsing="false" onAction="#irAPuntos" prefHeight="66.0" prefWidth="99.0" text="Puntos" textAlignment="CENTER" wrapText="true" />
+   </children>
+</AnchorPane>
