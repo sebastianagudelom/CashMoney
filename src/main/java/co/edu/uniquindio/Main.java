@@ -1,5 +1,6 @@
 package co.edu.uniquindio;
 
+import co.edu.uniquindio.models.GestorClientes;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,7 +27,9 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        // Iniciar la aplicación JavaFX
+        GestorClientes.cargarClientes(); // Cargar clientes antes de iniciar
+        GestorClientes.imprimirClientes(); // Para ver los clientes cargados
         launch(args);
     }
+
 }

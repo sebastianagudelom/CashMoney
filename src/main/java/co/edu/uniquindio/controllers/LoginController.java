@@ -1,6 +1,7 @@
 package co.edu.uniquindio.controllers;
 
 import co.edu.uniquindio.models.Cliente;
+import co.edu.uniquindio.models.GestorClientes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +32,7 @@ public class LoginController {
         String usuario = txtUsuario.getText();
         String contrasena = txtClave.getText();
 
-        clienteLogeado = Cliente.verificarUsuario(usuario, contrasena);
+        clienteLogeado = GestorClientes.verificarUsuario(usuario, contrasena);
 
         if (clienteLogeado != null) {
             System.out.println("Inicio de sesion correcto" + " Usuario: " + clienteLogeado.getUsuario() +

@@ -44,17 +44,14 @@ public class MenuController {
     private void irARetiros(ActionEvent event) {
         cambiarVentana(event, "/views/Retiros.fxml");
     }
-
     @FXML
     private void irATransferencias(ActionEvent event) {
         cambiarVentana(event, "/views/Transferencias.fxml");
     }
-
     @FXML
     private void irAConsultaSaldos(ActionEvent event) {
         cambiarVentana(event, "/views/ConsultaSaldos.fxml");
     }
-
     @FXML
     private void irAConsultaHistorial(ActionEvent event) {
         cambiarVentana(event, "/views/Historial.fxml");
@@ -62,6 +59,10 @@ public class MenuController {
     @FXML
     private void irAPuntos(ActionEvent event) {
         cambiarVentana(event, "/views/Puntos.fxml");
+    }
+    @FXML
+    private void irALogin(ActionEvent event) {
+        cambiarVentana(event, "/views/Login.fxml");
     }
 
     /**

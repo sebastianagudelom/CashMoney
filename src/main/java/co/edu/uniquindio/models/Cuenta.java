@@ -1,23 +1,31 @@
 package co.edu.uniquindio.models;
 
-public class Cuenta {
-    private String numeroCuenta;
+import java.io.Serializable;
+
+public class Cuenta implements Serializable {
+    private static final long serialVersionUID = 1L; // Agregar un UID para la compatibilidad de versiones
+
     private double saldo;
 
-    public Cuenta(String numeroCuenta, double saldo) {
-        this.numeroCuenta = numeroCuenta;
-        this.saldo = saldo;
+    public Cuenta() {
+        this.saldo = 0.0;
     }
 
-    public String getNumeroCuenta() { return numeroCuenta; }
-    public double getSaldo() { return saldo; }
+    public double getSaldo() {
+        return saldo;
+    }
 
-    public void depositar(double monto) { saldo += monto; }
+    public void depositar(double monto) {
+        if (monto > 0) {
+            saldo += monto;
+        }
+    }
+
     public boolean retirar(double monto) {
-        if (monto <= saldo) {
+        if (monto > 0 && saldo >= monto) {
             saldo -= monto;
             return true;
         }
-        return false;
+        return false; // Saldo insuficiente
     }
 }

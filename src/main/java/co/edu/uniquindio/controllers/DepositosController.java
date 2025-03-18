@@ -41,8 +41,8 @@ public class DepositosController {
             }
 
             // Depositar dinero en la cuenta del usuario
-            clienteActual.depositar(monto);
-            lblMensaje.setText("Depósito exitoso. Nuevo saldo: " + clienteActual.getSaldo());
+            clienteActual.getCuenta().depositar(monto);
+            lblMensaje.setText("Depósito exitoso. Nuevo saldo: " + clienteActual.getCuenta().getSaldo());
 
         } catch (NumberFormatException e) {
             lblMensaje.setText("Ingrese un número válido.");

@@ -18,5 +18,6 @@
       <Button fx:id="btnConsultaSaldos" layoutX="421.0" layoutY="108.0" mnemonicParsing="false" onAction="#irAConsultaSaldos" prefHeight="66.0" prefWidth="99.0" text="Consulta de saldos" textAlignment="CENTER" wrapText="true" />
       <Button fx:id="btnConsultaHistorial" layoutX="154.0" layoutY="200.0" mnemonicParsing="false" onAction="#irAConsultaHistorial" prefHeight="66.0" prefWidth="99.0" text="Consulta de historial de transacciones" textAlignment="CENTER" wrapText="true" />
       <Button fx:id="btnPuntos" layoutX="347.0" layoutY="200.0" mnemonicParsing="false" onAction="#irAPuntos" prefHeight="66.0" prefWidth="99.0" text="Puntos" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="btnSalir" layoutX="52.0" layoutY="324.0" mnemonicParsing="false" onAction="#irALogin" prefHeight="34.0" prefWidth="70.0" text="Salir" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>
