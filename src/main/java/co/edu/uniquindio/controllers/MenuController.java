@@ -60,7 +60,22 @@ public class MenuController {
     }
     @FXML
     private void irATransferencias(ActionEvent event) {
-        cambiarVentana(event, "/views/Transferencias.fxml");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Transferencias.fxml"));
+            Parent root = loader.load();
+
+            // Pasar el cliente actual a la ventana de transferencias
+            TransferenciasController transferenciasController = loader.getController();
+            transferenciasController.setCliente(clienteActual);
+
+            Stage stage = new Stage();
+            stage.setTitle("Transferencias");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al abrir la ventana de transferencias.");
+        }
     }
     @FXML
     private void irAConsultaSaldos(ActionEvent event) {

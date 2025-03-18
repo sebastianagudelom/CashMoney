@@ -86,6 +86,22 @@ public class GestorClientes {
         }
     }
 
+    // Método para transferir saldo entre clientes
+    public static boolean transferirSaldo(String usuarioOrigen, String usuarioDestino, double monto) {
+        Cliente clienteOrigen = buscarClientePorUsuario(usuarioOrigen);
+        Cliente clienteDestino = buscarClientePorUsuario(usuarioDestino);
+
+        // Verificar si ambos clientes existen y si el saldo es suficiente
+        if (clienteOrigen != null && clienteDestino != null && clienteOrigen.getCuenta().retirar(monto)) {
+            clienteDestino.getCuenta().depositar(monto);
+            guardarClientes(); // Guardar cambios en archivo
+            return true; // Transferencia exitosa
+        }
+        return false; // Transferencia fallida (saldo insuficiente o usuario inexistente)
+    }
+
+
+
     // Método para guardar la lista de clientes en un archivo
     public static void guardarClientes() {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(ARCHIVO_CLIENTES))) {
