@@ -42,7 +42,21 @@ public class MenuController {
 
     @FXML
     private void irARetiros(ActionEvent event) {
-        cambiarVentana(event, "/views/Retiros.fxml");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Retiros.fxml"));
+            Parent root = loader.load();
+
+            RetirosController retirosController = loader.getController();
+            retirosController.setCliente(clienteActual); // Pasar el cliente actual
+
+            Stage stage = new Stage();
+            stage.setTitle("Realizar Retiro");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al abrir la ventana de retiro.");
+        }
     }
     @FXML
     private void irATransferencias(ActionEvent event) {
