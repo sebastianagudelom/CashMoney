@@ -7,7 +7,6 @@ import java.util.List;
 public class GestorClientes {
     private static List<Cliente> listaClientes = new ArrayList<>();
 
-
     private static final String ARCHIVO_CLIENTES = "clientes.dat"; // Archivo para persistencia
 
     // Método para registrar un nuevo cliente

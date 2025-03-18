@@ -30,7 +30,7 @@ public class MenuController {
             // Obtener el controlador de la nueva ventana
             DepositosController depositosController = loader.getController();
             depositosController.setCliente(clienteActual); // Pasar cliente actual
-            System.out.println("Ingreso a Depositos" + " Usuario: " + clienteActual.getUsuario());
+            System.out.println("Ingreso a Depositos." + " Usuario: " + clienteActual.getUsuario());
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -50,8 +50,24 @@ public class MenuController {
     }
     @FXML
     private void irAConsultaSaldos(ActionEvent event) {
-        cambiarVentana(event, "/views/ConsultaSaldos.fxml");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Saldo.fxml"));
+            Parent root = loader.load();
+
+            SaldoController saldoController = loader.getController();
+            saldoController.setCliente(clienteActual); // Pasar el cliente actual
+            System.out.println("Ingreso a Consulta de saldos." + " Usuario: " + clienteActual.getUsuario());
+
+            Stage stage = new Stage();
+            stage.setTitle("Consulta de Saldo");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al abrir la ventana de consulta de saldo.");
+        }
     }
+
     @FXML
     private void irAConsultaHistorial(ActionEvent event) {
         cambiarVentana(event, "/views/Historial.fxml");

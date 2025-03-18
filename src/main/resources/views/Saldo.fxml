@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.controllers.SaldoController">
+   <children>
+      <Label layoutX="199.0" layoutY="52.0" text="Consulta de saldo">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <Label layoutX="249.0" layoutY="110.0" text="Saldo actual:">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblSaldo" layoutX="280.0" layoutY="163.0" text="0.00" textFill="#054a0f">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnActualizarSaldo" layoutX="248.0" layoutY="229.0" mnemonicParsing="false" onAction="#actualizarSaldo" text="Actualizar saldo" />
+      <Button fx:id="btnVolver" layoutX="40.0" layoutY="315.0" mnemonicParsing="false" onAction="#volverMenu" text="Volver al menu" />
+   </children>
+</AnchorPane>
