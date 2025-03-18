@@ -49,7 +49,6 @@ public class RegistroController {
         Cliente nuevoCliente = new Cliente(nombre, identificacion, correo, usuario, clave, ciudad);
         Cliente.agregarCliente(nuevoCliente);
 
-
         // Mensaje de confirmación
         lblMensaje.setText("Registro exitoso para: " + nombre);
         System.out.println("Cliente registrado\n" + "Usuaio: " + nuevoCliente.getUsuario() +

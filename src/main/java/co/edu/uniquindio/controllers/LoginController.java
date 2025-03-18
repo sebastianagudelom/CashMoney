@@ -62,7 +62,6 @@ public class LoginController {
         }
     }
 
-
     @FXML
     private void irARegistro(ActionEvent event) {
         try {
