@@ -1,6 +1,7 @@
 package co.edu.uniquindio.controllers;
 
 import co.edu.uniquindio.models.Cliente;
+import co.edu.uniquindio.models.GestorClientes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -40,6 +41,7 @@ public class RetirosController {
             }
 
             if (clienteActual != null && clienteActual.getCuenta().retirar(monto)) {
+                GestorClientes.guardarClientes();
                 lblMensaje.setText("Retiro exitoso.");
                 lblMensaje.setStyle("-fx-text-fill: green;");
                 actualizarSaldo(); // Actualizar saldo después del retiro

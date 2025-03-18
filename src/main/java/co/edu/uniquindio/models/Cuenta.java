@@ -28,4 +28,9 @@ public class Cuenta implements Serializable {
         }
         return false; // Saldo insuficiente
     }
+
+    @Override
+    public String toString() {
+        return "Cuenta{saldo=" + saldo + "}";
+    }
 }

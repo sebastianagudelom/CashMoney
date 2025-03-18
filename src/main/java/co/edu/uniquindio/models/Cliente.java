@@ -28,6 +28,15 @@ public class Cliente implements Serializable {
 
 
 
+    public void depositar(double monto) {
+        cuenta.depositar(monto);
+    }
+    public boolean retirar(double monto) {
+        return cuenta.retirar(monto);
+    }
+
+
+
     // Setters
     public void setNombre(String nombre) { this.nombre = nombre; }
     public void setIdentificacion(String identificacion) { this.identificacion = identificacion; }
@@ -41,8 +50,12 @@ public class Cliente implements Serializable {
     public String toString() {
         return "Cliente{" +
                 "nombre='" + nombre + '\'' +
+                ", identificacion='" + identificacion + '\'' +
                 ", usuario='" + usuario + '\'' +
+                ", clave='" + clave + '\'' +
                 ", ciudad='" + ciudad + '\'' +
+                ", correo='" + correo + '\'' +
+                ", saldo='" + cuenta.getSaldo() + '\'' +
                 '}';
     }
 }

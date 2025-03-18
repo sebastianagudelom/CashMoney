@@ -1,6 +1,7 @@
 package co.edu.uniquindio.controllers;
 
 import co.edu.uniquindio.models.Cliente;
+import co.edu.uniquindio.models.GestorClientes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,6 +43,7 @@ public class DepositosController {
 
             // Depositar dinero en la cuenta del usuario
             clienteActual.getCuenta().depositar(monto);
+            GestorClientes.guardarClientes();
             lblMensaje.setText("Depósito exitoso. Nuevo saldo: " + clienteActual.getCuenta().getSaldo());
 
         } catch (NumberFormatException e) {

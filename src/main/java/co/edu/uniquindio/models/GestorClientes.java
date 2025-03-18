@@ -93,7 +93,6 @@ public class GestorClientes {
             System.out.println("Clientes guardados correctamente.");
         } catch (IOException e) {
             System.out.println("Error al guardar los clientes: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -112,7 +111,6 @@ public class GestorClientes {
             System.out.println("Clientes cargados: " + listaClientes.size());
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("No se encontraron clientes guardados.");
-            e.printStackTrace();
         }
     }
 
