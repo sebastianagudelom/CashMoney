@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.controllers.TransferenciasController">
    <children>
       <Label layoutX="216.0" layoutY="32.0" text="Transferencias">
@@ -36,5 +35,13 @@
       <TextField fx:id="txtMonto" layoutX="415.0" layoutY="125.0" prefHeight="25.0" prefWidth="150.0" promptText="Ingrese el monto" />
       <Label fx:id="lblMensaje" layoutX="118.0" layoutY="317.0" prefHeight="17.0" prefWidth="365.0" />
       <Button fx:id="btnTransferir" layoutX="448.0" layoutY="175.0" mnemonicParsing="false" onAction="#realizarTransferencia" text="Transferir" />
+      <Label layoutX="56.0" layoutY="175.0" text="Inscribir cuentas nuevas">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtNumeroCuenta" layoutX="56.0" layoutY="215.0" prefHeight="25.0" prefWidth="202.0" promptText="Digite el numero de cuenta" />
+      <Button fx:id="btnInscribir" layoutX="127.0" layoutY="252.0" mnemonicParsing="false" onAction="#inscribirCuenta" text="Inscribir" />
+      <Label fx:id="lblInscripcionMensaje" layoutX="216.0" layoutY="256.0" prefHeight="17.0" prefWidth="343.0" />
    </children>
 </AnchorPane>

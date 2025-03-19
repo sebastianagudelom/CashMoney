@@ -64,19 +64,20 @@ public class MenuController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Transferencias.fxml"));
             Parent root = loader.load();
 
-            // Pasar el cliente actual a la ventana de transferencias
+            // Obtener el controlador y pasar el cliente actual
             TransferenciasController transferenciasController = loader.getController();
-            transferenciasController.setCliente(clienteActual);
+            transferenciasController.setCliente(clienteActual); // Asegurar que el cliente se pasa antes de inicializar
 
             Stage stage = new Stage();
-            stage.setTitle("Transferencias");
             stage.setScene(new Scene(root));
+            stage.setTitle("Transferencias");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error al abrir la ventana de transferencias.");
         }
     }
+
     @FXML
     private void irAConsultaSaldos(ActionEvent event) {
         try {

@@ -13,9 +13,16 @@ import java.util.List;
 
 public class TransferenciasController {
 
-    @FXML private Label lblSaldo, lblMensaje;
-    @FXML private TextField txtMonto;
-    @FXML private ComboBox<String> cmbUsuarios;
+    @FXML
+    private Label lblSaldo, lblMensaje;
+    @FXML
+    private TextField txtMonto;
+    @FXML
+    private ComboBox<String> cmbUsuarios;
+    @FXML
+    private TextField txtNumeroCuenta;
+    @FXML
+    private Label lblInscripcionMensaje;
 
     private Cliente clienteActual;
 
@@ -23,14 +30,14 @@ public class TransferenciasController {
     private void initialize() {
     }
 
-    // ✅ Método para recibir el cliente actual
+    //  Método para recibir el cliente actual
     public void setCliente(Cliente cliente) {
         this.clienteActual = cliente;
         actualizarSaldo();
         cargarUsuarios(); // Cargar usuarios después de asignar cliente
     }
 
-    // ✅ Método para actualizar saldo en pantalla
+    //  Método para actualizar saldo en pantalla
     private void actualizarSaldo() {
         if (clienteActual != null) {
             lblSaldo.setText("$" + String.format("%.2f", clienteActual.getCuenta().getSaldo()));
@@ -41,27 +48,71 @@ public class TransferenciasController {
 
     // Método para cargar usuarios disponibles
     private void cargarUsuarios() {
-        if (cmbUsuarios == null) {
-            System.out.println("⚠ cmbUsuarios aún no está inicializado.");
+        if (clienteActual == null || clienteActual.getCuentasInscritas() == null) {
+            System.out.println("⚠ Error: clienteActual es null o no tiene cuentas inscritas.");
             return;
         }
+
+        if (cmbUsuarios == null) {
+            System.out.println("⚠ Error: cmbUsuarios no está inicializado.");
+            return;
+        }
+
         List<Cliente> clientes = GestorClientes.getListaClientes();
+        if (clientes == null || clientes.isEmpty()) {
+            System.out.println("⚠ No hay clientes disponibles.");
+            return;
+        }
+
         cmbUsuarios.getItems().clear();
         for (Cliente c : clientes) {
-            if (!c.getUsuario().equals(clienteActual.getUsuario())) {
-                cmbUsuarios.getItems().add(c.getUsuario());
+            if (!c.getUsuario().equals(clienteActual.getUsuario()) &&
+                    clienteActual.getCuentasInscritas().contains(c.getCuenta().getNumeroCuenta())) {
+                cmbUsuarios.getItems().add(c.getCuenta().getNumeroCuenta());
             }
         }
     }
 
-    // ✅ Método para realizar la transferencia
+
+
+
+    @FXML
+    private void inscribirCuenta() {
+        String numeroCuenta = txtNumeroCuenta.getText().trim();
+
+        if (numeroCuenta.isEmpty()) {
+            lblInscripcionMensaje.setText("Ingrese un número de cuenta válido.");
+            return;
+        }
+
+        Cliente destino = GestorClientes.buscarClientePorCuenta(numeroCuenta);
+        if (destino == null) {
+            lblInscripcionMensaje.setText("Cuenta no encontrada.");
+            return;
+        }
+
+        if (clienteActual.inscribirCuenta(numeroCuenta)) {
+            lblInscripcionMensaje.setText("Cuenta inscrita con éxito.");
+            lblInscripcionMensaje.setStyle("-fx-text-fill: green;");
+            cargarUsuarios(); // Actualizar la lista de destinatarios inscritos
+        } else {
+            lblInscripcionMensaje.setText("La cuenta ya está inscrita.");
+            lblInscripcionMensaje.setStyle("-fx-text-fill: red;");
+        }
+    }
+
+
+
+
+
+    //  Método para realizar la transferencia
     @FXML
     private void realizarTransferencia() {
         try {
-            String usuarioDestino = cmbUsuarios.getValue();
+            String numeroCuentaDestino = cmbUsuarios.getValue(); // Ahora obtiene el número de cuenta correcto
             double monto = Double.parseDouble(txtMonto.getText());
 
-            if (usuarioDestino == null) {
+            if (numeroCuentaDestino == null) {
                 lblMensaje.setText("Seleccione un destinatario.");
                 return;
             }
@@ -71,12 +122,15 @@ public class TransferenciasController {
                 return;
             }
 
-            boolean exito = GestorClientes.transferirSaldo(clienteActual.getUsuario(), usuarioDestino, monto);
+            // Verificar que realmente estamos pasando números de cuenta
+            System.out.println("✅ Transferencia desde: " + clienteActual.getNumeroCuenta() + " hacia: " + numeroCuentaDestino);
+
+            boolean exito = GestorClientes.transferirSaldoPorCuenta(clienteActual.getNumeroCuenta(), numeroCuentaDestino, monto);
 
             if (exito) {
                 lblMensaje.setText("Transferencia exitosa.");
                 lblMensaje.setStyle("-fx-text-fill: green;");
-                actualizarSaldo(); // Actualizar saldo en pantalla
+                actualizarSaldo();
             } else {
                 lblMensaje.setText("Saldo insuficiente o error.");
                 lblMensaje.setStyle("-fx-text-fill: red;");
@@ -87,7 +141,10 @@ public class TransferenciasController {
         }
     }
 
-    // ✅ Método para cerrar la ventana
+
+
+
+    //  Método para cerrar la ventana
     @FXML
     private void volverMenu(ActionEvent event) {
         ((Stage) lblSaldo.getScene().getWindow()).close();
