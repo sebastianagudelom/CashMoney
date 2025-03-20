@@ -88,6 +88,28 @@ public class GestorClientes {
     }
 
 
+    public static boolean actualizarCliente(String usuario, String nuevoNombre, String nuevaIdentificacion,
+                                            String nuevoCorreo, String nuevoUsuario, String nuevaClave,
+                                            String nuevaCiudad) {
+        Cliente cliente = buscarClientePorUsuario(usuario);
+        if (cliente != null) {
+            if (nuevoNombre != null) cliente.setNombre(nuevoNombre);
+            if (nuevaIdentificacion != null) cliente.setIdentificacion(nuevaIdentificacion);
+            if (nuevoCorreo != null) cliente.setCorreo(nuevoCorreo);
+            if (nuevoUsuario != null && buscarClientePorUsuario(nuevoUsuario) == null) {
+                cliente.setUsuario(nuevoUsuario);
+            }
+            if (nuevaClave != null) cliente.setClave(nuevaClave);
+            if (nuevaCiudad != null) cliente.setCiudad(nuevaCiudad);
+
+            guardarClientes(); // Guardar los cambios
+            return true; // Actualización exitosa
+        }
+        return false; // Cliente no encontrado
+    }
+
+
+
     // Método para guardar la lista de clientes en un archivo
     public static void guardarClientes() {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(ARCHIVO_CLIENTES))) {

@@ -99,6 +99,24 @@ public class MenuController {
     }
 
     @FXML
+    private void irEditarPerfil(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/EditarPerfil.fxml"));
+            Parent root = loader.load();
+
+            EditarPerfilController editarPerfilController = loader.getController();
+            editarPerfilController.setCliente(clienteActual); // Pasar el cliente actual
+
+            Stage stage = new Stage();
+            stage.setTitle("Editar Perfil");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     private void irAConsultaHistorial(ActionEvent event) {
         cambiarVentana(event, "/views/Historial.fxml");
     }

@@ -59,10 +59,27 @@ public class Cliente implements Serializable {
     }
 
     // Setters
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
+    }
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
     public void setCuenta(Cuenta cuenta) {
         this.cuenta = cuenta;
     }
-
     public void setCuentasInscritas(Set<String> cuentas) {
         this.cuentasInscritas = cuentas;
     }
