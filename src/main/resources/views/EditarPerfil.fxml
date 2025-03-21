@@ -53,5 +53,6 @@
       <Label fx:id="lblMensaje" alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="254.0" prefHeight="17.0" prefWidth="558.0" textAlignment="CENTER" />
       <Button fx:id="btnGuardarCambios" layoutX="244.0" layoutY="294.0" mnemonicParsing="false" onAction="#guardarCambios" text="Guardar cambios" />
       <Button fx:id="btnVolver" layoutX="22.0" layoutY="333.0" mnemonicParsing="false" onAction="#volverMenu" text="Volver" />
+      <Button fx:id="btnEliminarCuenta" layoutX="482.0" layoutY="333.0" mnemonicParsing="false" onAction="#eliminarCuenta" text="Eliminar cuenta" textFill="#eb0e0e" />
    </children>
 </AnchorPane>

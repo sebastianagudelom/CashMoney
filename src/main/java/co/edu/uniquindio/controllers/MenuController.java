@@ -118,8 +118,21 @@ public class MenuController {
 
     @FXML
     private void irAConsultaHistorial(ActionEvent event) {
-        cambiarVentana(event, "/views/Historial.fxml");
-    }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Historial.fxml"));
+            Parent root = loader.load();
+
+            HistorialController historialController = loader.getController();
+            historialController.setCliente(clienteActual); // Pasar el cliente actual
+
+            Stage stage = new Stage();
+            stage.setTitle("Historial de Transacciones");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al abrir el historial.");
+        }    }
     @FXML
     private void irAPuntos(ActionEvent event) {
         cambiarVentana(event, "/views/Puntos.fxml");

@@ -9,8 +9,11 @@ public class Cuenta implements Serializable {
     private double saldo;
 
     public Cuenta() {
-        this.numeroCuenta = generarNumeroCuenta(); // Generar número de cuenta aleatorio
         this.saldo = 0.0;
+        if (this.numeroCuenta == null || this.numeroCuenta.isEmpty()) {
+            this.numeroCuenta = generarNumeroCuenta();
+            System.out.println("✔ Número de cuenta generado: " + this.numeroCuenta);
+        }
     }
 
     // Getters
@@ -22,24 +25,23 @@ public class Cuenta implements Serializable {
         return saldo;
     }
 
-    // Método para asignar número de cuenta si no lo tiene
+    // Método para asignar número de cuenta solo si no lo tiene
     public void setNumeroCuenta(String numeroCuenta) {
         if (this.numeroCuenta == null || this.numeroCuenta.isEmpty()) {
-            this.numeroCuenta = numeroCuenta != null ? numeroCuenta : generarNumeroCuenta();
+            this.numeroCuenta = numeroCuenta;
         }
     }
 
     private String generarNumeroCuenta() {
         Random random = new Random();
-        int numero = 10000000 + random.nextInt(90000000); // Entre 10000000 y 99999999
-        System.out.println("📌 Número de cuenta generado: " + numero);
+        int numero = 10000000 + random.nextInt(90000000);
         return String.valueOf(numero);
     }
 
     public boolean retirar(double monto) {
         if (monto > 0 && saldo >= monto) {
             saldo -= monto;
-            GestorClientes.guardarClientes(); // Guardar cambios después del retiro
+            GestorClientes.guardarClientes();
             return true;
         }
         return false;
@@ -48,7 +50,7 @@ public class Cuenta implements Serializable {
     public void depositar(double monto) {
         if (monto > 0) {
             saldo += monto;
-            GestorClientes.guardarClientes(); // Guardar cambios después del depósito
+            GestorClientes.guardarClientes();
         }
     }
 

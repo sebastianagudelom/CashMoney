@@ -1,14 +1,50 @@
 package co.edu.uniquindio.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
+
     private String nombre, identificacion, correo, usuario, clave, ciudad;
     private Cuenta cuenta;
     private Set<String> cuentasInscritas;
+    private List<Transaccion> historialTransacciones;
+
+
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public void setHistorialTransacciones(List<Transaccion> historial) {
+        this.historialTransacciones = historial;
+    }
+
+
+
 
     public Cliente(String nombre, String identificacion, String correo, String usuario, String clave, String ciudad) {
         this.nombre = nombre;
@@ -17,9 +53,19 @@ public class Cliente implements Serializable {
         this.usuario = usuario;
         this.clave = clave;
         this.ciudad = ciudad;
-        this.cuenta = new Cuenta();
         this.cuentasInscritas = new HashSet<>();
+
+        // Asegurar que historial nunca sea null
+        if (this.historialTransacciones == null) {
+            this.historialTransacciones = new ArrayList<>();
+        }
+
+        if (this.cuenta == null) {
+            this.cuenta = new Cuenta();
+        }
     }
+
+
 
     // Getters
     public String getNombre() { return nombre; }
@@ -31,6 +77,13 @@ public class Cliente implements Serializable {
     public String getCiudad() { return ciudad; }
     public Set<String> getCuentasInscritas() { return cuentasInscritas; }
     public String getNumeroCuenta() { return cuenta.getNumeroCuenta(); }
+    public List<Transaccion> getHistorialTransacciones() {
+        if (historialTransacciones == null) {
+            historialTransacciones = new ArrayList<>();
+        }
+        return historialTransacciones;
+    }
+
 
     // Métodos de Inscripción de Cuentas
     public boolean inscribirCuenta(String numeroCuenta) {
@@ -44,6 +97,19 @@ public class Cliente implements Serializable {
         GestorClientes.guardarClientes();
         return true;
     }
+
+    public void agregarTransaccion(Transaccion transaccion) {
+        if (historialTransacciones == null) {
+            historialTransacciones = new ArrayList<>();
+        }
+        historialTransacciones.add(transaccion);
+        GestorClientes.guardarClientes();
+    }
+
+
+
+
+
 
     public boolean estaInscrita(String numeroCuenta) {
         return cuentasInscritas != null && cuentasInscritas.contains(numeroCuenta);
@@ -59,27 +125,17 @@ public class Cliente implements Serializable {
     }
 
     // Setters
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-    public void setIdentificacion(String identificacion) {
-        this.identificacion = identificacion;
-    }
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
-    }
     public void setCuenta(Cuenta cuenta) {
-        this.cuenta = cuenta;
+        if (this.cuenta == null) { // Solo asigna si no hay una cuenta
+            this.cuenta = cuenta;
+        } else {
+            this.cuenta.setNumeroCuenta(cuenta.getNumeroCuenta()); // Mantiene el número de cuenta original
+        }
     }
+
+
+
+
     public void setCuentasInscritas(Set<String> cuentas) {
         this.cuentasInscritas = cuentas;
     }

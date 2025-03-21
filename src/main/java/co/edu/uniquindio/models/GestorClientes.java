@@ -9,16 +9,19 @@ public class GestorClientes {
     private static final String ARCHIVO_CLIENTES = "clientes.dat"; // Archivo para persistencia
 
     // Método para registrar un nuevo cliente
-    public static boolean registrarCliente(String nombre, String identificacion, String correo, String usuario,
-                                           String clave, String ciudad) {
-        if (buscarClientePorUsuario(usuario) == null) { // Verifica si ya existe el usuario
+    public static boolean registrarCliente(String nombre, String identificacion, String correo, String usuario, String clave, String ciudad) {
+        if (buscarClientePorUsuario(usuario) == null) {
             Cliente nuevoCliente = new Cliente(nombre, identificacion, correo, usuario, clave, ciudad);
+
             listaClientes.add(nuevoCliente);
             guardarClientes();
+
+            System.out.println("Cliente registrado: " + nuevoCliente);
             return true;
         }
         return false;
     }
+
 
     // Método para transferir saldo por número de cuenta
     public static boolean transferirSaldoPorCuenta(String numeroCuentaOrigen, String numeroCuentaDestino, double monto) {
@@ -30,13 +33,22 @@ public class GestorClientes {
             return false;
         }
 
-        if (origen.getCuenta().retirar(monto)) {
-            destino.getCuenta().depositar(monto);
-            guardarClientes();
-            return true;
+        if (origen.getCuenta().getSaldo() < monto) {
+            System.out.println("❌ Error: Saldo insuficiente.");
+            return false;
         }
-        return false;
+
+        origen.getCuenta().retirar(monto);
+        destino.getCuenta().depositar(monto);
+
+        // Registrar transacciones en ambos clientes
+        origen.agregarTransaccion(new Transaccion("Transferencia Enviada", monto, numeroCuentaDestino));
+        destino.agregarTransaccion(new Transaccion("Transferencia Recibida", monto, numeroCuentaOrigen));
+
+        guardarClientes();
+        return true;
     }
+
 
     // Método para buscar cliente por número de cuenta
     public static Cliente buscarClientePorCuenta(String numeroCuenta) {
@@ -87,6 +99,17 @@ public class GestorClientes {
         }
     }
 
+    // Método para eliminar un cliente de la lista y actualizar el archivo
+    public static boolean eliminarCliente(String usuario) {
+        Cliente cliente = buscarClientePorUsuario(usuario);
+        if (cliente != null) {
+            listaClientes.remove(cliente);
+            guardarClientes(); // Guardar cambios en archivo
+            return true; // Cliente eliminado correctamente
+        }
+        return false; // Cliente no encontrado
+    }
+
 
     public static boolean actualizarCliente(String usuario, String nuevoNombre, String nuevaIdentificacion,
                                             String nuevoCorreo, String nuevoUsuario, String nuevaClave,
@@ -123,14 +146,21 @@ public class GestorClientes {
     public static void cargarClientes() {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(ARCHIVO_CLIENTES))) {
             listaClientes = (List<Cliente>) in.readObject();
+
+            // Verificar y asignar números de cuenta si no los tienen
             for (Cliente c : listaClientes) {
                 if (c.getCuenta() == null) {
-                    c.setCuenta(new Cuenta());
+                    c.setCuenta(new Cuenta()); // Si el cliente no tiene cuenta, se le asigna una nueva
+                } else if (c.getCuenta().getNumeroCuenta() == null || c.getCuenta().getNumeroCuenta().isEmpty()) {
+                    c.getCuenta().setNumeroCuenta(c.getCuenta().getNumeroCuenta()); // Mantener el número original
                 }
             }
-            guardarClientes();
+
+            guardarClientes(); // Guardar los cambios con los números de cuenta asignados
+            System.out.println("✅ Clientes cargados correctamente.");
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("❌ No se encontraron clientes guardados.");
         }
     }
+
 }

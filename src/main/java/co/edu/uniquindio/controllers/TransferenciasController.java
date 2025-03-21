@@ -8,6 +8,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import java.util.HashMap;
+import java.util.Map;
 
 import java.util.List;
 
@@ -23,6 +25,8 @@ public class TransferenciasController {
     private TextField txtNumeroCuenta;
     @FXML
     private Label lblInscripcionMensaje;
+    private Map<String, String> cuentasMap = new HashMap<>(); // Mapa para relacionar texto mostrado con el número real de cuenta
+
 
     private Cliente clienteActual;
 
@@ -65,13 +69,24 @@ public class TransferenciasController {
         }
 
         cmbUsuarios.getItems().clear();
+        cuentasMap.clear();
+
         for (Cliente c : clientes) {
             if (!c.getUsuario().equals(clienteActual.getUsuario()) &&
                     clienteActual.getCuentasInscritas().contains(c.getCuenta().getNumeroCuenta())) {
-                cmbUsuarios.getItems().add(c.getCuenta().getNumeroCuenta());
+
+                // Formato: Nombre - Últimos 4 dígitos de la cuenta
+                String cuentaFormato = c.getNombre() + " - " + c.getCuenta().getNumeroCuenta().substring(c.getCuenta().getNumeroCuenta().length() - 4);
+
+                // Guardar la relación en el mapa
+                cuentasMap.put(cuentaFormato, c.getCuenta().getNumeroCuenta());
+
+                // Agregar el formato al ComboBox
+                cmbUsuarios.getItems().add(cuentaFormato);
             }
         }
     }
+
 
 
 
@@ -109,13 +124,20 @@ public class TransferenciasController {
     @FXML
     private void realizarTransferencia() {
         try {
-            String numeroCuentaDestino = cmbUsuarios.getValue(); // Ahora obtiene el número de cuenta correcto
-            double monto = Double.parseDouble(txtMonto.getText());
-
-            if (numeroCuentaDestino == null) {
+            String seleccionado = cmbUsuarios.getValue();
+            if (seleccionado == null) {
                 lblMensaje.setText("Seleccione un destinatario.");
                 return;
             }
+
+            // Obtener el número de cuenta real desde el mapa
+            String numeroCuentaDestino = cuentasMap.get(seleccionado);
+            if (numeroCuentaDestino == null) {
+                lblMensaje.setText("Error: No se encontró la cuenta.");
+                return;
+            }
+
+            double monto = Double.parseDouble(txtMonto.getText());
 
             if (monto <= 0) {
                 lblMensaje.setText("Ingrese un monto válido.");
@@ -140,6 +162,7 @@ public class TransferenciasController {
             lblMensaje.setText("Ingrese un número válido.");
         }
     }
+
 
 
 

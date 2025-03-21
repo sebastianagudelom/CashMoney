@@ -4,9 +4,15 @@ import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.GestorClientes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import java.io.IOException;
 
 public class EditarPerfilController {
 
@@ -33,6 +39,45 @@ public class EditarPerfilController {
             txtCiudad.setText(clienteActual.getCiudad());
         }
     }
+
+
+    @FXML
+    private void eliminarCuenta() {
+        if (clienteActual == null) {
+            lblMensaje.setText("Error: No hay usuario activo.");
+            lblMensaje.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        String nombreUsuario = clienteActual.getUsuario();
+        String numeroCuenta = clienteActual.getNumeroCuenta();
+
+        boolean eliminado = GestorClientes.eliminarCliente(nombreUsuario);
+
+        if (eliminado) {
+            // Mostrar alerta de confirmación
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setTitle("Cuenta Eliminada");
+            alerta.setHeaderText("Cuenta eliminada con éxito");
+            alerta.setContentText("El usuario '" + nombreUsuario + "' con la cuenta '" + numeroCuenta + "' ha sido eliminado.");
+
+            alerta.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    // Cerrar la ventana actual
+                    Stage stage = (Stage) lblMensaje.getScene().getWindow();
+                    stage.close();
+
+                    // Redirigir a la pantalla de login
+                    abrirLogin();
+                }
+            });
+
+        } else {
+            lblMensaje.setText("Error al eliminar la cuenta.");
+            lblMensaje.setStyle("-fx-text-fill: red;");
+        }
+    }
+
 
     @FXML
     private void guardarCambios(ActionEvent event) {
@@ -68,6 +113,21 @@ public class EditarPerfilController {
         }
     }
 
+
+
+    private void abrirLogin() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
+            Parent root = loader.load();
+
+            Stage loginStage = new Stage();
+            loginStage.setTitle("Iniciar Sesión");
+            loginStage.setScene(new Scene(root));
+            loginStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     private void volverMenu(ActionEvent event) {

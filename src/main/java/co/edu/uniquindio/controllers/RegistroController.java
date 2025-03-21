@@ -36,20 +36,17 @@ public class RegistroController {
             return;
         }
 
-        // Creación del cliente
-        Cliente nuevoCliente = new Cliente(nombre, identificacion, correo, usuario, clave, ciudad);
-        boolean registroExitoso = GestorClientes.registrarCliente(nombre, identificacion, correo, usuario, clave,
-                ciudad);
+        // Registrar el cliente directamente sin crear un objeto aquí
+        boolean registroExitoso = GestorClientes.registrarCliente(nombre, identificacion, correo, usuario, clave, ciudad);
+
         if (registroExitoso) {
             lblMensaje.setText("Registro exitoso para: " + nombre);
-            System.out.println("Cliente registrado: " + nuevoCliente);
             cambiarEscena("/views/Login.fxml", "Iniciar Sesión");
         } else {
             lblMensaje.setText("El usuario ya existe. Intente con otro.");
         }
-        // Redirigir al Login automáticamente después de registrar
-        cambiarEscena("/views/Login.fxml", "Iniciar Sesión");
     }
+
 
     @FXML
     private void onVolverAction(ActionEvent event) {
