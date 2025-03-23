@@ -12,18 +12,13 @@ public class Cuenta implements Serializable {
         this.saldo = 0.0;
         if (this.numeroCuenta == null || this.numeroCuenta.isEmpty()) {
             this.numeroCuenta = generarNumeroCuenta();
-            System.out.println("✔ Número de cuenta generado: " + this.numeroCuenta);
+            System.out.println("Número de cuenta generado: " + this.numeroCuenta);
         }
     }
 
     // Getters
-    public String getNumeroCuenta() {
-        return numeroCuenta;
-    }
-
-    public double getSaldo() {
-        return saldo;
-    }
+    public String getNumeroCuenta() { return numeroCuenta; }
+    public double getSaldo() { return saldo; }
 
     // Método para asignar número de cuenta solo si no lo tiene
     public void setNumeroCuenta(String numeroCuenta) {

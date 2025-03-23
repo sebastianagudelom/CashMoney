@@ -4,32 +4,20 @@ import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.GestorClientes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import java.util.HashMap;
-import java.util.Map;
-
-import java.util.List;
+import javafx.scene.control.*;
+import javafx.stage.*;
+import java.util.*;
 
 public class TransferenciasController {
 
     @FXML
-    private Label lblSaldo, lblMensaje;
+    private Label lblSaldo, lblMensaje, lblInscripcionMensaje;
     @FXML
-    private TextField txtMonto;
+    private TextField txtMonto, txtNumeroCuenta;
     @FXML
     private ComboBox<String> cmbUsuarios;
-    @FXML
-    private TextField txtNumeroCuenta;
-    @FXML
-    private Label lblInscripcionMensaje;
-    private Map<String, String> cuentasMap = new HashMap<>(); // Mapa para relacionar texto mostrado con el número real de cuenta
-
-
+    private final Map<String, String> cuentasMap = new HashMap<>();
     private Cliente clienteActual;
-
     @FXML
     private void initialize() {
     }
@@ -50,27 +38,23 @@ public class TransferenciasController {
         }
     }
 
-    // Método para cargar usuarios disponibles
+    // Método para cargar las cuentas inscritas
     private void cargarUsuarios() {
         if (clienteActual == null || clienteActual.getCuentasInscritas() == null) {
             System.out.println("⚠ Error: clienteActual es null o no tiene cuentas inscritas.");
             return;
         }
-
         if (cmbUsuarios == null) {
             System.out.println("⚠ Error: cmbUsuarios no está inicializado.");
             return;
         }
-
         List<Cliente> clientes = GestorClientes.getListaClientes();
         if (clientes == null || clientes.isEmpty()) {
             System.out.println("⚠ No hay clientes disponibles.");
             return;
         }
-
         cmbUsuarios.getItems().clear();
         cuentasMap.clear();
-
         for (Cliente c : clientes) {
             if (!c.getUsuario().equals(clienteActual.getUsuario()) &&
                     clienteActual.getCuentasInscritas().contains(c.getCuenta().getNumeroCuenta())) {
@@ -87,25 +71,19 @@ public class TransferenciasController {
         }
     }
 
-
-
-
-
+    // Método para inscribir una cuenta
     @FXML
     private void inscribirCuenta() {
         String numeroCuenta = txtNumeroCuenta.getText().trim();
-
         if (numeroCuenta.isEmpty()) {
             lblInscripcionMensaje.setText("Ingrese un número de cuenta válido.");
             return;
         }
-
         Cliente destino = GestorClientes.buscarClientePorCuenta(numeroCuenta);
         if (destino == null) {
             lblInscripcionMensaje.setText("Cuenta no encontrada.");
             return;
         }
-
         if (clienteActual.inscribirCuenta(numeroCuenta)) {
             lblInscripcionMensaje.setText("Cuenta inscrita con éxito.");
             lblInscripcionMensaje.setStyle("-fx-text-fill: green;");
@@ -116,10 +94,6 @@ public class TransferenciasController {
         }
     }
 
-
-
-
-
     //  Método para realizar la transferencia
     @FXML
     private void realizarTransferencia() {
@@ -129,39 +103,37 @@ public class TransferenciasController {
                 lblMensaje.setText("Seleccione un destinatario.");
                 return;
             }
-
-            // Obtener el número de cuenta real desde el mapa
             String numeroCuentaDestino = cuentasMap.get(seleccionado);
             if (numeroCuentaDestino == null) {
                 lblMensaje.setText("Error: No se encontró la cuenta.");
                 return;
             }
-
             double monto = Double.parseDouble(txtMonto.getText());
-
             if (monto <= 0) {
                 lblMensaje.setText("Ingrese un monto válido.");
                 return;
             }
-
-            // Verificar que realmente estamos pasando números de cuenta
             System.out.println("✅ Transferencia desde: " + clienteActual.getNumeroCuenta() + " hacia: " + numeroCuentaDestino);
-
-            boolean exito = GestorClientes.transferirSaldoPorCuenta(clienteActual.getNumeroCuenta(), numeroCuentaDestino, monto);
-
+            boolean exito = GestorClientes.transferirSaldoPorCuenta(clienteActual.getNumeroCuenta(),
+                    numeroCuentaDestino, monto);
             if (exito) {
-                lblMensaje.setText("Transferencia exitosa.");
+                int puntos = (int) ((monto / 100) * 3); // 3 puntos por cada 100 unidades
+                GestorClientes.getSistemaPuntos().agregarPuntos(clienteActual.getIdentificacion(), puntos);
+                System.out.println("🏆 Puntos actuales: " + GestorClientes.getSistemaPuntos()
+                        .consultarPuntos(clienteActual.getIdentificacion()));
+                GestorClientes.guardarClientes();
+                lblMensaje.setText("Transferencia exitosa. Puntos ganados: " + puntos);
                 lblMensaje.setStyle("-fx-text-fill: green;");
                 actualizarSaldo();
             } else {
                 lblMensaje.setText("Saldo insuficiente o error.");
                 lblMensaje.setStyle("-fx-text-fill: red;");
             }
-
         } catch (NumberFormatException e) {
             lblMensaje.setText("Ingrese un número válido.");
         }
     }
+
 
 
 

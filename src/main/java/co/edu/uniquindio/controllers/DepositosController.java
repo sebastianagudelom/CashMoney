@@ -5,34 +5,30 @@ import co.edu.uniquindio.models.GestorClientes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.stage.*;
 import java.io.IOException;
 
 public class DepositosController {
 
     private Cliente clienteActual;
-    public void setCliente(Cliente cliente) {
-        this.clienteActual = cliente;
-    }
-
     @FXML
     private TextField txtMonto;
     @FXML
     private Label lblMensaje;
 
+    public void setCliente(Cliente cliente) {
+        this.clienteActual = cliente;
+    }
 
+    // Métodos para realizar un depósito
     @FXML
     private void realizarDeposito(ActionEvent event) {
         if (clienteActual == null) {
             lblMensaje.setText("Error: No hay usuario activo.");
             return;
         }
-
         String montoTexto = txtMonto.getText();
         try {
             double monto = Double.parseDouble(montoTexto);
@@ -40,22 +36,24 @@ public class DepositosController {
                 lblMensaje.setText("Ingrese un monto válido.");
                 return;
             }
-
-            // Depositar dinero en la cuenta del usuario
             clienteActual.getCuenta().depositar(monto);
+            int puntos = (int) (monto / 50);
+            GestorClientes.getSistemaPuntos().agregarPuntos(clienteActual.getIdentificacion(), puntos);
             GestorClientes.guardarClientes();
-            lblMensaje.setText("Depósito exitoso. Nuevo saldo: " + clienteActual.getCuenta().getSaldo());
-
+            lblMensaje.setText("Depósito exitoso. Puntos ganados: " + puntos +
+                    ". Nuevo saldo: " + clienteActual.getCuenta().getSaldo());
         } catch (NumberFormatException e) {
             lblMensaje.setText("Ingrese un número válido.");
         }
     }
 
+    // Método para volver al menú
     @FXML
     private void volverMenu(ActionEvent event) {
         cambiarVentana(event, "/views/Menu.fxml");
     }
 
+    // Método para cambiar la pestaña
     private void cambiarVentana(ActionEvent event, String rutaFXML) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));

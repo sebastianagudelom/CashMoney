@@ -34,22 +34,22 @@ public class RetirosController {
     private void realizarRetiro() {
         try {
             double monto = Double.parseDouble(txtMonto.getText());
-
             if (monto <= 0) {
                 lblMensaje.setText("Ingrese un monto válido.");
                 return;
             }
-
             if (clienteActual != null && clienteActual.getCuenta().retirar(monto)) {
+                int puntos = (int) (monto / 100) * 2;
+                GestorClientes.getSistemaPuntos().agregarPuntos(clienteActual.getIdentificacion(), puntos);
                 GestorClientes.guardarClientes();
-                lblMensaje.setText("Retiro exitoso.");
+
+                lblMensaje.setText("Retiro exitoso. Puntos ganados: " + puntos);
                 lblMensaje.setStyle("-fx-text-fill: green;");
-                actualizarSaldo(); // Actualizar saldo después del retiro
+                actualizarSaldo();
             } else {
                 lblMensaje.setText("Fondos insuficientes.");
                 lblMensaje.setStyle("-fx-text-fill: red;");
             }
-
         } catch (NumberFormatException e) {
             lblMensaje.setText("Ingrese un número válido.");
         }

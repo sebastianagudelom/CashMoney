@@ -8,45 +8,32 @@ import java.util.Set;
 
 public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
-
     private String nombre, identificacion, correo, usuario, clave, ciudad;
     private Cuenta cuenta;
     private Set<String> cuentasInscritas;
     private List<Transaccion> historialTransacciones;
 
-
-
+    // Setters
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    public void setIdentificacion(String identificacion) {
-        this.identificacion = identificacion;
+    public void setIdentificacion(String identificacion) { this.identificacion = identificacion; }
+    public void setCorreo(String correo) { this.correo = correo; }
+    public void setUsuario(String usuario) { this.usuario = usuario; }
+    public void setClave(String clave) { this.clave = clave; }
+    public void setCiudad(String ciudad) { this.ciudad = ciudad; }
+    public void setHistorialTransacciones(List<Transaccion> historial) { this.historialTransacciones = historial; }
+    public void setCuenta(Cuenta cuenta) {
+        if (this.cuenta == null) { // Solo asigna si no hay una cuenta
+            this.cuenta = cuenta;
+        } else {
+            this.cuenta.setNumeroCuenta(cuenta.getNumeroCuenta()); // Mantiene el número de cuenta original
+        }
     }
+    public void setCuentasInscritas(Set<String> cuentas) { this.cuentasInscritas = cuentas; }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
-
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
-    }
-
-    public void setHistorialTransacciones(List<Transaccion> historial) {
-        this.historialTransacciones = historial;
-    }
-
-
-
-
-    public Cliente(String nombre, String identificacion, String correo, String usuario, String clave, String ciudad) {
+    public Cliente(String nombre, String identificacion, String correo, String usuario, String clave, String ciudad)
+    {
         this.nombre = nombre;
         this.identificacion = identificacion;
         this.correo = correo;
@@ -54,18 +41,9 @@ public class Cliente implements Serializable {
         this.clave = clave;
         this.ciudad = ciudad;
         this.cuentasInscritas = new HashSet<>();
-
-        // Asegurar que historial nunca sea null
-        if (this.historialTransacciones == null) {
-            this.historialTransacciones = new ArrayList<>();
-        }
-
-        if (this.cuenta == null) {
-            this.cuenta = new Cuenta();
-        }
+        this.historialTransacciones = new ArrayList<>();
+        this.cuenta = new Cuenta();
     }
-
-
 
     // Getters
     public String getNombre() { return nombre; }
@@ -84,7 +62,6 @@ public class Cliente implements Serializable {
         return historialTransacciones;
     }
 
-
     // Métodos de Inscripción de Cuentas
     public boolean inscribirCuenta(String numeroCuenta) {
         if (cuentasInscritas == null) {
@@ -98,46 +75,13 @@ public class Cliente implements Serializable {
         return true;
     }
 
+    // Método para agregar una transacción
     public void agregarTransaccion(Transaccion transaccion) {
         if (historialTransacciones == null) {
             historialTransacciones = new ArrayList<>();
         }
         historialTransacciones.add(transaccion);
         GestorClientes.guardarClientes();
-    }
-
-
-
-
-
-
-    public boolean estaInscrita(String numeroCuenta) {
-        return cuentasInscritas != null && cuentasInscritas.contains(numeroCuenta);
-    }
-
-    // Métodos de Transacción
-    public void depositar(double monto) {
-        cuenta.depositar(monto);
-    }
-
-    public boolean retirar(double monto) {
-        return cuenta.retirar(monto);
-    }
-
-    // Setters
-    public void setCuenta(Cuenta cuenta) {
-        if (this.cuenta == null) { // Solo asigna si no hay una cuenta
-            this.cuenta = cuenta;
-        } else {
-            this.cuenta.setNumeroCuenta(cuenta.getNumeroCuenta()); // Mantiene el número de cuenta original
-        }
-    }
-
-
-
-
-    public void setCuentasInscritas(Set<String> cuentas) {
-        this.cuentasInscritas = cuentas;
     }
 
     @Override

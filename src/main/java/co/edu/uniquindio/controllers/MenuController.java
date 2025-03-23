@@ -1,6 +1,7 @@
 package co.edu.uniquindio.controllers;
 
 import co.edu.uniquindio.models.Cliente;
+import co.edu.uniquindio.models.GestorClientes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -135,8 +136,22 @@ public class MenuController {
         }    }
     @FXML
     private void irAPuntos(ActionEvent event) {
-        cambiarVentana(event, "/views/Puntos.fxml");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Puntos.fxml"));
+            Parent root = loader.load();
+
+            PuntosController controller = loader.getController();
+            controller.inicializar(clienteActual, GestorClientes.getSistemaPuntos());
+
+            Stage stage = new Stage();
+            stage.setTitle("Mis Puntos");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
     @FXML
     private void irALogin(ActionEvent event) {
         cambiarVentana(event, "/views/Login.fxml");

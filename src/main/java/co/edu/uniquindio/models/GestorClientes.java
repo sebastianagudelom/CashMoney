@@ -7,66 +7,64 @@ import java.util.List;
 public class GestorClientes {
     private static List<Cliente> listaClientes = new ArrayList<>();
     private static final String ARCHIVO_CLIENTES = "clientes.dat"; // Archivo para persistencia
+    private static final String ARCHIVO_PUNTOS = "puntos.dat"; // Archivo para persistencia
+    private static final SistemaPuntos sistemaPuntos = new SistemaPuntos();
+
+    public static SistemaPuntos getSistemaPuntos() {
+        return sistemaPuntos;
+    }
+    // Método para obtener la lista de clientes
+    public static List<Cliente> getListaClientes() {
+        return listaClientes;
+    }
 
     // Método para registrar un nuevo cliente
-    public static boolean registrarCliente(String nombre, String identificacion, String correo, String usuario, String clave, String ciudad) {
+    public static boolean registrarCliente(String nombre, String identificacion, String correo, String usuario,
+                                           String clave, String ciudad) {
         if (buscarClientePorUsuario(usuario) == null) {
             Cliente nuevoCliente = new Cliente(nombre, identificacion, correo, usuario, clave, ciudad);
-
             listaClientes.add(nuevoCliente);
             guardarClientes();
-
             System.out.println("Cliente registrado: " + nuevoCliente);
             return true;
         }
         return false;
     }
 
-
     // Método para transferir saldo por número de cuenta
-    public static boolean transferirSaldoPorCuenta(String numeroCuentaOrigen, String numeroCuentaDestino, double monto) {
+    public static boolean transferirSaldoPorCuenta(String numeroCuentaOrigen, String numeroCuentaDestino, double monto)
+    {
         Cliente origen = buscarClientePorCuenta(numeroCuentaOrigen);
         Cliente destino = buscarClientePorCuenta(numeroCuentaDestino);
-
         if (origen == null || destino == null) {
-            System.out.println("❌ Error: Una de las cuentas no existe.");
+            System.out.println("Error: Una de las cuentas no existe.");
             return false;
         }
-
         if (origen.getCuenta().getSaldo() < monto) {
-            System.out.println("❌ Error: Saldo insuficiente.");
+            System.out.println("Error: Saldo insuficiente.");
             return false;
         }
-
         origen.getCuenta().retirar(monto);
         destino.getCuenta().depositar(monto);
-
-        // Registrar transacciones en ambos clientes
         origen.agregarTransaccion(new Transaccion("Transferencia Enviada", monto, numeroCuentaDestino));
         destino.agregarTransaccion(new Transaccion("Transferencia Recibida", monto, numeroCuentaOrigen));
-
         guardarClientes();
         return true;
     }
 
-
     // Método para buscar cliente por número de cuenta
     public static Cliente buscarClientePorCuenta(String numeroCuenta) {
-        System.out.println("🔍 Buscando cliente con cuenta: " + numeroCuenta);
-
+        System.out.println("Buscando cliente con cuenta: " + numeroCuenta);
         for (Cliente c : listaClientes) {
-            System.out.println("👤 Cliente: " + c.getUsuario() + " - Cuenta: " + c.getCuenta().getNumeroCuenta());
-
+            System.out.println("Cliente: " + c.getUsuario() + " - Cuenta: " + c.getCuenta().getNumeroCuenta());
             if (c.getCuenta() != null && c.getCuenta().getNumeroCuenta().equals(numeroCuenta)) {
-                System.out.println("✅ Cliente encontrado: " + c.getUsuario());
+                System.out.println("Cliente encontrado: " + c.getUsuario());
                 return c;
             }
         }
-
-        System.out.println("❌ No se encontró ningún cliente con la cuenta " + numeroCuenta);
+        System.out.println("No se encontró ningún cliente con la cuenta " + numeroCuenta);
         return null;
     }
-
 
     // Método para verificar usuario por usuario y clave
     public static Cliente verificarUsuario(String usuario, String clave) {
@@ -78,6 +76,7 @@ public class GestorClientes {
         return null;
     }
 
+    // Método que busca los clientes por el usuario
     public static Cliente buscarClientePorUsuario(String usuario) {
         for (Cliente c : listaClientes) {
             if (c.getUsuario().equals(usuario)) {
@@ -87,13 +86,9 @@ public class GestorClientes {
         return null;
     }
 
-    // Método para obtener la lista de clientes
-    public static List<Cliente> getListaClientes() {
-        return listaClientes;
-    }
-
+    // Imprime los clientes
     public static void imprimirClientes() {
-        System.out.println("📋 Lista de Clientes:");
+        System.out.println("Lista de Clientes:");
         for (Cliente c : listaClientes) {
             System.out.println(c);
         }
@@ -104,13 +99,13 @@ public class GestorClientes {
         Cliente cliente = buscarClientePorUsuario(usuario);
         if (cliente != null) {
             listaClientes.remove(cliente);
-            guardarClientes(); // Guardar cambios en archivo
-            return true; // Cliente eliminado correctamente
+            guardarClientes();
+            return true;
         }
-        return false; // Cliente no encontrado
+        return false;
     }
 
-
+    // Método para actualizar los datos del cliente
     public static boolean actualizarCliente(String usuario, String nuevoNombre, String nuevaIdentificacion,
                                             String nuevoCorreo, String nuevoUsuario, String nuevaClave,
                                             String nuevaCiudad) {
@@ -124,43 +119,63 @@ public class GestorClientes {
             }
             if (nuevaClave != null) cliente.setClave(nuevaClave);
             if (nuevaCiudad != null) cliente.setCiudad(nuevaCiudad);
-
-            guardarClientes(); // Guardar los cambios
-            return true; // Actualización exitosa
+            guardarClientes();
+            return true;
         }
-        return false; // Cliente no encontrado
+        return false;
     }
 
+    // Método para guardar la lista de clientes en el archivo
+    private static void guardarSistemaPuntos() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(ARCHIVO_PUNTOS))) {
+            out.writeObject(sistemaPuntos);
+            System.out.println("✅ Sistema de puntos guardado.");
+        } catch (IOException e) {
+            System.out.println("❌ Error al guardar el sistema de puntos: " + e.getMessage());
+        }
+    }
 
-
-    // Método para guardar la lista de clientes en un archivo
+    // Método para guardar la lista de clientes en el archivo
     public static void guardarClientes() {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(ARCHIVO_CLIENTES))) {
             out.writeObject(listaClientes);
         } catch (IOException e) {
             System.out.println("Error al guardar los clientes: " + e.getMessage());
         }
+        guardarSistemaPuntos();
     }
 
-    // Método para cargar clientes desde un archivo
+    // Método para cargar los puntos de un cliente desde el archivo
+    private static void cargarSistemaPuntos() {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(ARCHIVO_PUNTOS))) {
+            SistemaPuntos cargado = (SistemaPuntos) in.readObject();
+            if (cargado != null) {
+                sistemaPuntos.reemplazarPor(cargado);
+            }
+            //System.out.println("Sistema de puntos cargado.");
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("No se pudo cargar el sistema de puntos. Se usará uno nuevo.");
+        }
+    }
+
+    // Método para cargar clientes desde el archivo
     public static void cargarClientes() {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(ARCHIVO_CLIENTES))) {
             listaClientes = (List<Cliente>) in.readObject();
-
-            // Verificar y asignar números de cuenta si no los tienen
             for (Cliente c : listaClientes) {
                 if (c.getCuenta() == null) {
-                    c.setCuenta(new Cuenta()); // Si el cliente no tiene cuenta, se le asigna una nueva
+                    c.setCuenta(new Cuenta());
                 } else if (c.getCuenta().getNumeroCuenta() == null || c.getCuenta().getNumeroCuenta().isEmpty()) {
-                    c.getCuenta().setNumeroCuenta(c.getCuenta().getNumeroCuenta()); // Mantener el número original
+                    c.getCuenta().setNumeroCuenta(c.getCuenta().getNumeroCuenta());
                 }
             }
-
-            guardarClientes(); // Guardar los cambios con los números de cuenta asignados
-            System.out.println("✅ Clientes cargados correctamente.");
+            cargarSistemaPuntos();
+            guardarClientes();
+            //System.out.println("Clientes cargados correctamente.");
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("❌ No se encontraron clientes guardados.");
+            System.out.println("No se encontraron clientes guardados.");
         }
     }
+
 
 }
