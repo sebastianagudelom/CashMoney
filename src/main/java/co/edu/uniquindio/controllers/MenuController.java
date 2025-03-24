@@ -8,14 +8,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MenuController {
     private Cliente clienteActual;
+    @FXML
+    private Label lblSaludo;
 
     public void setCliente(Cliente clienteActual) {
         this.clienteActual = clienteActual;
+        if (lblSaludo != null) {
+            lblSaludo.setText("Bienvenido " + clienteActual.getNombre() + ", ¿Qué desea hacer hoy?");
+        }
     }
 
     @FXML
@@ -30,8 +36,7 @@ public class MenuController {
 
             // Obtener el controlador de la nueva ventana
             DepositosController depositosController = loader.getController();
-            depositosController.setCliente(clienteActual); // Pasar cliente actual
-            System.out.println("Ingreso a Depositos." + " Usuario: " + clienteActual.getUsuario());
+            depositosController.setCliente(clienteActual);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -48,7 +53,7 @@ public class MenuController {
             Parent root = loader.load();
 
             RetirosController retirosController = loader.getController();
-            retirosController.setCliente(clienteActual); // Pasar el cliente actual
+            retirosController.setCliente(clienteActual);
 
             Stage stage = new Stage();
             stage.setTitle("Realizar Retiro");
@@ -67,7 +72,7 @@ public class MenuController {
 
             // Obtener el controlador y pasar el cliente actual
             TransferenciasController transferenciasController = loader.getController();
-            transferenciasController.setCliente(clienteActual); // Asegurar que el cliente se pasa antes de inicializar
+            transferenciasController.setCliente(clienteActual);
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -86,8 +91,7 @@ public class MenuController {
             Parent root = loader.load();
 
             SaldoController saldoController = loader.getController();
-            saldoController.setCliente(clienteActual); // Pasar el cliente actual
-            System.out.println("Ingreso a Consulta de saldos." + " Usuario: " + clienteActual.getUsuario());
+            saldoController.setCliente(clienteActual);
 
             Stage stage = new Stage();
             stage.setTitle("Consulta de Saldo");
@@ -106,7 +110,7 @@ public class MenuController {
             Parent root = loader.load();
 
             EditarPerfilController editarPerfilController = loader.getController();
-            editarPerfilController.setCliente(clienteActual); // Pasar el cliente actual
+            editarPerfilController.setCliente(clienteActual);
 
             Stage stage = new Stage();
             stage.setTitle("Editar Perfil");
@@ -124,7 +128,7 @@ public class MenuController {
             Parent root = loader.load();
 
             HistorialController historialController = loader.getController();
-            historialController.setCliente(clienteActual); // Pasar el cliente actual
+            historialController.setCliente(clienteActual);
 
             Stage stage = new Stage();
             stage.setTitle("Historial de Transacciones");

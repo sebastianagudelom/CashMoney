@@ -37,11 +37,22 @@ public class DepositosController {
                 return;
             }
             clienteActual.getCuenta().depositar(monto);
-            int puntos = (int) (monto / 50);
+            int puntos = (int) (monto / 50);  // 1 punto por cada $50
+            String rangoAnterior = GestorClientes.getSistemaPuntos().consultarRango(clienteActual.
+                    getIdentificacion()).name();
             GestorClientes.getSistemaPuntos().agregarPuntos(clienteActual.getIdentificacion(), puntos);
             GestorClientes.guardarClientes();
-            lblMensaje.setText("Depósito exitoso. Puntos ganados: " + puntos +
-                    ". Nuevo saldo: " + clienteActual.getCuenta().getSaldo());
+            String nuevoRango = GestorClientes.getSistemaPuntos()
+                    .consultarRango(clienteActual.getIdentificacion()).name();
+            if (!rangoAnterior.equals(nuevoRango)) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("🎉 ¡Nuevo Rango!");
+                alert.setHeaderText("¡Felicidades, " + clienteActual.getNombre() + "!");
+                alert.setContentText("Has alcanzado el rango " + nuevoRango + " 🏅");
+                alert.showAndWait();
+            }
+            lblMensaje.setText("Depósito exitoso. Puntos ganados: " + puntos + ". Nuevo saldo: " +
+                    clienteActual.getCuenta().getSaldo());
         } catch (NumberFormatException e) {
             lblMensaje.setText("Ingrese un número válido.");
         }

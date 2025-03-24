@@ -129,9 +129,9 @@ public class GestorClientes {
     private static void guardarSistemaPuntos() {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(ARCHIVO_PUNTOS))) {
             out.writeObject(sistemaPuntos);
-            System.out.println("✅ Sistema de puntos guardado.");
+            //System.out.println("Sistema de puntos guardado.");
         } catch (IOException e) {
-            System.out.println("❌ Error al guardar el sistema de puntos: " + e.getMessage());
+            System.out.println("Error al guardar el sistema de puntos: " + e.getMessage());
         }
     }
 

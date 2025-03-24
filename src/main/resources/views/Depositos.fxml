@@ -4,18 +4,28 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import java.lang.String?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.controllers.DepositosController">
+<AnchorPane styleClass="fondo-menu" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.uniquindio.controllers.DepositosController">
+
+   <stylesheets>
+      <String fx:value="/styles/styles.css"/>
+   </stylesheets>
+
    <children>
-      <Label layoutX="148.0" layoutY="75.0" text="Ingrese el monto a depositar">
-         <font>
-            <Font size="26.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtMonto" layoutX="221.0" layoutY="141.0" />
-      <Button fx:id="btnDepositar" layoutX="266.0" layoutY="202.0" mnemonicParsing="false" onAction="#realizarDeposito" text="Depositar" />
-      <Label fx:id="lblMensaje" alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="255.0" prefHeight="17.0" prefWidth="428.0" textAlignment="CENTER" />
-      <Button fx:id="btnVolver" layoutX="76.0" layoutY="305.0" mnemonicParsing="false" onAction="#volverMenu" text="Volver" />
+      <VBox alignment="CENTER" spacing="20.0" layoutX="50.0" layoutY="50.0" prefWidth="500.0">
+         <children>
+            <Label text="Depósito de dinero" styleClass="saludo-label"/>
+            <Label text="Ingrese el monto a depositar:" styleClass="label"/>
+            <TextField fx:id="txtMonto" promptText="Ingresar monto" styleClass="text-field"/>
+            <Button fx:id="btnDepositar" text="Depositar" onAction="#realizarDeposito" styleClass="button"/>
+            <Label fx:id="lblMensaje" styleClass="label"/>
+            <Button fx:id="btnVolver" text="Volver al menú" onAction="#volverMenu" styleClass="button"/>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

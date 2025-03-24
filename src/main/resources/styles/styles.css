@@ -1,0 +1,77 @@
+.root {
+    -fx-font-family: 'Segoe UI', sans-serif;
+    -fx-background-color: #f4f6f8;
+}
+
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+}
+
+.saludo-label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #444;
+    -fx-padding: 10 0 20 0;
+}
+
+.fondo-menu {
+    -fx-background-color: linear-gradient(to bottom, #e8f5e9, #c8e6c9); /* verde suave degradado */
+    -fx-padding: 20px;
+    -fx-background-radius: 15;
+}
+
+.button {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-padding: 8 16;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #2ecc71;
+}
+
+.text-field, .password-field {
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-border-color: #ccc;
+    -fx-padding: 6 10;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #27ae60;
+    -fx-border-width: 2;
+}
+
+.combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+}
+
+.tarjeta {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 16;
+    -fx-border-radius: 16;
+    -fx-padding: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.12), 10, 0.3, 0, 2);
+}
+
+.titulo-logo {
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #13870f;
+    -fx-padding: 0 0 10 0;
+}
+
+
+.link-registro {
+    -fx-text-fill: #13870f;
+    -fx-font-size: 13px;
+    -fx-underline: true;
+    -fx-alignment: center;
+}

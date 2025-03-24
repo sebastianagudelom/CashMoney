@@ -19,7 +19,7 @@ public class Main extends Application {
         primaryStage.setTitle("CashMoney");
         primaryStage.setScene(new Scene(root, 600, 400)); // O el tamaño que prefieras
         primaryStage.setMinWidth(400);
-        primaryStage.setMinHeight(300);
+        primaryStage.setMinHeight(480);
 
 
         // Mostrar la ventana

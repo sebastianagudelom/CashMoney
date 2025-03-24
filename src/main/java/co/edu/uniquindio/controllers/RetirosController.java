@@ -4,6 +4,7 @@ import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.GestorClientes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -39,21 +40,34 @@ public class RetirosController {
                 return;
             }
             if (clienteActual != null && clienteActual.getCuenta().retirar(monto)) {
-                int puntos = (int) (monto / 100) * 2;
+                int puntos = (int) (monto / 100) * 2;  // 2 puntos por cada $100 retirados
+                String rangoAnterior = GestorClientes.getSistemaPuntos().consultarRango(clienteActual.
+                        getIdentificacion()).name();
                 GestorClientes.getSistemaPuntos().agregarPuntos(clienteActual.getIdentificacion(), puntos);
                 GestorClientes.guardarClientes();
-
+                String nuevoRango = GestorClientes.getSistemaPuntos()
+                        .consultarRango(clienteActual.getIdentificacion()).name();
+                if (!rangoAnterior.equals(nuevoRango)) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("¡Nuevo Rango!");
+                    alert.setHeaderText("¡Felicidades, " + clienteActual.getNombre() + "!");
+                    alert.setContentText("Has alcanzado el rango " + nuevoRango + " 🏅");
+                    alert.showAndWait();
+                }
                 lblMensaje.setText("Retiro exitoso. Puntos ganados: " + puntos);
                 lblMensaje.setStyle("-fx-text-fill: green;");
                 actualizarSaldo();
+
             } else {
                 lblMensaje.setText("Fondos insuficientes.");
                 lblMensaje.setStyle("-fx-text-fill: red;");
             }
+
         } catch (NumberFormatException e) {
             lblMensaje.setText("Ingrese un número válido.");
         }
     }
+
 
     // Método para volver al menú
     @FXML

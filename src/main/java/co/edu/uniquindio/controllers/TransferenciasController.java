@@ -113,15 +113,25 @@ public class TransferenciasController {
                 lblMensaje.setText("Ingrese un monto válido.");
                 return;
             }
-            System.out.println("✅ Transferencia desde: " + clienteActual.getNumeroCuenta() + " hacia: " + numeroCuentaDestino);
-            boolean exito = GestorClientes.transferirSaldoPorCuenta(clienteActual.getNumeroCuenta(),
-                    numeroCuentaDestino, monto);
+            System.out.println("Transferencia desde: " + clienteActual.getNumeroCuenta() + " hacia: " +
+                    numeroCuentaDestino);
+            boolean exito = GestorClientes.transferirSaldoPorCuenta(
+                    clienteActual.getNumeroCuenta(), numeroCuentaDestino, monto);
             if (exito) {
-                int puntos = (int) ((monto / 100) * 3); // 3 puntos por cada 100 unidades
+                int puntos = (int) ((monto / 100) * 3);
+                String rangoAnterior = GestorClientes.getSistemaPuntos().consultarRango(clienteActual.
+                        getIdentificacion()).name();
                 GestorClientes.getSistemaPuntos().agregarPuntos(clienteActual.getIdentificacion(), puntos);
-                System.out.println("🏆 Puntos actuales: " + GestorClientes.getSistemaPuntos()
-                        .consultarPuntos(clienteActual.getIdentificacion()));
                 GestorClientes.guardarClientes();
+                String nuevoRango = GestorClientes.getSistemaPuntos().consultarRango(clienteActual.
+                        getIdentificacion()).name();
+                if (!rangoAnterior.equals(nuevoRango)) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("¡Nuevo Rango!");
+                    alert.setHeaderText("¡Felicidades, " + clienteActual.getNombre() + "!");
+                    alert.setContentText("Has alcanzado el rango " + nuevoRango + " 🏅");
+                    alert.showAndWait();
+                }
                 lblMensaje.setText("Transferencia exitosa. Puntos ganados: " + puntos);
                 lblMensaje.setStyle("-fx-text-fill: green;");
                 actualizarSaldo();
@@ -133,11 +143,6 @@ public class TransferenciasController {
             lblMensaje.setText("Ingrese un número válido.");
         }
     }
-
-
-
-
-
 
     //  Método para cerrar la ventana
     @FXML
