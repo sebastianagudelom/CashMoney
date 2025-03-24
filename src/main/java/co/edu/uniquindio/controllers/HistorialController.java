@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import co.edu.uniquindio.utils.ExportadorPDF;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,13 @@ public class HistorialController {
     public void setCliente(Cliente cliente) {
         this.clienteActual = cliente;
         cargarHistorial();
+    }
+
+    @FXML
+    private void exportarPDF() {
+        if (clienteActual != null) {
+            ExportadorPDF.exportarHistorial(clienteActual.getHistorialTransacciones(), "Historial_" + clienteActual.getUsuario() + ".pdf");
+        }
     }
 
     private void cargarHistorial() {

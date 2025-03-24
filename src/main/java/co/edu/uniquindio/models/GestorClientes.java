@@ -9,23 +9,13 @@ public class GestorClientes {
     private static final String ARCHIVO_CLIENTES = "clientes.dat"; // Archivo para persistencia
     private static final String ARCHIVO_PUNTOS = "puntos.dat"; // Archivo para persistencia
     private static final SistemaPuntos sistemaPuntos = new SistemaPuntos();
-    private static GestorClientes instancia;
 
     private GestorClientes() {
         cargarClientes();
     }
-
-    public static GestorClientes obtenerInstancia() {
-        if (instancia == null) {
-            instancia = new GestorClientes();
-        }
-        return instancia;
-    }
-    
     public static SistemaPuntos getSistemaPuntos() {
         return sistemaPuntos;
     }
-    // Método para obtener la lista de clientes
     public static List<Cliente> getListaClientes() {
         return listaClientes;
     }

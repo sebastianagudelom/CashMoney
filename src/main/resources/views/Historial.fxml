@@ -24,7 +24,9 @@
 
             <Label fx:id="lblMensaje" layoutX="25.0" layoutY="310.0" prefWidth="450.0" alignment="CENTER" styleClass="label" textAlignment="CENTER" wrapText="true" />
 
-            <Button fx:id="btnVolver" layoutX="25.0" layoutY="340.0" prefWidth="80.0" text="Volver" onAction="#volverMenu" styleClass="button" />
+            <Button fx:id="btnVolver" layoutX="25.0" layoutY="360.0" prefWidth="80.0" text="Volver" onAction="#volverMenu" styleClass="button" />
+
+            <Button fx:id="btnExportarPDF" layoutX="350.0" layoutY="360.0" prefWidth="120.0" text="Exportar PDF" onAction="#exportarPDF" styleClass="button" />
          </children>
       </AnchorPane>
    </children>
