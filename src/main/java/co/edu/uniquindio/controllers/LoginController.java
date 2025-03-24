@@ -2,6 +2,8 @@ package co.edu.uniquindio.controllers;
 
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.GestorClientes;
+import co.edu.uniquindio.models.GestorAdministradores; // <--- Agrega esto
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,12 +12,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
 public class LoginController {
 
-    private Cliente clienteLogeado;  // Variable para almacenar el cliente actual
-
+    private Cliente clienteLogeado;
     @FXML
     private Button btnIniciarSesion;
     @FXML
@@ -32,34 +34,52 @@ public class LoginController {
         String usuario = txtUsuario.getText();
         String contrasena = txtClave.getText();
 
+        // Validación modo administrador
+        if (GestorAdministradores.verificarCredenciales(usuario, contrasena)) {
+            cambiarVentanaAdmin(event, "/views/AdminMenu.fxml");
+            return;
+        }
+
+        // Validación de cliente normal
         clienteLogeado = GestorClientes.verificarUsuario(usuario, contrasena);
 
         if (clienteLogeado != null) {
             System.out.println("Inicio de sesion correcto" + " Usuario: " + clienteLogeado.getUsuario() +
                     " Clave: " + clienteLogeado.getClave() + " Nombre: " + clienteLogeado.getNombre());
-            cambiarVentana(event, "/views/Menu.fxml");
+            cambiarVentanaCliente(event, "/views/Menu.fxml");
         } else {
             lblMensaje.setText("Usuario o contraseña incorrectos.");
         }
     }
 
-
-    private void cambiarVentana(ActionEvent event, String rutaFXML) {
+    private void cambiarVentanaCliente(ActionEvent event, String rutaFXML) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
             Parent root = loader.load();
 
-            // Obtener el controlador de la nueva ventana
             MenuController menuController = loader.getController();
-            menuController.setCliente(clienteLogeado); // Pasar el cliente logeado
+            menuController.setCliente(clienteLogeado);
 
-            // Cambiar la ventana
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error al cargar la ventana: " + rutaFXML);
+        }
+    }
+
+    private void cambiarVentanaAdmin(ActionEvent event, String rutaFXML) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al cargar la ventana de administrador.");
         }
     }
 
@@ -75,7 +95,6 @@ public class LoginController {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error al cargar la ventana de registro.");
-
         }
     }
 }

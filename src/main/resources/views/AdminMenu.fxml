@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<?import java.lang.String?>
+<AnchorPane xmlns="http://javafx.com/javafx/20.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.uniquindio.controllers.AdminMenuController"
+            prefWidth="600" prefHeight="480"
+            styleClass="fondo-menu">
+
+    <stylesheets>
+        <String fx:value="/styles/styles.css"/>
+    </stylesheets>
+
+    <children>
+        <AnchorPane layoutX="50" layoutY="30" prefWidth="500" prefHeight="420" styleClass="tarjeta">
+            <children>
+                <Label layoutX="150" layoutY="20" text="Panel Administrador" styleClass="saludo-label"/>
+
+                <TableView fx:id="tablaClientes" layoutX="20" layoutY="60" prefWidth="460" prefHeight="100">
+                    <columns>
+                        <TableColumn fx:id="colNombre" text="Nombre" prefWidth="100"/>
+                        <TableColumn fx:id="colUsuario" text="Usuario" prefWidth="100"/>
+                        <TableColumn fx:id="colCorreo" text="Correo" prefWidth="160"/>
+                        <TableColumn fx:id="colCiudad" text="Ciudad" prefWidth="100"/>
+                    </columns>
+                </TableView>
+
+                <TableView fx:id="tablaTransacciones" layoutX="20" layoutY="180" prefWidth="460" prefHeight="100">
+                    <columns>
+                        <TableColumn fx:id="colTipo" text="Tipo" prefWidth="150"/>
+                        <TableColumn fx:id="colMonto" text="Monto" prefWidth="150"/>
+                        <TableColumn fx:id="colReferencia" text="Referencia" prefWidth="160"/>
+                    </columns>
+                </TableView>
+
+                <Button layoutX="50" layoutY="300" prefWidth="180" prefHeight="40"
+                        text="Eliminar Cliente" styleClass="button"
+                        onAction="#eliminarCliente"/>
+
+                <Button layoutX="260" layoutY="300" prefWidth="180" prefHeight="40"
+                        text="Ver Transacciones" styleClass="button"
+                        onAction="#verTransacciones"/>
+
+                <Button layoutX="150" layoutY="350" prefWidth="180" prefHeight="40"
+                        text="Cerrar sesión" styleClass="button"
+                        onAction="#cerrarSesion"/>
+
+                <Label fx:id="lblMensaje" layoutX="20" layoutY="400" prefWidth="460" styleClass="label" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

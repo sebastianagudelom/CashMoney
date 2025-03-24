@@ -6,17 +6,15 @@ import java.time.format.DateTimeFormatter;
 
 public class Transaccion implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    private String tipo;  // Depósito, Retiro, Transferencia
     private double monto;
-    private String cuentaDestino;  // Puede ser null si es un retiro o depósito
-    private String fecha;
+    private String fecha, referencia, tipo, cuentaDestino;
 
     public Transaccion(String tipo, double monto, String cuentaDestino) {
         this.tipo = tipo;
         this.monto = monto;
         this.cuentaDestino = cuentaDestino;
         this.fecha = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
     }
 
     // Getters
@@ -24,6 +22,8 @@ public class Transaccion implements Serializable {
     public double getMonto() { return monto; }
     public String getCuentaDestino() { return cuentaDestino; }
     public String getFecha() { return fecha; }
+    public String getReferencia() { return referencia; }
+
 
     // Setters
     public void setTipo(String tipo) { this.tipo = tipo; }

@@ -2,6 +2,7 @@ package co.edu.uniquindio.controllers;
 
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.GestorClientes;
+import co.edu.uniquindio.utils.CorreoService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,18 +11,23 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.Optional;
+import java.util.Random;
 
 public class RegistroController {
 
     @FXML private TextField txtNombre, txtUsuario, txtClave, txtIdentificacion, txtCorreo, txtCiudad;
     @FXML private Button btnRegistrarse, btnVolver;
     @FXML private Label lblMensaje;
+    private String codigoEnviado;
+    private Cliente datosPendientes;
+
 
     @FXML
     private void onRegistrarseAction(ActionEvent event) {
-        // Obtener valores de los campos
         String nombre = txtNombre.getText();
         String usuario = txtUsuario.getText();
         String clave = txtClave.getText();
@@ -29,23 +35,46 @@ public class RegistroController {
         String correo = txtCorreo.getText();
         String ciudad = txtCiudad.getText();
 
-        // Validación básica
         if (nombre.isEmpty() || usuario.isEmpty() || clave.isEmpty() || identificacion.isEmpty() || correo.isEmpty()
                 || ciudad.isEmpty()) {
             lblMensaje.setText("Por favor, completa todos los campos.");
             return;
         }
 
-        // Registrar el cliente directamente sin crear un objeto aquí
-        boolean registroExitoso = GestorClientes.registrarCliente(nombre, identificacion, correo, usuario, clave, ciudad);
+        // Generar código aleatorio
+        int codigoVerificacion = new Random().nextInt(900000) + 100000;
 
-        if (registroExitoso) {
-            lblMensaje.setText("Registro exitoso para: " + nombre);
-            cambiarEscena("/views/Login.fxml", "Iniciar Sesión");
+        // Enviar el código
+        CorreoService.enviarCorreo(correo, "Código de verificación",
+                "Tu código de verificación para CashMoney es: " + codigoVerificacion);
+
+        // Mostrar input dialog para el código
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Verificación de correo");
+        dialog.setHeaderText("Hemos enviado un código a tu correo.");
+        dialog.setContentText("Ingresa el código:");
+
+        Optional<String> resultado = dialog.showAndWait();
+
+        if (resultado.isPresent()) {
+            String ingreso = resultado.get();
+            if (ingreso.equals(String.valueOf(codigoVerificacion))) {
+                boolean registroExitoso = GestorClientes.registrarCliente(nombre, identificacion, correo, usuario, clave, ciudad);
+
+                if (registroExitoso) {
+                    lblMensaje.setText("Registro exitoso para: " + nombre);
+                    cambiarEscena("/views/Login.fxml", "Iniciar Sesión");
+                } else {
+                    lblMensaje.setText("El usuario ya existe. Intente con otro.");
+                }
+            } else {
+                lblMensaje.setText("Código incorrecto. Registro cancelado.");
+            }
         } else {
-            lblMensaje.setText("El usuario ya existe. Intente con otro.");
+            lblMensaje.setText("Registro cancelado.");
         }
     }
+
 
 
     @FXML

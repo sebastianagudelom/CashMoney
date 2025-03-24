@@ -13,6 +13,7 @@ public class Cliente implements Serializable {
     private Set<String> cuentasInscritas;
     private List<Transaccion> historialTransacciones;
 
+
     // Setters
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -61,6 +62,7 @@ public class Cliente implements Serializable {
         }
         return historialTransacciones;
     }
+
 
     // Métodos de Inscripción de Cuentas
     public boolean inscribirCuenta(String numeroCuenta) {

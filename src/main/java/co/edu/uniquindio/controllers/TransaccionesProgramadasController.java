@@ -70,13 +70,6 @@ public class TransaccionesProgramadasController {
     }
 
     @FXML
-    public void programarTransferencia(ActionEvent event) {
-        // Por ahora podrías dejar esto vacío si aún no lo implementás
-        System.out.println("Transacción programada");
-    }
-
-
-    @FXML
     private void programarTransaccion() {
         String destinatario = cmbDestinatarios.getValue();
         String montoTexto = txtMonto.getText();

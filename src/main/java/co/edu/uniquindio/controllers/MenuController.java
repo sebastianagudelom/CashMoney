@@ -22,8 +22,8 @@ public class MenuController {
         this.clienteActual = clienteActual;
         lblSaludo.setText("Bienvenido " + clienteActual.getNombre() + ", ¿Qué desea hacer hoy?");
 
-        //GestorTransaccionesProgramadas gestor = new GestorTransaccionesProgramadas();
-        //gestor.ejecutarTransacciones(); // Ejecuta si hay alguna para hoy
+        GestorTransaccionesProgramadas gestor = new GestorTransaccionesProgramadas();
+        gestor.ejecutarTransacciones();
     }
 
     @FXML

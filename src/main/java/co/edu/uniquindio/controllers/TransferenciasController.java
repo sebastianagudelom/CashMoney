@@ -2,6 +2,7 @@ package co.edu.uniquindio.controllers;
 
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.GestorClientes;
+import co.edu.uniquindio.models.Transaccion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -103,28 +104,35 @@ public class TransferenciasController {
                 lblMensaje.setText("Seleccione un destinatario.");
                 return;
             }
+
             String numeroCuentaDestino = cuentasMap.get(seleccionado);
             if (numeroCuentaDestino == null) {
                 lblMensaje.setText("Error: No se encontró la cuenta.");
                 return;
             }
+
             double monto = Double.parseDouble(txtMonto.getText());
             if (monto <= 0) {
                 lblMensaje.setText("Ingrese un monto válido.");
                 return;
             }
-            System.out.println("Transferencia desde: " + clienteActual.getNumeroCuenta() + " hacia: " +
-                    numeroCuentaDestino);
+
+            System.out.println("Transferencia desde: " + clienteActual.getNumeroCuenta() + " hacia: " + numeroCuentaDestino);
+
             boolean exito = GestorClientes.transferirSaldoPorCuenta(
                     clienteActual.getNumeroCuenta(), numeroCuentaDestino, monto);
+
             if (exito) {
                 int puntos = (int) ((monto / 100) * 3);
-                String rangoAnterior = GestorClientes.getSistemaPuntos().consultarRango(clienteActual.
-                        getIdentificacion()).name();
+                String rangoAnterior = GestorClientes.getSistemaPuntos()
+                        .consultarRango(clienteActual.getIdentificacion()).name();
+
                 GestorClientes.getSistemaPuntos().agregarPuntos(clienteActual.getIdentificacion(), puntos);
                 GestorClientes.guardarClientes();
-                String nuevoRango = GestorClientes.getSistemaPuntos().consultarRango(clienteActual.
-                        getIdentificacion()).name();
+
+                String nuevoRango = GestorClientes.getSistemaPuntos()
+                        .consultarRango(clienteActual.getIdentificacion()).name();
+
                 if (!rangoAnterior.equals(nuevoRango)) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("¡Nuevo Rango!");
@@ -132,6 +140,7 @@ public class TransferenciasController {
                     alert.setContentText("Has alcanzado el rango " + nuevoRango + " 🏅");
                     alert.showAndWait();
                 }
+
                 lblMensaje.setText("Transferencia exitosa. Puntos ganados: " + puntos);
                 lblMensaje.setStyle("-fx-text-fill: green;");
                 actualizarSaldo();
@@ -139,6 +148,7 @@ public class TransferenciasController {
                 lblMensaje.setText("Saldo insuficiente o error.");
                 lblMensaje.setStyle("-fx-text-fill: red;");
             }
+
         } catch (NumberFormatException e) {
             lblMensaje.setText("Ingrese un número válido.");
         }
