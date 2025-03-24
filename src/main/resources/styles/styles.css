@@ -16,7 +16,7 @@
 }
 
 .fondo-menu {
-    -fx-background-color: linear-gradient(to bottom, #e8f5e9, #c8e6c9); /* verde suave degradado */
+    -fx-background-color: linear-gradient(to bottom, #e8f5e9, #c8e6c9);
     -fx-padding: 20px;
     -fx-background-radius: 15;
 }
