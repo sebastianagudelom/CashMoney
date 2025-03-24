@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import java.lang.String?>
 
@@ -15,23 +14,43 @@
    </stylesheets>
 
    <children>
-      <!-- Tarjeta central que contiene todos los elementos -->
       <AnchorPane layoutX="50.0" layoutY="30.0" prefWidth="500.0" prefHeight="420.0" styleClass="tarjeta">
          <children>
-            <Label fx:id="lblSaludo" layoutX="25.0" layoutY="20.0" text="Bienvenido, ¿Qué desea hacer hoy?" styleClass="saludo-label"/>
+            <Label fx:id="lblSaludo" layoutX="25.0" layoutY="20.0"
+                   text="Bienvenido, ¿Qué desea hacer hoy?" styleClass="saludo-label"/>
 
-            <Button fx:id="btnDepositos" layoutX="40.0" layoutY="80.0" onAction="#irADepositos" prefHeight="60.0" prefWidth="90.0" text="Depósitos"/>
-            <Button fx:id="btnRetiros" layoutX="140.0" layoutY="80.0" onAction="#irARetiros" prefHeight="60.0" prefWidth="90.0" text="Retiros"/>
-            <Button fx:id="btnPuntos" layoutX="240.0" layoutY="80.0" onAction="#irAPuntos" prefHeight="60.0" prefWidth="90.0" text="Puntos"/>
-            <Button fx:id="btnEditarPerfil" layoutX="340.0" layoutY="80.0" onAction="#irEditarPerfil" prefHeight="60.0" prefWidth="90.0" text="Editar Perfil"/>
+            <!-- Fila 1 -->
+            <Button fx:id="btnDepositos" layoutX="40.0" layoutY="80.0" onAction="#irADepositos"
+                    prefHeight="60.0" prefWidth="90.0" text="Depósitos"/>
+            <Button fx:id="btnRetiros" layoutX="140.0" layoutY="80.0" onAction="#irARetiros"
+                    prefHeight="60.0" prefWidth="90.0" text="Retiros"/>
+            <Button fx:id="btnPuntos" layoutX="240.0" layoutY="80.0" onAction="#irAPuntos"
+                    prefHeight="60.0" prefWidth="90.0" text="Puntos"/>
+            <Button fx:id="btnEditarPerfil" layoutX="340.0" layoutY="80.0" onAction="#irEditarPerfil"
+                    prefHeight="60.0" prefWidth="90.0" text="Editar Perfil"/>
 
-            <Button fx:id="btnTransferencias" layoutX="40.0" layoutY="160.0" onAction="#irATransferencias" prefHeight="60.0" prefWidth="150.0" text="Transferencias"/>
-            <Button fx:id="btnConsultaHistorial" layoutX="200.0" layoutY="160.0" onAction="#irAConsultaHistorial" prefHeight="60.0" prefWidth="150.0" wrapText="true" text="Consulta de historial de transacciones"/>
-            <Button fx:id="btnConsultaSaldos" layoutX="360.0" layoutY="160.0" onAction="#irAConsultaSaldos" prefHeight="60.0" prefWidth="90.0" wrapText="true" text="Consulta de saldos"/>
+            <!-- Fila 2 -->
+            <Button fx:id="btnTransferencias" layoutX="40.0" layoutY="160.0" onAction="#irATransferencias"
+                    prefHeight="60.0" prefWidth="150.0" text="Transferencias"/>
+            <Button fx:id="btnConsultaHistorial" layoutX="200.0" layoutY="160.0" onAction="#irAConsultaHistorial"
+                    prefHeight="60.0" prefWidth="150.0" wrapText="true" text="Consulta de historial de transacciones"/>
+            <Button fx:id="btnConsultaSaldos" layoutX="360.0" layoutY="160.0" onAction="#irAConsultaSaldos"
+                    prefHeight="60.0" prefWidth="90.0" wrapText="true" text="Consulta de saldos"/>
 
-            <Button fx:id="btnTransaccionesProgramadas" layoutX="150.0" layoutY="240.0" onAction="#irATransaccionesProgramadas" prefHeight="60.0" prefWidth="200.0" wrapText="true" text="Transacciones Programadas"/>
+            <!-- Fila 3 -->
+            <Button fx:id="btnTransaccionesProgramadas" layoutX="150.0" layoutY="240.0"
+                    onAction="#irATransaccionesProgramadas" prefHeight="60.0" prefWidth="200.0"
+                    wrapText="true" text="Transacciones Programadas"/>
 
-            <Button fx:id="btnSalir" layoutX="25.0" layoutY="330.0" onAction="#irALogin" prefHeight="30.0" prefWidth="60.0" text="Salir"/>         </children>
+            <!-- Fila 4 -->
+            <Button fx:id="btnAnalisis" layoutX="150.0" layoutY="320.0"
+                    onAction="#irAAnalisis" prefHeight="60.0" prefWidth="200.0"
+                    wrapText="true" text="Análisis de Gasto"/>
+
+            <!-- Botón salir -->
+            <Button fx:id="btnSalir" layoutX="410.0" layoutY="370.0" onAction="#irALogin"
+                    prefHeight="30.0" prefWidth="60.0" text="Salir"/>
+         </children>
       </AnchorPane>
    </children>
 </AnchorPane>

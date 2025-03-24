@@ -42,7 +42,7 @@ public class AdminMenuController {
         // Configurar columnas de transacciones
         colTipo.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getTipo()));
         colMonto.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getMonto()));
-        colReferencia.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getReferencia()));
+        colReferencia.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getCategoria()));
 
         cargarClientes();
     }

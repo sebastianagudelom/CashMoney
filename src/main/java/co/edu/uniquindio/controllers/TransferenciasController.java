@@ -3,6 +3,7 @@ package co.edu.uniquindio.controllers;
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.GestorClientes;
 import co.edu.uniquindio.models.Transaccion;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -20,7 +21,11 @@ public class TransferenciasController {
     private final Map<String, String> cuentasMap = new HashMap<>();
     private Cliente clienteActual;
     @FXML
+    private ComboBox<String> cmbCategoria;
+
+    @FXML
     private void initialize() {
+        cmbCategoria.setItems(FXCollections.observableArrayList("Alimentos", "Transporte", "Servicios", "Entretenimiento", "Otros"));
     }
 
     //  Método para recibir el cliente actual
@@ -117,22 +122,26 @@ public class TransferenciasController {
                 return;
             }
 
-            System.out.println("Transferencia desde: " + clienteActual.getNumeroCuenta() + " hacia: " + numeroCuentaDestino);
+            String categoria = cmbCategoria.getValue();
+            if (categoria == null || categoria.isBlank()) {
+                lblMensaje.setText("Seleccione una categoría.");
+                return;
+            }
 
+            System.out.println("Transferencia desde: " + clienteActual.getNumeroCuenta() + " hacia: " + numeroCuentaDestino);
             boolean exito = GestorClientes.transferirSaldoPorCuenta(
-                    clienteActual.getNumeroCuenta(), numeroCuentaDestino, monto);
+                    clienteActual.getNumeroCuenta(), numeroCuentaDestino, monto, cmbCategoria.getValue());
 
             if (exito) {
-                int puntos = (int) ((monto / 100) * 3);
-                String rangoAnterior = GestorClientes.getSistemaPuntos()
-                        .consultarRango(clienteActual.getIdentificacion()).name();
-
-                GestorClientes.getSistemaPuntos().agregarPuntos(clienteActual.getIdentificacion(), puntos);
                 GestorClientes.guardarClientes();
 
-                String nuevoRango = GestorClientes.getSistemaPuntos()
-                        .consultarRango(clienteActual.getIdentificacion()).name();
+                // Puntos y rango como ya los tenías
+                int puntos = (int) ((monto / 100) * 3);
+                String rangoAnterior = GestorClientes.getSistemaPuntos().consultarRango(clienteActual.getIdentificacion()).name();
 
+                GestorClientes.getSistemaPuntos().agregarPuntos(clienteActual.getIdentificacion(), puntos);
+
+                String nuevoRango = GestorClientes.getSistemaPuntos().consultarRango(clienteActual.getIdentificacion()).name();
                 if (!rangoAnterior.equals(nuevoRango)) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("¡Nuevo Rango!");

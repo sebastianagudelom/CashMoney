@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.String?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/20.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.uniquindio.controllers.AnalisisController"
+            prefHeight="480.0" prefWidth="600.0"
+            styleClass="fondo-menu">
+
+    <stylesheets>
+        <String fx:value="/styles/styles.css"/>
+    </stylesheets>
+
+    <children>
+        <AnchorPane layoutX="50.0" layoutY="30.0" prefWidth="500.0" prefHeight="420.0" styleClass="tarjeta">
+            <children>
+
+                <Label layoutX="140" layoutY="15" text="Análisis de Gastos" styleClass="saludo-label"/>
+
+                <BarChart fx:id="graficoBarras" layoutX="25.0" layoutY="50.0" prefHeight="150.0" prefWidth="450.0">
+                    <xAxis>
+                        <CategoryAxis label="Categoría"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis label="Monto"/>
+                    </yAxis>
+                </BarChart>
+
+                <Pane fx:id="graficoNodos" layoutX="25.0" layoutY="210.0" prefHeight="140.0" prefWidth="450.0" style="-fx-border-color: gray;"/>
+
+                <Button fx:id="btnVolver" layoutX="25.0" layoutY="360.0" prefWidth="80.0" text="Volver" onAction="#volverMenu" styleClass="button"/>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

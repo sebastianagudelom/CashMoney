@@ -1,0 +1,67 @@
+package co.edu.uniquindio.models;
+
+import co.edu.uniquindio.models.Cliente;
+import co.edu.uniquindio.models.GrafoGastos;
+import co.edu.uniquindio.models.Transaccion;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class AnalizadorGastos {
+
+    public static GrafoGastos construirGrafo(Cliente cliente) {
+        GrafoGastos grafo = new GrafoGastos();
+
+        for (Transaccion t : cliente.getHistorialTransacciones()) {
+            if (t.getTipo().equalsIgnoreCase("Transferencia Enviada")) {
+                String categoria = "Transferencias";
+                grafo.agregarRelacion(cliente.getUsuario(), categoria, t.getMonto());
+            }
+            // Si usas más tipos: retiros, depósitos, etc. puedes añadirlos aquí como nodos destino.
+        }
+
+        return grafo;
+    }
+
+    public static Map<String, Double> obtenerGastosPorCategoria(Cliente cliente) {
+        Map<String, Double> gastosPorCategoria = new HashMap<>();
+
+        for (Transaccion t : cliente.getHistorialTransacciones()) {
+            if (t.getTipo().equalsIgnoreCase("Transferencia Enviada")) {
+                String categoria = t.getCategoria(); // Asumimos que la referencia es la categoría
+                gastosPorCategoria.put(categoria,
+                        gastosPorCategoria.getOrDefault(categoria, 0.0) + t.getMonto());
+            }
+        }
+
+        return gastosPorCategoria;
+    }
+
+    public static Map<String, List<String>> generarGrafoRelaciones(Cliente cliente) {
+        Map<String, List<String>> grafo = new HashMap<>();
+
+        String origen = cliente.getUsuario();
+        grafo.putIfAbsent(origen, new ArrayList<>());
+
+        for (Transaccion t : cliente.getHistorialTransacciones()) {
+            if (t.getTipo().equals("Transferencia Enviada") && t.getCuentaDestino() != null) {
+                Cliente destino = GestorClientes.buscarClientePorCuenta(t.getCuentaDestino());
+                if (destino != null) {
+                    String usuarioDestino = destino.getUsuario();
+                    grafo.get(origen).add(usuarioDestino);
+
+                    // Agrega también el nodo del destino aunque no tenga hijos
+                    grafo.putIfAbsent(usuarioDestino, new ArrayList<>());
+                }
+            }
+        }
+
+        return grafo;
+    }
+
+    public static Map<String, Double> resumenPorCategoria(GrafoGastos grafo, String usuario) {
+        return grafo.getAdyacencias().getOrDefault(usuario, new HashMap<>());
+    }
+}

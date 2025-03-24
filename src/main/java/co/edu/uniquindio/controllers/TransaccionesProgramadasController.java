@@ -4,6 +4,7 @@ import co.edu.uniquindio.models.GestorClientes;
 import co.edu.uniquindio.models.GestorTransaccionesProgramadas;
 import co.edu.uniquindio.models.TransaccionProgramada;
 import co.edu.uniquindio.models.Cliente;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +19,7 @@ import java.time.LocalDate;
 
 public class TransaccionesProgramadasController {
     @FXML
-    private ComboBox<String> cmbDestinatarios;
+    private ComboBox<String> cmbDestinatarios, cmbCategoria;
     @FXML
     private TextField txtMonto;
     @FXML
@@ -37,12 +38,13 @@ public class TransaccionesProgramadasController {
     private TableColumn<TransaccionProgramada, Double> colMonto;
     @FXML
     private TableColumn<TransaccionProgramada, LocalDate> colFecha;
+
     private GestorTransaccionesProgramadas gestorTransacciones;
     private Cliente usuarioActual;
 
     public void setCliente(Cliente cliente) {
         this.usuarioActual = cliente;
-        cargarDestinatarios(); // este método lo explico abajo
+        cargarDestinatarios();
     }
 
     @FXML
@@ -56,8 +58,12 @@ public class TransaccionesProgramadasController {
         colFecha.setCellValueFactory(new PropertyValueFactory<>("fechaEjecucion"));
 
         tablaTransacciones.getItems().setAll(gestorTransacciones.getTransacciones());
-    }
 
+        // Inicializar categorías
+        cmbCategoria.setItems(FXCollections.observableArrayList(
+                "Alimentos", "Transporte", "Servicios", "Entretenimiento", "Otros"
+        ));
+    }
 
     private void cargarDestinatarios() {
         if (usuarioActual == null) return;
@@ -72,10 +78,11 @@ public class TransaccionesProgramadasController {
     @FXML
     private void programarTransaccion() {
         String destinatario = cmbDestinatarios.getValue();
+        String categoria = cmbCategoria.getValue();
         String montoTexto = txtMonto.getText();
         LocalDate fecha = datePicker.getValue();
 
-        if (destinatario == null || montoTexto.isBlank() || fecha == null) {
+        if (destinatario == null || montoTexto.isBlank() || fecha == null || categoria == null) {
             lblMensaje.setText("Todos los campos son obligatorios.");
             return;
         }
@@ -93,19 +100,27 @@ public class TransaccionesProgramadasController {
                 return;
             }
 
+            if (categoria.isBlank()) {
+                lblMensaje.setText("Seleccione una categoría.");
+                return;
+            }
+
             TransaccionProgramada nueva = new TransaccionProgramada(
                     usuarioActual.getUsuario(),
                     destinatario,
                     monto,
                     fecha
             );
+            nueva.setCategoria(categoria); // NUEVO
 
             gestorTransacciones.agregarTransaccion(nueva);
             lblMensaje.setText("Transacción programada exitosamente.");
+            lblMensaje.setStyle("-fx-text-fill: green;");
             tablaTransacciones.getItems().setAll(gestorTransacciones.getTransacciones());
 
             txtMonto.clear();
             cmbDestinatarios.setValue(null);
+            cmbCategoria.setValue(null);
             datePicker.setValue(null);
 
         } catch (NumberFormatException e) {
@@ -127,7 +142,6 @@ public class TransaccionesProgramadasController {
             stage.setScene(new Scene(root));
             stage.show();
 
-            // Cerrar la ventana actual
             Stage ventanaActual = (Stage) btnVolver.getScene().getWindow();
             ventanaActual.close();
 
@@ -136,5 +150,4 @@ public class TransaccionesProgramadasController {
             System.out.println("Error al volver al menú.");
         }
     }
-
 }

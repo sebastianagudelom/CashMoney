@@ -35,10 +35,9 @@ public class GestorClientes {
     }
 
     // Método para transferir saldo por número de cuenta
-    public static boolean transferirSaldoPorCuenta(String numeroCuentaOrigen, String numeroCuentaDestino,
-                                                   double monto)  {
-        Cliente origen = buscarClientePorCuenta(numeroCuentaOrigen);
-        Cliente destino = buscarClientePorCuenta(numeroCuentaDestino);
+    public static boolean transferirSaldoPorCuenta(String cuentaOrigen, String cuentaDestino, double monto, String categoria) {
+        Cliente origen = buscarClientePorCuenta(cuentaOrigen);
+        Cliente destino = buscarClientePorCuenta(cuentaDestino);
         if (origen == null || destino == null) {
             System.out.println("Error: Una de las cuentas no existe.");
             return false;
@@ -47,13 +46,24 @@ public class GestorClientes {
             System.out.println("Error: Saldo insuficiente.");
             return false;
         }
+
         origen.getCuenta().retirar(monto);
         destino.getCuenta().depositar(monto);
-        origen.agregarTransaccion(new Transaccion("Transferencia Enviada", monto, numeroCuentaDestino));
-        destino.agregarTransaccion(new Transaccion("Transferencia Recibida", monto, numeroCuentaOrigen));
+
+        Transaccion enviada = new Transaccion("Transferencia Enviada", monto, cuentaDestino);
+        enviada.setCategoria(categoria);
+
+        Transaccion recibida = new Transaccion("Transferencia Recibida", monto, cuentaOrigen);
+        recibida.setCategoria(categoria);
+
+        origen.agregarTransaccion(enviada);
+        destino.agregarTransaccion(recibida);
+
         guardarClientes();
         return true;
     }
+
+
 
     // Método para buscar cliente por número de cuenta
     public static Cliente buscarClientePorCuenta(String numeroCuenta) {
