@@ -2,6 +2,7 @@ package co.edu.uniquindio.controllers;
 
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.GestorClientes;
+import co.edu.uniquindio.models.GestorTransaccionesProgramadas;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,9 +20,10 @@ public class MenuController {
 
     public void setCliente(Cliente clienteActual) {
         this.clienteActual = clienteActual;
-        if (lblSaludo != null) {
-            lblSaludo.setText("Bienvenido " + clienteActual.getNombre() + ", ¿Qué desea hacer hoy?");
-        }
+        lblSaludo.setText("Bienvenido " + clienteActual.getNombre() + ", ¿Qué desea hacer hoy?");
+
+        //GestorTransaccionesProgramadas gestor = new GestorTransaccionesProgramadas();
+        //gestor.ejecutarTransacciones(); // Ejecuta si hay alguna para hoy
     }
 
     @FXML
@@ -153,6 +155,25 @@ public class MenuController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void irATransaccionesProgramadas(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TransaccionesProgramadas.fxml"));
+            Parent root = loader.load();
+
+            TransaccionesProgramadasController controller = loader.getController();
+            controller.setCliente(clienteActual);
+
+            Stage stage = new Stage();
+            stage.setTitle("Transacciones Programadas");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al abrir la ventana de transacciones programadas.");
         }
     }
 

@@ -10,6 +10,22 @@ public class GestorClientes {
     private static final String ARCHIVO_PUNTOS = "puntos.dat"; // Archivo para persistencia
     private static final SistemaPuntos sistemaPuntos = new SistemaPuntos();
 
+    // 🔥 Instancia singleton
+    private static GestorClientes instancia;
+
+    // ✅ Constructor privado
+    private GestorClientes() {
+        cargarClientes();
+    }
+
+    // ✅ Método para obtener la instancia
+    public static GestorClientes obtenerInstancia() {
+        if (instancia == null) {
+            instancia = new GestorClientes();
+        }
+        return instancia;
+    }
+    
     public static SistemaPuntos getSistemaPuntos() {
         return sistemaPuntos;
     }

@@ -29,8 +29,9 @@
             <Button fx:id="btnConsultaHistorial" layoutX="200.0" layoutY="160.0" onAction="#irAConsultaHistorial" prefHeight="60.0" prefWidth="150.0" wrapText="true" text="Consulta de historial de transacciones"/>
             <Button fx:id="btnConsultaSaldos" layoutX="360.0" layoutY="160.0" onAction="#irAConsultaSaldos" prefHeight="60.0" prefWidth="90.0" wrapText="true" text="Consulta de saldos"/>
 
-            <Button fx:id="btnSalir" layoutX="25.0" layoutY="260.0" onAction="#irALogin" prefHeight="30.0" prefWidth="60.0" text="Salir"/>
-         </children>
+            <Button fx:id="btnTransaccionesProgramadas" layoutX="150.0" layoutY="240.0" onAction="#irATransaccionesProgramadas" prefHeight="60.0" prefWidth="200.0" wrapText="true" text="Transacciones Programadas"/>
+
+            <Button fx:id="btnSalir" layoutX="25.0" layoutY="330.0" onAction="#irALogin" prefHeight="30.0" prefWidth="60.0" text="Salir"/>         </children>
       </AnchorPane>
    </children>
 </AnchorPane>
