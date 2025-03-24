@@ -59,13 +59,14 @@ public class RegistroController {
         if (resultado.isPresent()) {
             String ingreso = resultado.get();
             if (ingreso.equals(String.valueOf(codigoVerificacion))) {
-                boolean registroExitoso = GestorClientes.registrarCliente(nombre, identificacion, correo, usuario, clave, ciudad);
+                boolean registroExitoso = GestorClientes.registrarCliente(nombre, identificacion,
+                        correo, usuario, clave, ciudad);
 
                 if (registroExitoso) {
                     lblMensaje.setText("Registro exitoso para: " + nombre);
                     cambiarEscena("/views/Login.fxml", "Iniciar Sesión");
                 } else {
-                    lblMensaje.setText("El usuario ya existe. Intente con otro.");
+                    lblMensaje.setText("El usuario, correo o identificacion ya existen. Intente con otro.");
                 }
             } else {
                 lblMensaje.setText("Código incorrecto. Registro cancelado.");

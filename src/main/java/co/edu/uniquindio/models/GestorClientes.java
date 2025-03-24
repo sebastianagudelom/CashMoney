@@ -1,24 +1,20 @@
 package co.edu.uniquindio.models;
 
+import co.edu.uniquindio.utils.SeguridadUtil;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class GestorClientes {
     private static List<Cliente> listaClientes = new ArrayList<>();
     private static final String ARCHIVO_CLIENTES = "clientes.dat"; // Archivo para persistencia
     private static final String ARCHIVO_PUNTOS = "puntos.dat"; // Archivo para persistencia
     private static final SistemaPuntos sistemaPuntos = new SistemaPuntos();
-
-    // 🔥 Instancia singleton
     private static GestorClientes instancia;
 
-    // ✅ Constructor privado
     private GestorClientes() {
         cargarClientes();
     }
 
-    // ✅ Método para obtener la instancia
     public static GestorClientes obtenerInstancia() {
         if (instancia == null) {
             instancia = new GestorClientes();
@@ -37,8 +33,9 @@ public class GestorClientes {
     // Método para registrar un nuevo cliente
     public static boolean registrarCliente(String nombre, String identificacion, String correo, String usuario,
                                            String clave, String ciudad) {
-        if (buscarClientePorUsuario(usuario) == null) {
-            Cliente nuevoCliente = new Cliente(nombre, identificacion, correo, usuario, clave, ciudad);
+        if (buscarClienteUsuarioCorreoIdentificacion(usuario, correo, identificacion) == null) {
+            String claveEncriptada = SeguridadUtil.encriptar(clave);
+            Cliente nuevoCliente = new Cliente(nombre, identificacion, correo, usuario, claveEncriptada, ciudad);
             listaClientes.add(nuevoCliente);
             guardarClientes();
             System.out.println("Cliente registrado: " + nuevoCliente);
@@ -48,8 +45,8 @@ public class GestorClientes {
     }
 
     // Método para transferir saldo por número de cuenta
-    public static boolean transferirSaldoPorCuenta(String numeroCuentaOrigen, String numeroCuentaDestino, double monto)
-    {
+    public static boolean transferirSaldoPorCuenta(String numeroCuentaOrigen, String numeroCuentaDestino,
+                                                   double monto)  {
         Cliente origen = buscarClientePorCuenta(numeroCuentaOrigen);
         Cliente destino = buscarClientePorCuenta(numeroCuentaDestino);
         if (origen == null || destino == null) {
@@ -83,10 +80,11 @@ public class GestorClientes {
     }
 
     // Método para verificar usuario por usuario y clave
-    public static Cliente verificarUsuario(String usuario, String clave) {
-        for (Cliente c : listaClientes) {
-            if (c.getUsuario().equals(usuario) && c.getClave().equals(clave)) {
-                return c;
+    public static Cliente verificarUsuario(String usuario, String claveIngresada) {
+        String claveEncriptada = SeguridadUtil.encriptar(claveIngresada);
+        for (Cliente cliente : listaClientes) {
+            if (cliente.getUsuario().equals(usuario) && cliente.getClave().equals(claveEncriptada)) {
+                return cliente;
             }
         }
         return null;
@@ -96,6 +94,17 @@ public class GestorClientes {
     public static Cliente buscarClientePorUsuario(String usuario) {
         for (Cliente c : listaClientes) {
             if (c.getUsuario().equals(usuario)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    public static Cliente buscarClienteUsuarioCorreoIdentificacion(String usuario, String correo,
+                                                                   String identificacion) {
+        for (Cliente c : listaClientes) {
+            if(c.getUsuario().equals(usuario) || c.getCorreo().equals(correo) || c.getIdentificacion().
+                    equals(identificacion)) {
                 return c;
             }
         }
@@ -181,7 +190,8 @@ public class GestorClientes {
             for (Cliente c : listaClientes) {
                 if (c.getCuenta() == null) {
                     c.setCuenta(new Cuenta());
-                } else if (c.getCuenta().getNumeroCuenta() == null || c.getCuenta().getNumeroCuenta().isEmpty()) {
+                } else if (c.getCuenta().getNumeroCuenta() == null || c.getCuenta().getNumeroCuenta().isEmpty())
+                {
                     c.getCuenta().setNumeroCuenta(c.getCuenta().getNumeroCuenta());
                 }
             }
