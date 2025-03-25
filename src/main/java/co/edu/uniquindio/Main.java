@@ -7,6 +7,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.Objects;
 
 public class Main extends Application {
@@ -27,6 +29,14 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        try {
+            Taskbar taskbar = Taskbar.getTaskbar();
+            Image image = new ImageIcon(Main.class.getResource("/icons/CashMoney.png")).getImage();
+            taskbar.setIconImage(image);
+        } catch (Exception e) {
+            System.out.println("No se pudo cambiar el ícono del dock: " + e.getMessage());
+        }
+
         GestorClientes.cargarClientes(); // Cargar clientes antes de iniciar
         GestorClientes.imprimirClientes(); // Para ver los clientes cargados
         launch(args);
