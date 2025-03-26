@@ -19,10 +19,6 @@ public class LoginController {
 
     private Cliente clienteLogeado;
     @FXML
-    private Button btnIniciarSesion;
-    @FXML
-    private Hyperlink linkRegistro;
-    @FXML
     private TextField txtUsuario;
     @FXML
     private PasswordField txtClave;

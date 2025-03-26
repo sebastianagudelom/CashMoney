@@ -47,8 +47,8 @@ public class GestorClientes {
             return false;
         }
 
-        origen.getCuenta().retirar(monto);
-        destino.getCuenta().depositar(monto);
+        GestorTransacciones.retirarSaldo(origen, monto);
+        GestorTransacciones.depositarSaldo(destino, monto);
 
         Transaccion enviada = new Transaccion("Transferencia Enviada", monto, cuentaDestino);
         enviada.setCategoria(categoria);
@@ -56,14 +56,26 @@ public class GestorClientes {
         Transaccion recibida = new Transaccion("Transferencia Recibida", monto, cuentaOrigen);
         recibida.setCategoria(categoria);
 
-        origen.agregarTransaccion(enviada);
-        destino.agregarTransaccion(recibida);
+        GestorTransacciones.registrarTransferencia(origen, destino, enviada, recibida);
 
         guardarClientes();
         return true;
     }
 
+    // Inscribe las cuentas para que un cliente transfiera
+    public static boolean inscribirCuentaParaCliente(Cliente cliente, String numeroCuenta) {
+        if (cliente.getCuentasInscritas() == null) {
+            cliente.setCuentasInscritas(new HashSet<>());
+        }
 
+        if (cliente.getCuentasInscritas().contains(numeroCuenta)) {
+            return false; // Ya está inscrita
+        }
+
+        cliente.agregarCuentaInscrita(numeroCuenta);
+        guardarClientes();
+        return true;
+    }
 
     // Método para buscar cliente por número de cuenta
     public static Cliente buscarClientePorCuenta(String numeroCuenta) {
@@ -100,6 +112,7 @@ public class GestorClientes {
         return null;
     }
 
+    // Método que busca clientes por usuario, correo o identificacion
     public static Cliente buscarClienteUsuarioCorreoIdentificacion(String usuario, String correo,
                                                                    String identificacion) {
         for (Cliente c : listaClientes) {

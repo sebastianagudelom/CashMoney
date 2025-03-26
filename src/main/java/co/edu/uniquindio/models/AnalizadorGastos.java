@@ -1,9 +1,5 @@
 package co.edu.uniquindio.models;
 
-import co.edu.uniquindio.models.Cliente;
-import co.edu.uniquindio.models.GrafoGastos;
-import co.edu.uniquindio.models.Transaccion;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +7,7 @@ import java.util.Map;
 
 public class AnalizadorGastos {
 
+    /*
     public static GrafoGastos construirGrafo(Cliente cliente) {
         GrafoGastos grafo = new GrafoGastos();
 
@@ -24,6 +21,7 @@ public class AnalizadorGastos {
 
         return grafo;
     }
+     */
 
     public static Map<String, Double> obtenerGastosPorCategoria(Cliente cliente) {
         Map<String, Double> gastosPorCategoria = new HashMap<>();

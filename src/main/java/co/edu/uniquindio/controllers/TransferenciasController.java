@@ -12,16 +12,12 @@ import java.util.*;
 
 public class TransferenciasController {
 
-    @FXML
-    private Label lblSaldo, lblMensaje, lblInscripcionMensaje;
-    @FXML
-    private TextField txtMonto, txtNumeroCuenta;
-    @FXML
-    private ComboBox<String> cmbUsuarios;
+    @FXML private Label lblSaldo, lblMensaje, lblInscripcionMensaje;
+    @FXML private TextField txtMonto, txtNumeroCuenta;
+    @FXML private ComboBox<String> cmbUsuarios;
+    @FXML private ComboBox<String> cmbCategoria;
     private final Map<String, String> cuentasMap = new HashMap<>();
     private Cliente clienteActual;
-    @FXML
-    private ComboBox<String> cmbCategoria;
 
     @FXML
     private void initialize() {
@@ -90,7 +86,7 @@ public class TransferenciasController {
             lblInscripcionMensaje.setText("Cuenta no encontrada.");
             return;
         }
-        if (clienteActual.inscribirCuenta(numeroCuenta)) {
+        if (GestorClientes.inscribirCuentaParaCliente(clienteActual, numeroCuenta)) {
             lblInscripcionMensaje.setText("Cuenta inscrita con éxito.");
             lblInscripcionMensaje.setStyle("-fx-text-fill: green;");
             cargarUsuarios(); // Actualizar la lista de destinatarios inscritos

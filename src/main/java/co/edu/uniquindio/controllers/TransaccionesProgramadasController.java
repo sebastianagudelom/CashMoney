@@ -18,27 +18,15 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 public class TransaccionesProgramadasController {
-    @FXML
-    private ComboBox<String> cmbDestinatarios, cmbCategoria;
-    @FXML
-    private TextField txtMonto;
-    @FXML
-    private DatePicker datePicker;
-    @FXML
-    private Button btnProgramar, btnVolver;
-    @FXML
-    private Label lblMensaje;
-    @FXML
-    private TableView<TransaccionProgramada> tablaTransacciones;
-    @FXML
-    private TableColumn<TransaccionProgramada, String> colOrigen;
-    @FXML
-    private TableColumn<TransaccionProgramada, String> colDestino;
-    @FXML
-    private TableColumn<TransaccionProgramada, Double> colMonto;
-    @FXML
-    private TableColumn<TransaccionProgramada, LocalDate> colFecha;
-
+    @FXML private ComboBox<String> cmbDestinatarios, cmbCategoria;
+    @FXML private TextField txtMonto;
+    @FXML private DatePicker datePicker;
+    @FXML private Button btnProgramar, btnVolver;
+    @FXML private Label lblMensaje;
+    @FXML private TableView<TransaccionProgramada> tablaTransacciones;
+    @FXML private TableColumn<TransaccionProgramada, String> colOrigen, colDestino;
+    @FXML private TableColumn<TransaccionProgramada, Double> colMonto;
+    @FXML private TableColumn<TransaccionProgramada, LocalDate> colFecha;
     private GestorTransaccionesProgramadas gestorTransacciones;
     private Cliente usuarioActual;
 
@@ -129,25 +117,8 @@ public class TransaccionesProgramadasController {
     }
 
     @FXML
-    private void volverMenu() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Menu.fxml"));
-            Parent root = loader.load();
-
-            MenuController menuController = loader.getController();
-            menuController.setCliente(usuarioActual);
-
-            Stage stage = new Stage();
-            stage.setTitle("Menú Principal");
-            stage.setScene(new Scene(root));
-            stage.show();
-
-            Stage ventanaActual = (Stage) btnVolver.getScene().getWindow();
-            ventanaActual.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al volver al menú.");
-        }
+    private void volverMenu(ActionEvent event) {
+        ((Stage) btnVolver.getScene().getWindow()).close();
     }
+
 }

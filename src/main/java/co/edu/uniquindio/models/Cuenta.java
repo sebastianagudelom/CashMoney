@@ -10,22 +10,17 @@ public class Cuenta implements Serializable {
 
     public Cuenta() {
         this.saldo = 0.0;
-        if (this.numeroCuenta == null || this.numeroCuenta.isEmpty()) {
-            this.numeroCuenta = generarNumeroCuenta();
-            System.out.println("Número de cuenta generado: " + this.numeroCuenta);
-        }
+        this.numeroCuenta = generarNumeroCuenta();
+        System.out.println("Número de cuenta generado: " + this.numeroCuenta);
     }
 
     // Getters
     public String getNumeroCuenta() { return numeroCuenta; }
     public double getSaldo() { return saldo; }
 
-    // Método para asignar número de cuenta solo si no lo tiene
-    public void setNumeroCuenta(String numeroCuenta) {
-        if (this.numeroCuenta == null || this.numeroCuenta.isEmpty()) {
-            this.numeroCuenta = numeroCuenta;
-        }
-    }
+
+    // Setters
+    public void setNumeroCuenta(String numeroCuenta) { this.numeroCuenta = numeroCuenta; }
 
     private String generarNumeroCuenta() {
         Random random = new Random();
@@ -36,18 +31,19 @@ public class Cuenta implements Serializable {
     public boolean retirar(double monto) {
         if (monto > 0 && saldo >= monto) {
             saldo -= monto;
-            GestorClientes.guardarClientes();
             return true;
         }
         return false;
     }
 
-    public void depositar(double monto) {
+    public boolean depositar(double monto) {
         if (monto > 0) {
             saldo += monto;
-            GestorClientes.guardarClientes();
+            return true;
         }
+        return false;
     }
+
 
     @Override
     public String toString() {

@@ -198,16 +198,11 @@ public class MenuController {
         }
     }
 
-
-
     @FXML
     private void irALogin(ActionEvent event) {
         cambiarVentana(event, "/views/Login.fxml");
     }
 
-    /**
-     * Método para cambiar de escena.
-     */
     private void cambiarVentana(ActionEvent event, String rutaFXML) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(rutaFXML));

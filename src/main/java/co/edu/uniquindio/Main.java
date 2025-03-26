@@ -31,7 +31,7 @@ public class Main extends Application {
     public static void main(String[] args) {
         try {
             Taskbar taskbar = Taskbar.getTaskbar();
-            Image image = new ImageIcon(Main.class.getResource("/icons/CashMoney.png")).getImage();
+            Image image = new ImageIcon(Objects.requireNonNull(Main.class.getResource("/icons/CashMoney.png"))).getImage();
             taskbar.setIconImage(image);
         } catch (Exception e) {
             System.out.println("No se pudo cambiar el ícono del dock: " + e.getMessage());

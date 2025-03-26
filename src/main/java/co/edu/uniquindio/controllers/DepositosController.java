@@ -2,6 +2,7 @@ package co.edu.uniquindio.controllers;
 
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.GestorClientes;
+import co.edu.uniquindio.models.GestorTransacciones;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +25,7 @@ public class DepositosController {
 
     // Métodos para realizar un depósito
     @FXML
-    private void realizarDeposito(ActionEvent event) {
+    private void realizarDeposito() {
         if (clienteActual == null) {
             lblMensaje.setText("Error: No hay usuario activo.");
             return;
@@ -36,7 +37,7 @@ public class DepositosController {
                 lblMensaje.setText("Ingrese un monto válido.");
                 return;
             }
-            clienteActual.getCuenta().depositar(monto);
+            GestorTransacciones.depositarSaldo(clienteActual, monto);
             int puntos = (int) (monto / 50);  // 1 punto por cada $50
             String rangoAnterior = GestorClientes.getSistemaPuntos().consultarRango(clienteActual.
                     getIdentificacion()).name();

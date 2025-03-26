@@ -9,7 +9,7 @@ import java.util.List;
 public class GestorTransaccionesProgramadas {
 
     private static final String ARCHIVO = "transaccionesProgramadas.dat";
-    private List<TransaccionProgramada> transacciones;
+    private final List<TransaccionProgramada> transacciones;
 
     public GestorTransaccionesProgramadas() {
         this.transacciones = cargarTransacciones();
@@ -38,10 +38,11 @@ public class GestorTransaccionesProgramadas {
         Cliente origen = GestorClientes.buscarClientePorUsuario(t.getUsuarioOrigen());
         Cliente destino = GestorClientes.buscarClientePorUsuario(t.getUsuarioDestino());
 
-        if (origen != null && destino != null && origen.getCuenta().getSaldo() >= t.getMonto()) {
-            origen.getCuenta().retirar(t.getMonto());
-            destino.getCuenta().depositar(t.getMonto());
-            GestorClientes.guardarClientes();
+        if (origen != null && destino != null) {
+            boolean exito = GestorTransacciones.retirarSaldo(origen, t.getMonto());
+            if (exito) {
+                GestorTransacciones.depositarSaldo(destino, t.getMonto());
+            }
         }
     }
 

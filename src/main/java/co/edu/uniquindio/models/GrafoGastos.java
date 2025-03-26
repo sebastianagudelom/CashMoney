@@ -3,7 +3,7 @@ package co.edu.uniquindio.models;
 import java.util.*;
 
 public class GrafoGastos {
-    private Map<String, Map<String, Double>> adyacencias = new HashMap<>();
+    private final Map<String, Map<String, Double>> adyacencias = new HashMap<>();
 
     public void agregarRelacion(String origen, String destino, double monto) {
         adyacencias.putIfAbsent(origen, new HashMap<>());

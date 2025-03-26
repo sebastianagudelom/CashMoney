@@ -20,11 +20,8 @@ import java.util.Random;
 public class RegistroController {
 
     @FXML private TextField txtNombre, txtUsuario, txtClave, txtIdentificacion, txtCorreo, txtCiudad;
-    @FXML private Button btnRegistrarse, btnVolver;
+    @FXML private Button btnRegistrarse;
     @FXML private Label lblMensaje;
-    private String codigoEnviado;
-    private Cliente datosPendientes;
-
 
     @FXML
     private void onRegistrarseAction(ActionEvent event) {

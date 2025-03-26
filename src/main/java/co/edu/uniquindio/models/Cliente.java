@@ -24,13 +24,7 @@ public class Cliente implements Serializable {
     public void setClave(String clave) { this.clave = clave; }
     public void setCiudad(String ciudad) { this.ciudad = ciudad; }
     public void setHistorialTransacciones(List<Transaccion> historial) { this.historialTransacciones = historial; }
-    public void setCuenta(Cuenta cuenta) {
-        if (this.cuenta == null) { // Solo asigna si no hay una cuenta
-            this.cuenta = cuenta;
-        } else {
-            this.cuenta.setNumeroCuenta(cuenta.getNumeroCuenta()); // Mantiene el número de cuenta original
-        }
-    }
+    public void setCuenta(Cuenta cuenta) { this.cuenta = cuenta; }
     public void setCuentasInscritas(Set<String> cuentas) { this.cuentasInscritas = cuentas; }
 
     public Cliente(String nombre, String identificacion, String correo, String usuario, String clave, String ciudad)
@@ -56,34 +50,16 @@ public class Cliente implements Serializable {
     public String getCiudad() { return ciudad; }
     public Set<String> getCuentasInscritas() { return cuentasInscritas; }
     public String getNumeroCuenta() { return cuenta.getNumeroCuenta(); }
-    public List<Transaccion> getHistorialTransacciones() {
-        if (historialTransacciones == null) {
-            historialTransacciones = new ArrayList<>();
-        }
-        return historialTransacciones;
+    public List<Transaccion> getHistorialTransacciones() { return historialTransacciones; }
+
+
+    //CAMBIADO
+    public void agregarCuentaInscrita(String numeroCuenta) {
+        this.cuentasInscritas.add(numeroCuenta);
     }
-
-
-    // Métodos de Inscripción de Cuentas
-    public boolean inscribirCuenta(String numeroCuenta) {
-        if (cuentasInscritas == null) {
-            cuentasInscritas = new HashSet<>();
-        }
-        if (cuentasInscritas.contains(numeroCuenta)) {
-            return false; // Ya está inscrita
-        }
-        cuentasInscritas.add(numeroCuenta);
-        GestorClientes.guardarClientes();
-        return true;
-    }
-
-    // Método para agregar una transacción
+    //CAMBIADO
     public void agregarTransaccion(Transaccion transaccion) {
-        if (historialTransacciones == null) {
-            historialTransacciones = new ArrayList<>();
-        }
         historialTransacciones.add(transaccion);
-        GestorClientes.guardarClientes();
     }
 
     @Override

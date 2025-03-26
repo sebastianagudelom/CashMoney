@@ -2,7 +2,6 @@ package co.edu.uniquindio.controllers;
 
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.Transaccion;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Label;
@@ -54,7 +53,7 @@ public class HistorialController {
 
 
     @FXML
-    private void volverMenu(ActionEvent event) {
+    private void volverMenu() {
         ((Stage) lblMensaje.getScene().getWindow()).close();
     }
 

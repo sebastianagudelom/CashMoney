@@ -5,9 +5,10 @@ import java.time.LocalDate;
 
 public class TransaccionProgramada implements Serializable {
 
-    private String usuarioOrigen, usuarioDestino, categoria;
-    private double monto;
-    private LocalDate fechaEjecucion;
+    private final String usuarioOrigen, usuarioDestino;
+    private String categoria;
+    private final double monto;
+    private final LocalDate fechaEjecucion;
 
     public TransaccionProgramada(String usuarioOrigen, String usuarioDestino, double monto, LocalDate fechaEjecucion) {
         this.usuarioOrigen = usuarioOrigen;
