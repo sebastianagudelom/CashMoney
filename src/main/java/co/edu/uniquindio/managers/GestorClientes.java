@@ -1,5 +1,6 @@
-package co.edu.uniquindio.models;
+package co.edu.uniquindio.managers;
 
+import co.edu.uniquindio.models.*;
 import co.edu.uniquindio.utils.SeguridadUtil;
 import java.io.*;
 import java.util.*;

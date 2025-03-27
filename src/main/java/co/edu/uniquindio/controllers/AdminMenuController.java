@@ -1,7 +1,7 @@
 package co.edu.uniquindio.controllers;
 
 import co.edu.uniquindio.models.Cliente;
-import co.edu.uniquindio.models.GestorClientes;
+import co.edu.uniquindio.managers.GestorClientes;
 import co.edu.uniquindio.models.Transaccion;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

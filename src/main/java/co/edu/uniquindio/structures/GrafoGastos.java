@@ -1,4 +1,4 @@
-package co.edu.uniquindio.models;
+package co.edu.uniquindio.structures;
 
 import java.util.*;
 

@@ -2,7 +2,7 @@ package co.edu.uniquindio.controllers;
 
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.RangoCliente;
-import co.edu.uniquindio.models.SistemaPuntos;
+import co.edu.uniquindio.managers.SistemaPuntos;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

@@ -1,4 +1,9 @@
-package co.edu.uniquindio.models;
+package co.edu.uniquindio.managers;
+
+import co.edu.uniquindio.managers.GestorClientes;
+import co.edu.uniquindio.managers.GestorTransacciones;
+import co.edu.uniquindio.models.Cliente;
+import co.edu.uniquindio.models.TransaccionProgramada;
 
 import java.io.*;
 import java.time.LocalDate;

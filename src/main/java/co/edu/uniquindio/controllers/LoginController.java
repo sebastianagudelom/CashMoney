@@ -1,8 +1,8 @@
 package co.edu.uniquindio.controllers;
 
 import co.edu.uniquindio.models.Cliente;
-import co.edu.uniquindio.models.GestorClientes;
-import co.edu.uniquindio.models.GestorAdministradores; // <--- Agrega esto
+import co.edu.uniquindio.managers.GestorClientes;
+import co.edu.uniquindio.managers.GestorAdministradores; // <--- Agrega esto
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

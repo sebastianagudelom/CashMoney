@@ -1,4 +1,8 @@
-package co.edu.uniquindio.models;
+package co.edu.uniquindio.managers;
+
+import co.edu.uniquindio.managers.GestorClientes;
+import co.edu.uniquindio.models.Cliente;
+import co.edu.uniquindio.models.Transaccion;
 
 import java.util.ArrayList;
 

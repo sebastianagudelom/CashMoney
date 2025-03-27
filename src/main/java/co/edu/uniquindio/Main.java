@@ -1,6 +1,6 @@
 package co.edu.uniquindio;
 
-import co.edu.uniquindio.models.GestorClientes;
+import co.edu.uniquindio.managers.GestorClientes;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

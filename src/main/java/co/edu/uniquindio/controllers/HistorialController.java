@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import co.edu.uniquindio.utils.ExportadorPDF;
+import co.edu.uniquindio.services.ExportadorPDF;
 
 import java.util.ArrayList;
 

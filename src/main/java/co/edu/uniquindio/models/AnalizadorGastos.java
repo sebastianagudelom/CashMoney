@@ -1,5 +1,8 @@
 package co.edu.uniquindio.models;
 
+import co.edu.uniquindio.managers.GestorClientes;
+import co.edu.uniquindio.structures.GrafoGastos;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

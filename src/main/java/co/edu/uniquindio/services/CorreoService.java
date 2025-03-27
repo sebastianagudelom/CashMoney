@@ -1,4 +1,4 @@
-package co.edu.uniquindio.utils;
+package co.edu.uniquindio.services;
 
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;

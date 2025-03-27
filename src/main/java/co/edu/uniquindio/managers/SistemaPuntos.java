@@ -1,4 +1,7 @@
-package co.edu.uniquindio.models;
+package co.edu.uniquindio.managers;
+
+import co.edu.uniquindio.models.NodoPuntos;
+import co.edu.uniquindio.models.RangoCliente;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -27,9 +30,14 @@ public class SistemaPuntos implements Serializable {
 
     private NodoPuntos insertarNodo(NodoPuntos actual, String cedula, int puntos) {
         if (actual == null) return new NodoPuntos(cedula, puntos);
-        if (puntos < actual.puntos) actual.izquierdo = insertarNodo(actual.izquierdo, cedula, puntos);
-        else if (puntos > actual.puntos) actual.derecho = insertarNodo(actual.derecho, cedula, puntos);
-        else actual.cedula = cedula;
+        if (puntos < actual.getPuntos()) {
+            actual.setIzquierdo(insertarNodo(actual.getIzquierdo(), cedula, puntos));
+        } else if (puntos > actual.getPuntos()) {
+            actual.setDerecho(insertarNodo(actual.getDerecho(), cedula, puntos));
+        } else {
+            actual.setCedula(cedula);
+        }
+
         return actual;
     }
 
