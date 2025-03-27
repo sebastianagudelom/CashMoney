@@ -17,10 +17,8 @@ import java.io.IOException;
 public class EditarPerfilController {
 
     private Cliente clienteActual;
-
     @FXML
     private TextField txtNombre, txtIdentificacion, txtCorreo, txtUsuario, txtClave, txtCiudad;
-
     @FXML
     private Label lblMensaje;
 
@@ -39,7 +37,6 @@ public class EditarPerfilController {
             txtCiudad.setText(clienteActual.getCiudad());
         }
     }
-
 
     @FXML
     private void eliminarCuenta() {
@@ -78,7 +75,6 @@ public class EditarPerfilController {
         }
     }
 
-
     @FXML
     private void guardarCambios(ActionEvent event) {
         if (clienteActual == null) {
@@ -112,8 +108,6 @@ public class EditarPerfilController {
             lblMensaje.setStyle("-fx-text-fill: red;");
         }
     }
-
-
 
     private void abrirLogin() {
         try {

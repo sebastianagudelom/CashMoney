@@ -66,6 +66,7 @@ public class MenuController {
             System.out.println("Error al abrir la ventana de retiro.");
         }
     }
+
     @FXML
     private void irATransferencias(ActionEvent event) {
         try {
@@ -139,7 +140,9 @@ public class MenuController {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error al abrir el historial.");
-        }    }
+        }
+    }
+
     @FXML
     private void irAPuntos(ActionEvent event) {
         try {

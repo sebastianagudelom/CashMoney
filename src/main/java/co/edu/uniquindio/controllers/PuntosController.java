@@ -12,7 +12,6 @@ public class PuntosController {
 
     @FXML
     private Label lblNombre, lblPuntos, lblRango;
-
     private Cliente clienteActual;
     private SistemaPuntos sistemaPuntos;
 

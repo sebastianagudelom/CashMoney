@@ -72,8 +72,6 @@ public class RegistroController {
         }
     }
 
-
-
     @FXML
     private void onVolverAction(ActionEvent event) {
         cambiarEscena("/views/Login.fxml",
@@ -99,5 +97,4 @@ public class RegistroController {
             System.out.println("Error al cambiar de escena a: " + rutaFXML);
         }
     }
-
 }

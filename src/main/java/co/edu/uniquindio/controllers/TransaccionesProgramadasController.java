@@ -11,10 +11,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
 import java.time.LocalDate;
 
 public class TransaccionesProgramadasController {
+
     @FXML private ComboBox<String> cmbDestinatarios, cmbCategoria;
     @FXML private TextField txtMonto;
     @FXML private DatePicker datePicker;
@@ -24,7 +24,6 @@ public class TransaccionesProgramadasController {
     @FXML private TableColumn<TransaccionProgramada, String> colOrigen, colDestino;
     @FXML private TableColumn<TransaccionProgramada, Double> colMonto;
     @FXML private TableColumn<TransaccionProgramada, LocalDate> colFecha;
-
     private GestorTransaccionesProgramadas gestorTransacciones;
     private Cliente usuarioActual;
 

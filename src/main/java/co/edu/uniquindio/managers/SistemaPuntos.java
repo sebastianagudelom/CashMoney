@@ -2,7 +2,6 @@ package co.edu.uniquindio.managers;
 
 import co.edu.uniquindio.models.NodoPuntos;
 import co.edu.uniquindio.models.RangoCliente;
-
 import java.io.Serializable;
 import java.util.HashMap;
 

@@ -20,7 +20,6 @@ public class GestorTransacciones {
         GestorClientes.guardarClientes();
     }
 
-
     /**
      * Registra una transferencia entre dos clientes
      */
