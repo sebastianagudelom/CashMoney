@@ -1,16 +1,16 @@
 package co.edu.uniquindio.managers;
 
+import co.edu.uniquindio.exceptions.*;
 import co.edu.uniquindio.models.*;
 import co.edu.uniquindio.structures.ListaEnlazada;
 import co.edu.uniquindio.utils.SeguridadUtil;
-
 import java.io.*;
 
 public class GestorClientes {
 
     private static ListaEnlazada<Cliente> listaClientes = new ListaEnlazada<>();
-    private static final String ARCHIVO_CLIENTES = "clientes.dat"; // Archivo para persistencia
-    private static final String ARCHIVO_PUNTOS = "puntos.dat"; // Archivo para persistencia
+    private static final String ARCHIVO_CLIENTES = "src/main/resources/data/clientes.dat";
+    private static final String ARCHIVO_PUNTOS = "src/main/resources/data/puntos.dat";
     private static final SistemaPuntos sistemaPuntos = new SistemaPuntos();
 
     private GestorClientes() {
@@ -20,38 +20,48 @@ public class GestorClientes {
     public static SistemaPuntos getSistemaPuntos() {
         return sistemaPuntos;
     }
-
     public static ListaEnlazada<Cliente> getListaClientes() {
         return listaClientes;
     }
 
     // Método para registrar un nuevo cliente
-    public static boolean registrarCliente(String nombre, String identificacion, String correo, String usuario,
-                                           String clave, String ciudad) {
-        if (buscarClienteUsuarioCorreoIdentificacion(usuario, correo, identificacion) == null) {
+    public static boolean registrarCliente(String nombre, String identificacion, String correo,
+                                           String usuario, String clave, String ciudad) {
+        try {
+            verificarDuplicados(usuario, correo, identificacion);
+
             String claveEncriptada = SeguridadUtil.encriptar(clave);
-            Cliente nuevoCliente = new Cliente(nombre, identificacion, correo, usuario, claveEncriptada, ciudad);
+            Cliente nuevoCliente = new Cliente(nombre, identificacion, correo, usuario, claveEncriptada,
+                    ciudad);
             listaClientes.agregar(nuevoCliente);
             guardarClientes();
             System.out.println("Cliente registrado: " + nuevoCliente);
             return true;
+
+        } catch (UsuarioYaExisteException e) {
+            System.out.println("Error: " + e.getMessage());
+            return false;
         }
-        return false;
     }
 
-    public static boolean transferirSaldoPorCuenta(String cuentaOrigen, String cuentaDestino, double monto, String categoria) {
-        Cliente origen = buscarClientePorCuenta(cuentaOrigen);
+    // Transfiere el saldo por la cuenta
+    public static boolean transferirSaldoPorCuenta(String cuentaOrigen, String cuentaDestino,
+                                                   double monto, String categoria)
+            throws TransaccionInvalidaException, CuentaNoEncontradaException {
+
+        Cliente origen = buscarClientePorCuenta(cuentaOrigen); // puede lanzar CuentaNoEncontradaException
         Cliente destino = buscarClientePorCuenta(cuentaDestino);
-        if (origen == null || destino == null) {
-            System.out.println("Error: Una de las cuentas no existe.");
-            return false;
-        }
-        if (origen.getCuenta().getSaldo() < monto) {
-            System.out.println("Error: Saldo insuficiente.");
-            return false;
+
+        if (cuentaOrigen.equals(cuentaDestino)) {
+            throw new TransaccionInvalidaException("No se puede transferir a la misma cuenta.");
         }
 
-        GestorTransacciones.retirarSaldo(origen, monto);
+        if (monto <= 0) {
+            throw new TransaccionInvalidaException("El monto debe ser mayor que cero.");
+        }
+
+        // Validación de saldo y ejecución
+        GestorTransacciones.retirarSaldo(origen, monto); // puede lanzar TransaccionInvalidaException
         GestorTransacciones.depositarSaldo(destino, monto);
 
         Transaccion enviada = new Transaccion("Transferencia Enviada", monto, cuentaDestino);
@@ -61,11 +71,12 @@ public class GestorClientes {
         recibida.setCategoria(categoria);
 
         GestorTransacciones.registrarTransferencia(origen, destino, enviada, recibida);
-
         guardarClientes();
+
         return true;
     }
 
+    // Inscribe cuentas para un cliente
     public static boolean inscribirCuentaParaCliente(Cliente cliente, String numeroCuenta) {
         if (cliente.getCuentasInscritas() == null) {
             cliente.setCuentasInscritas(new java.util.HashSet<>());
@@ -80,15 +91,18 @@ public class GestorClientes {
         return true;
     }
 
-    public static Cliente buscarClientePorCuenta(String numeroCuenta) {
-        for (Cliente c : listaClientes) {
-            if (c.getCuenta() != null && c.getCuenta().getNumeroCuenta().equals(numeroCuenta)) {
-                return c;
+    // Busca el cliente por el número de cuenta
+    public static Cliente buscarClientePorCuenta(String numeroCuenta) throws CuentaNoEncontradaException {
+        for (Cliente cliente : listaClientes) {
+            if (cliente.getCuenta().getNumeroCuenta().equals(numeroCuenta)) {
+                return cliente;
             }
         }
-        return null;
+        throw new CuentaNoEncontradaException("No se encontró la cuenta con número: " + numeroCuenta);
     }
 
+
+    // Verifica el usuario y la clave para login
     public static Cliente verificarUsuario(String usuario, String claveIngresada) {
         String claveEncriptada = SeguridadUtil.encriptar(claveIngresada);
         for (Cliente cliente : listaClientes) {
@@ -99,24 +113,26 @@ public class GestorClientes {
         return null;
     }
 
-    public static Cliente buscarClientePorUsuario(String usuario) {
+    // Busca si existe el usuario
+    public static Cliente buscarClientePorUsuario(String usuario) throws ClienteNoEncontradoException {
         for (Cliente c : listaClientes) {
             if (c.getUsuario().equals(usuario)) {
                 return c;
             }
         }
-        return null;
+        throw new ClienteNoEncontradoException("El cliente con usuario '" + usuario + "' no existe.");
     }
 
-    public static Cliente buscarClienteUsuarioCorreoIdentificacion(String usuario, String correo, String identificacion) {
+    // Verifica si antes de registrar hay clientes que tengan el usuario, correo o identificacion
+    public static void verificarDuplicados(String usuario, String correo, String identificacion)
+            throws UsuarioYaExisteException {
         for (Cliente c : listaClientes) {
             if (c.getUsuario().equals(usuario) ||
                     c.getCorreo().equals(correo) ||
                     c.getIdentificacion().equals(identificacion)) {
-                return c;
+                throw new UsuarioYaExisteException("El usuario, correo o identificación ya están en uso.");
             }
         }
-        return null;
     }
 
     public static void imprimirClientes() {
@@ -126,36 +142,55 @@ public class GestorClientes {
     }
 
     public static boolean eliminarCliente(String usuario) {
-        Cliente cliente = buscarClientePorUsuario(usuario);
-        if (cliente != null) {
+        try {
+            Cliente cliente = buscarClientePorUsuario(usuario);
             listaClientes.eliminar(cliente);
             guardarClientes();
             return true;
+        } catch (ClienteNoEncontradoException e) {
+            System.out.println("Error: " + e.getMessage());
+            return false;
         }
-        return false;
     }
+
 
     public static boolean actualizarCliente(String usuario, String nuevoNombre, String nuevaIdentificacion,
                                             String nuevoCorreo, String nuevoUsuario, String nuevaClave,
                                             String nuevaCiudad) {
-        Cliente cliente = buscarClientePorUsuario(usuario);
-        if (cliente != null) {
+        try {
+            Cliente cliente = buscarClientePorUsuario(usuario);
+
             if (nuevoNombre != null) cliente.setNombre(nuevoNombre);
             if (nuevaIdentificacion != null) cliente.setIdentificacion(nuevaIdentificacion);
             if (nuevoCorreo != null) cliente.setCorreo(nuevoCorreo);
-            if (nuevaUsuarioValido(nuevoUsuario, usuario)) cliente.setUsuario(nuevoUsuario);
             if (nuevaClave != null) cliente.setClave(nuevaClave);
             if (nuevaCiudad != null) cliente.setCiudad(nuevaCiudad);
+
+            if (nuevoUsuarioValido(nuevoUsuario, usuario)) {
+                cliente.setUsuario(nuevoUsuario);
+            }
+
             guardarClientes();
             return true;
+        } catch (ClienteNoEncontradoException e) {
+            System.out.println("Error al actualizar cliente: " + e.getMessage());
+            return false;
         }
-        return false;
     }
 
-    private static boolean nuevaUsuarioValido(String nuevoUsuario, String actualUsuario) {
-        return nuevoUsuario != null &&
-                !nuevoUsuario.equals(actualUsuario) &&
-                buscarClientePorUsuario(nuevoUsuario) == null;
+    private static boolean nuevoUsuarioValido(String nuevoUsuario, String actualUsuario) {
+        if (nuevoUsuario == null || nuevoUsuario.equals(actualUsuario)) {
+            return false;
+        }
+
+        try {
+            // Si lo encuentra, entonces el nuevo ya existe, no es válido
+            buscarClientePorUsuario(nuevoUsuario);
+            return false;
+        } catch (ClienteNoEncontradoException e) {
+            // No lo encontró: está disponible
+            return true;
+        }
     }
 
     private static void guardarSistemaPuntos() {
@@ -192,7 +227,8 @@ public class GestorClientes {
             for (Cliente c : listaClientes) {
                 if (c.getCuenta() == null) {
                     c.setCuenta(new Cuenta());
-                } else if (c.getCuenta().getNumeroCuenta() == null || c.getCuenta().getNumeroCuenta().isEmpty()) {
+                } else if (c.getCuenta().getNumeroCuenta() == null || c.getCuenta().getNumeroCuenta().
+                        isEmpty()) {
                     c.getCuenta().setNumeroCuenta(c.getCuenta().getNumeroCuenta());
                 }
             }

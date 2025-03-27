@@ -1,5 +1,6 @@
 package co.edu.uniquindio.controllers;
 
+import co.edu.uniquindio.exceptions.TransaccionInvalidaException;
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.managers.GestorClientes;
 import co.edu.uniquindio.managers.GestorTransacciones;
@@ -30,21 +31,26 @@ public class DepositosController {
             lblMensaje.setText("Error: No hay usuario activo.");
             return;
         }
+
         String montoTexto = txtMonto.getText();
         try {
             double monto = Double.parseDouble(montoTexto);
-            if (monto <= 0) {
-                lblMensaje.setText("Ingrese un monto válido.");
-                return;
-            }
+
+            // Ya no necesitas validar monto <= 0 aquí porque la excepción lo maneja
             GestorTransacciones.depositarSaldo(clienteActual, monto);
+
             int puntos = (int) (monto / 50);  // 1 punto por cada $50
-            String rangoAnterior = GestorClientes.getSistemaPuntos().consultarRango(clienteActual.
-                    getIdentificacion()).name();
-            GestorClientes.getSistemaPuntos().agregarPuntos(clienteActual.getIdentificacion(), puntos);
+            String rangoAnterior = GestorClientes.getSistemaPuntos()
+                    .consultarRango(clienteActual.getIdentificacion()).name();
+
+            GestorClientes.getSistemaPuntos()
+                    .agregarPuntos(clienteActual.getIdentificacion(), puntos);
+
             GestorClientes.guardarClientes();
+
             String nuevoRango = GestorClientes.getSistemaPuntos()
                     .consultarRango(clienteActual.getIdentificacion()).name();
+
             if (!rangoAnterior.equals(nuevoRango)) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("🎉 ¡Nuevo Rango!");
@@ -52,10 +58,17 @@ public class DepositosController {
                 alert.setContentText("Has alcanzado el rango " + nuevoRango + " 🏅");
                 alert.showAndWait();
             }
-            lblMensaje.setText("Depósito exitoso. Puntos ganados: " + puntos + ". Nuevo saldo: " +
-                    clienteActual.getCuenta().getSaldo());
+
+            lblMensaje.setText("Depósito exitoso. Puntos ganados: " + puntos +
+                    ". Nuevo saldo: " + clienteActual.getCuenta().getSaldo());
+            lblMensaje.setStyle("-fx-text-fill: green;");
+
         } catch (NumberFormatException e) {
             lblMensaje.setText("Ingrese un número válido.");
+            lblMensaje.setStyle("-fx-text-fill: red;");
+        } catch (TransaccionInvalidaException e) {
+            lblMensaje.setText("Error en el depósito: " + e.getMessage());
+            lblMensaje.setStyle("-fx-text-fill: red;");
         }
     }
 

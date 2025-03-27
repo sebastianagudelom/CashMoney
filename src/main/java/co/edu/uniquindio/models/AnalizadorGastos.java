@@ -1,5 +1,6 @@
 package co.edu.uniquindio.models;
 
+import co.edu.uniquindio.exceptions.CuentaNoEncontradaException;
 import co.edu.uniquindio.managers.GestorClientes;
 import co.edu.uniquindio.structures.GrafoGastos;
 
@@ -48,17 +49,21 @@ public class AnalizadorGastos {
 
         for (Transaccion t : cliente.getHistorialTransacciones()) {
             if (t.getTipo().equals("Transferencia Enviada") && t.getCuentaDestino() != null) {
-                Cliente destino = GestorClientes.buscarClientePorCuenta(t.getCuentaDestino());
-                if (destino != null) {
-                    String usuarioDestino = destino.getUsuario();
-                    grafo.get(origen).add(usuarioDestino);
+                try {
+                    Cliente destino = GestorClientes.buscarClientePorCuenta(t.getCuentaDestino());
 
-                    // Agrega también el nodo del destino aunque no tenga hijos
-                    grafo.putIfAbsent(usuarioDestino, new ArrayList<>());
+                    if (destino != null) {
+                        String usuarioDestino = destino.getUsuario();
+                        grafo.get(origen).add(usuarioDestino);
+                        grafo.putIfAbsent(usuarioDestino, new ArrayList<>());
+                    }
+
+                } catch (CuentaNoEncontradaException e) {
+                    // Puedes registrar el error o ignorarlo si no afecta al grafo
+                    System.out.println("Cuenta no encontrada en grafo: " + e.getMessage());
                 }
             }
         }
-
         return grafo;
     }
 

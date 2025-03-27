@@ -1,5 +1,6 @@
 package co.edu.uniquindio.controllers;
 
+import co.edu.uniquindio.exceptions.*;
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.managers.GestorClientes;
 import co.edu.uniquindio.structures.ListaEnlazada;
@@ -21,7 +22,8 @@ public class TransferenciasController {
 
     @FXML
     private void initialize() {
-        cmbCategoria.setItems(FXCollections.observableArrayList("Alimentos", "Transporte", "Servicios", "Entretenimiento", "Otros"));
+        cmbCategoria.setItems(FXCollections.observableArrayList("Alimentos", "Transporte",
+                "Servicios", "Entretenimiento", "Otros"));
     }
 
     //  Método para recibir el cliente actual
@@ -62,7 +64,8 @@ public class TransferenciasController {
                     clienteActual.getCuentasInscritas().contains(c.getCuenta().getNumeroCuenta())) {
 
                 // Formato: Nombre - Últimos 4 dígitos de la cuenta
-                String cuentaFormato = c.getNombre() + " - " + c.getCuenta().getNumeroCuenta().substring(c.getCuenta().getNumeroCuenta().length() - 4);
+                String cuentaFormato = c.getNombre() + " - " + c.getCuenta().getNumeroCuenta().
+                        substring(c.getCuenta().getNumeroCuenta().length() - 4);
 
                 // Guardar la relación en el mapa
                 cuentasMap.put(cuentaFormato, c.getCuenta().getNumeroCuenta());
@@ -77,21 +80,26 @@ public class TransferenciasController {
     @FXML
     private void inscribirCuenta() {
         String numeroCuenta = txtNumeroCuenta.getText().trim();
+
         if (numeroCuenta.isEmpty()) {
             lblInscripcionMensaje.setText("Ingrese un número de cuenta válido.");
             return;
         }
-        Cliente destino = GestorClientes.buscarClientePorCuenta(numeroCuenta);
-        if (destino == null) {
-            lblInscripcionMensaje.setText("Cuenta no encontrada.");
-            return;
-        }
-        if (GestorClientes.inscribirCuentaParaCliente(clienteActual, numeroCuenta)) {
-            lblInscripcionMensaje.setText("Cuenta inscrita con éxito.");
-            lblInscripcionMensaje.setStyle("-fx-text-fill: green;");
-            cargarUsuarios(); // Actualizar la lista de destinatarios inscritos
-        } else {
-            lblInscripcionMensaje.setText("La cuenta ya está inscrita.");
+
+        try {
+            Cliente destino = GestorClientes.buscarClientePorCuenta(numeroCuenta);
+
+            if (GestorClientes.inscribirCuentaParaCliente(clienteActual, numeroCuenta)) {
+                lblInscripcionMensaje.setText("Cuenta inscrita con éxito.");
+                lblInscripcionMensaje.setStyle("-fx-text-fill: green;");
+                cargarUsuarios(); // Actualizar la lista de destinatarios inscritos
+            } else {
+                lblInscripcionMensaje.setText("La cuenta ya está inscrita.");
+                lblInscripcionMensaje.setStyle("-fx-text-fill: red;");
+            }
+
+        } catch (CuentaNoEncontradaException e) {
+            lblInscripcionMensaje.setText(e.getMessage());
             lblInscripcionMensaje.setStyle("-fx-text-fill: red;");
         }
     }
@@ -124,38 +132,47 @@ public class TransferenciasController {
                 return;
             }
 
-            System.out.println("Transferencia desde: " + clienteActual.getNumeroCuenta() + " hacia: " + numeroCuentaDestino);
-            boolean exito = GestorClientes.transferirSaldoPorCuenta(
-                    clienteActual.getNumeroCuenta(), numeroCuentaDestino, monto, cmbCategoria.getValue());
+            System.out.println("Transferencia desde: " + clienteActual.getNumeroCuenta() + " hacia: " +
+                    numeroCuentaDestino);
 
-            if (exito) {
-                GestorClientes.guardarClientes();
+            try {
+                boolean exito = GestorClientes.transferirSaldoPorCuenta(
+                        clienteActual.getNumeroCuenta(), numeroCuentaDestino, monto, categoria);
 
-                // Puntos y rango como ya los tenías
-                int puntos = (int) ((monto / 100) * 3);
-                String rangoAnterior = GestorClientes.getSistemaPuntos().consultarRango(clienteActual.getIdentificacion()).name();
+                if (exito) {
+                    GestorClientes.guardarClientes();
 
-                GestorClientes.getSistemaPuntos().agregarPuntos(clienteActual.getIdentificacion(), puntos);
+                    int puntos = (int) ((monto / 100) * 3);
+                    String rangoAnterior = GestorClientes.getSistemaPuntos()
+                            .consultarRango(clienteActual.getIdentificacion()).name();
 
-                String nuevoRango = GestorClientes.getSistemaPuntos().consultarRango(clienteActual.getIdentificacion()).name();
-                if (!rangoAnterior.equals(nuevoRango)) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("¡Nuevo Rango!");
-                    alert.setHeaderText("¡Felicidades, " + clienteActual.getNombre() + "!");
-                    alert.setContentText("Has alcanzado el rango " + nuevoRango + " 🏅");
-                    alert.showAndWait();
+                    GestorClientes.getSistemaPuntos().agregarPuntos(clienteActual.getIdentificacion(),
+                            puntos);
+
+                    String nuevoRango = GestorClientes.getSistemaPuntos()
+                            .consultarRango(clienteActual.getIdentificacion()).name();
+
+                    if (!rangoAnterior.equals(nuevoRango)) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("¡Nuevo Rango!");
+                        alert.setHeaderText("¡Felicidades, " + clienteActual.getNombre() + "!");
+                        alert.setContentText("Has alcanzado el rango " + nuevoRango + " 🏅");
+                        alert.showAndWait();
+                    }
+
+                    lblMensaje.setText("Transferencia exitosa. Puntos ganados: " + puntos);
+                    lblMensaje.setStyle("-fx-text-fill: green;");
+                    actualizarSaldo();
                 }
 
-                lblMensaje.setText("Transferencia exitosa. Puntos ganados: " + puntos);
-                lblMensaje.setStyle("-fx-text-fill: green;");
-                actualizarSaldo();
-            } else {
-                lblMensaje.setText("Saldo insuficiente o error.");
+            } catch (TransaccionInvalidaException | CuentaNoEncontradaException e) {
+                lblMensaje.setText(e.getMessage());
                 lblMensaje.setStyle("-fx-text-fill: red;");
             }
 
         } catch (NumberFormatException e) {
             lblMensaje.setText("Ingrese un número válido.");
+            lblMensaje.setStyle("-fx-text-fill: red;");
         }
     }
 

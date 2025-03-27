@@ -1,5 +1,6 @@
 package co.edu.uniquindio.controllers;
 
+import co.edu.uniquindio.exceptions.TransaccionInvalidaException;
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.managers.GestorClientes;
 import co.edu.uniquindio.managers.GestorTransacciones;
@@ -33,43 +34,51 @@ public class RetirosController {
     private void realizarRetiro() {
         try {
             double monto = Double.parseDouble(txtMonto.getText());
+
             if (monto <= 0) {
-                lblMensaje.setText("Ingrese un monto válido.");
-                return;
+                throw new TransaccionInvalidaException("El monto debe ser mayor que cero.");
             }
 
-            if (clienteActual != null && GestorTransacciones.retirarSaldo(clienteActual, monto)) {
-                int puntos = (int) (monto / 100) * 2;
-                String rangoAnterior = GestorClientes.getSistemaPuntos()
-                        .consultarRango(clienteActual.getIdentificacion()).name();
-
-                GestorClientes.getSistemaPuntos()
-                        .agregarPuntos(clienteActual.getIdentificacion(), puntos);
-
-                String nuevoRango = GestorClientes.getSistemaPuntos()
-                        .consultarRango(clienteActual.getIdentificacion()).name();
-
-                if (!rangoAnterior.equals(nuevoRango)) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("¡Nuevo Rango!");
-                    alert.setHeaderText("¡Felicidades, " + clienteActual.getNombre() + "!");
-                    alert.setContentText("Has alcanzado el rango " + nuevoRango + " 🏅");
-                    alert.showAndWait();
-                }
-
-                lblMensaje.setText("Retiro exitoso. Puntos ganados: " + puntos);
-                lblMensaje.setStyle("-fx-text-fill: green;");
-                actualizarSaldo();
-
-            } else {
-                lblMensaje.setText("Fondos insuficientes.");
-                lblMensaje.setStyle("-fx-text-fill: red;");
+            if (clienteActual == null) {
+                throw new TransaccionInvalidaException("Cliente no encontrado.");
             }
+
+            // Intenta retirar (esto lanza la excepción si no hay saldo)
+            GestorTransacciones.retirarSaldo(clienteActual, monto);
+
+            // Calcular puntos
+            int puntos = (int) (monto / 100) * 2;
+            String rangoAnterior = GestorClientes.getSistemaPuntos()
+                    .consultarRango(clienteActual.getIdentificacion()).name();
+
+            GestorClientes.getSistemaPuntos()
+                    .agregarPuntos(clienteActual.getIdentificacion(), puntos);
+
+            String nuevoRango = GestorClientes.getSistemaPuntos()
+                    .consultarRango(clienteActual.getIdentificacion()).name();
+
+            // Mostrar alerta si cambia de rango
+            if (!rangoAnterior.equals(nuevoRango)) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("¡Nuevo Rango!");
+                alert.setHeaderText("¡Felicidades, " + clienteActual.getNombre() + "!");
+                alert.setContentText("Has alcanzado el rango " + nuevoRango + " 🏅");
+                alert.showAndWait();
+            }
+
+            lblMensaje.setText("Retiro exitoso. Puntos ganados: " + puntos);
+            lblMensaje.setStyle("-fx-text-fill: green;");
+            actualizarSaldo();
 
         } catch (NumberFormatException e) {
             lblMensaje.setText("Ingrese un número válido.");
+            lblMensaje.setStyle("-fx-text-fill: red;");
+        } catch (TransaccionInvalidaException e) {
+            lblMensaje.setText(e.getMessage());
+            lblMensaje.setStyle("-fx-text-fill: red;");
         }
     }
+
 
     @FXML
     private void volverMenu(ActionEvent event) {

@@ -128,5 +128,4 @@ public class ListaEnlazada<T> implements Iterable<T>, Serializable {
         }
         return lista;
     }
-
 }

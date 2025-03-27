@@ -1,5 +1,6 @@
 package co.edu.uniquindio.managers;
 
+import co.edu.uniquindio.exceptions.*;
 import co.edu.uniquindio.managers.GestorClientes;
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.Transaccion;
@@ -29,33 +30,40 @@ public class GestorTransacciones {
         agregarTransaccion(destino, recibida);
     }
 
-    public static boolean retirarSaldo(Cliente cliente, double monto) {
+
+    public static boolean retirarSaldo(Cliente cliente, double monto) throws TransaccionInvalidaException {
         if (cliente == null || cliente.getCuenta() == null) {
-            System.out.println("Error: cliente o cuenta no válida.");
-            return false;
+            throw new TransaccionInvalidaException("El cliente o su cuenta no es válida.");
         }
 
-        boolean exito = cliente.getCuenta().retirar(monto);
-        if (exito) {
-            GestorClientes.guardarClientes();
-        } else {
-            System.out.println("Saldo insuficiente.");
+        if (monto <= 0) {
+            throw new TransaccionInvalidaException("El monto a retirar debe ser mayor a cero.");
         }
 
-        return exito;
+        if (cliente.getCuenta().getSaldo() < monto) {
+            throw new TransaccionInvalidaException("Saldo insuficiente.");
+        }
+
+        cliente.getCuenta().retirar(monto);
+        GestorClientes.guardarClientes();
+        return true;
     }
 
-    public static boolean depositarSaldo(Cliente cliente, double monto) {
+    public static boolean depositarSaldo(Cliente cliente, double monto) throws TransaccionInvalidaException {
         if (cliente == null || cliente.getCuenta() == null) {
-            System.out.println("Error: cliente o cuenta no válida.");
-            return false;
+            throw new TransaccionInvalidaException("Cliente o cuenta no válida para depósito.");
+        }
+
+        if (monto <= 0) {
+            throw new TransaccionInvalidaException("El monto a depositar debe ser mayor que cero.");
         }
 
         boolean exito = cliente.getCuenta().depositar(monto);
-        if (exito) {
-            GestorClientes.guardarClientes();
+        if (!exito) {
+            throw new TransaccionInvalidaException("No se pudo realizar el depósito.");
         }
 
-        return exito;
+        GestorClientes.guardarClientes();
+        return true;
     }
 }

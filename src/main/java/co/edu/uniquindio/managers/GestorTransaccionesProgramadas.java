@@ -1,5 +1,7 @@
 package co.edu.uniquindio.managers;
 
+import co.edu.uniquindio.exceptions.ClienteNoEncontradoException;
+import co.edu.uniquindio.exceptions.TransaccionInvalidaException;
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.TransaccionProgramada;
 import co.edu.uniquindio.structures.ListaEnlazada;
@@ -9,7 +11,7 @@ import java.util.Iterator;
 
 public class GestorTransaccionesProgramadas {
 
-    private static final String ARCHIVO = "transaccionesProgramadas.dat";
+    private static final String ARCHIVO = "src/main/resources/data/transaccionesProgramadas.dat";
     private final ListaEnlazada<TransaccionProgramada> transacciones;
 
     public GestorTransaccionesProgramadas() {
@@ -36,14 +38,16 @@ public class GestorTransaccionesProgramadas {
     }
 
     private void realizarTransferencia(TransaccionProgramada t) {
-        Cliente origen = GestorClientes.buscarClientePorUsuario(t.getUsuarioOrigen());
-        Cliente destino = GestorClientes.buscarClientePorUsuario(t.getUsuarioDestino());
+        try {
+            Cliente origen = GestorClientes.buscarClientePorUsuario(t.getUsuarioOrigen());
+            Cliente destino = GestorClientes.buscarClientePorUsuario(t.getUsuarioDestino());
 
-        if (origen != null && destino != null) {
-            boolean exito = GestorTransacciones.retirarSaldo(origen, t.getMonto());
-            if (exito) {
-                GestorTransacciones.depositarSaldo(destino, t.getMonto());
-            }
+            GestorTransacciones.retirarSaldo(origen, t.getMonto());
+            GestorTransacciones.depositarSaldo(destino, t.getMonto());
+
+        } catch (ClienteNoEncontradoException | TransaccionInvalidaException e) {
+            System.out.println("Error al ejecutar transferencia programada: " + e.getMessage());
+            // También puedes guardar un log o actualizar estado de la transacción si lo deseas
         }
     }
 
