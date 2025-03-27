@@ -2,6 +2,7 @@ package co.edu.uniquindio.controllers;
 
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.managers.GestorClientes;
+import co.edu.uniquindio.structures.ListaEnlazada;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,16 +43,16 @@ public class TransferenciasController {
     // Método para cargar las cuentas inscritas
     private void cargarUsuarios() {
         if (clienteActual == null || clienteActual.getCuentasInscritas() == null) {
-            System.out.println("⚠ Error: clienteActual es null o no tiene cuentas inscritas.");
+            System.out.println("Error: clienteActual es null o no tiene cuentas inscritas.");
             return;
         }
         if (cmbUsuarios == null) {
-            System.out.println("⚠ Error: cmbUsuarios no está inicializado.");
+            System.out.println("Error: cmbUsuarios no está inicializado.");
             return;
         }
-        List<Cliente> clientes = GestorClientes.getListaClientes();
-        if (clientes == null || clientes.isEmpty()) {
-            System.out.println("⚠ No hay clientes disponibles.");
+        ListaEnlazada<Cliente> clientes = GestorClientes.getListaClientes();
+        if (clientes == null || clientes.estaVacia()) {
+            System.out.println("No hay clientes disponibles.");
             return;
         }
         cmbUsuarios.getItems().clear();

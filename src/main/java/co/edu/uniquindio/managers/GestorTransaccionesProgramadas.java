@@ -1,27 +1,23 @@
 package co.edu.uniquindio.managers;
 
-import co.edu.uniquindio.managers.GestorClientes;
-import co.edu.uniquindio.managers.GestorTransacciones;
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.TransaccionProgramada;
-
+import co.edu.uniquindio.structures.ListaEnlazada;
 import java.io.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class GestorTransaccionesProgramadas {
 
     private static final String ARCHIVO = "transaccionesProgramadas.dat";
-    private final List<TransaccionProgramada> transacciones;
+    private final ListaEnlazada<TransaccionProgramada> transacciones;
 
     public GestorTransaccionesProgramadas() {
         this.transacciones = cargarTransacciones();
     }
 
     public void agregarTransaccion(TransaccionProgramada t) {
-        transacciones.add(t);
+        transacciones.agregar(t);
         guardarTransacciones();
     }
 
@@ -59,16 +55,15 @@ public class GestorTransaccionesProgramadas {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public List<TransaccionProgramada> cargarTransacciones() {
+    public ListaEnlazada<TransaccionProgramada> cargarTransacciones() {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(ARCHIVO))) {
-            return (List<TransaccionProgramada>) in.readObject();
+            return (ListaEnlazada<TransaccionProgramada>) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            return new ArrayList<>();
+            return new ListaEnlazada<>();
         }
     }
 
-    public List<TransaccionProgramada> getTransacciones() {
+    public ListaEnlazada<TransaccionProgramada> getTransacciones() {
         return transacciones;
     }
 }

@@ -1,5 +1,6 @@
 package co.edu.uniquindio.models;
 
+import co.edu.uniquindio.structures.ListaEnlazada;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,7 +12,8 @@ public class Cliente implements Serializable {
     private String nombre, identificacion, correo, usuario, clave, ciudad;
     private Cuenta cuenta;
     private Set<String> cuentasInscritas;
-    private List<Transaccion> historialTransacciones;
+    // DESPUÉS
+    private ListaEnlazada<Transaccion> historialTransacciones;
 
 
     // Setters
@@ -23,7 +25,7 @@ public class Cliente implements Serializable {
     public void setUsuario(String usuario) { this.usuario = usuario; }
     public void setClave(String clave) { this.clave = clave; }
     public void setCiudad(String ciudad) { this.ciudad = ciudad; }
-    public void setHistorialTransacciones(List<Transaccion> historial) { this.historialTransacciones = historial; }
+    public void setHistorialTransacciones(ListaEnlazada<Transaccion> historial) { this.historialTransacciones = historial; }
     public void setCuenta(Cuenta cuenta) { this.cuenta = cuenta; }
     public void setCuentasInscritas(Set<String> cuentas) { this.cuentasInscritas = cuentas; }
 
@@ -36,7 +38,7 @@ public class Cliente implements Serializable {
         this.clave = clave;
         this.ciudad = ciudad;
         this.cuentasInscritas = new HashSet<>();
-        this.historialTransacciones = new ArrayList<>();
+        this.historialTransacciones = new ListaEnlazada<>();
         this.cuenta = new Cuenta();
     }
 
@@ -50,7 +52,7 @@ public class Cliente implements Serializable {
     public String getCiudad() { return ciudad; }
     public Set<String> getCuentasInscritas() { return cuentasInscritas; }
     public String getNumeroCuenta() { return cuenta.getNumeroCuenta(); }
-    public List<Transaccion> getHistorialTransacciones() { return historialTransacciones; }
+    public ListaEnlazada<Transaccion> getHistorialTransacciones() { return historialTransacciones; }
 
 
     //CAMBIADO
@@ -58,11 +60,9 @@ public class Cliente implements Serializable {
         this.cuentasInscritas.add(numeroCuenta);
     }
     //CAMBIADO
-    public void agregarTransaccion(Transaccion transaccion) {
-        historialTransacciones.add(transaccion);
-    }
+    public void agregarTransaccion(Transaccion transaccion) { historialTransacciones.agregar(transaccion); }
 
-    @Override
+        @Override
     public String toString() {
         return "Cliente{" +
                 "nombre='" + nombre + '\'' +

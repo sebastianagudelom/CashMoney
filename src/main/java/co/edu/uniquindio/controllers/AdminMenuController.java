@@ -48,9 +48,15 @@ public class AdminMenuController {
     }
 
     private void cargarClientes() {
-        ObservableList<Cliente> clientes = FXCollections.observableArrayList(GestorClientes.getListaClientes());
+        ObservableList<Cliente> clientes = FXCollections.observableArrayList();
+
+        for (Cliente cliente : GestorClientes.getListaClientes()) {
+            clientes.add(cliente);
+        }
+
         tablaClientes.setItems(clientes);
     }
+
 
     @FXML
     private void eliminarCliente() {
@@ -73,7 +79,9 @@ public class AdminMenuController {
     private void verTransacciones() {
         Cliente seleccionado = tablaClientes.getSelectionModel().getSelectedItem();
         if (seleccionado != null) {
-            tablaTransacciones.setItems(FXCollections.observableArrayList(seleccionado.getHistorialTransacciones()));
+            tablaTransacciones.setItems(
+                    FXCollections.observableArrayList(seleccionado.getHistorialTransacciones().aListaJava())
+            );
         } else {
             lblMensaje.setText("Selecciona un cliente para ver transacciones");
         }

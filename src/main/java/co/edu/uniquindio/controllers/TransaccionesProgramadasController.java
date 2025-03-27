@@ -5,6 +5,7 @@ import co.edu.uniquindio.managers.GestorTransaccionesProgramadas;
 import co.edu.uniquindio.models.TransaccionProgramada;
 import co.edu.uniquindio.models.Cliente;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -23,6 +24,7 @@ public class TransaccionesProgramadasController {
     @FXML private TableColumn<TransaccionProgramada, String> colOrigen, colDestino;
     @FXML private TableColumn<TransaccionProgramada, Double> colMonto;
     @FXML private TableColumn<TransaccionProgramada, LocalDate> colFecha;
+
     private GestorTransaccionesProgramadas gestorTransacciones;
     private Cliente usuarioActual;
 
@@ -35,15 +37,18 @@ public class TransaccionesProgramadasController {
     public void initialize() {
         gestorTransacciones = new GestorTransaccionesProgramadas();
 
-        // Configurar columnas de la tabla
         colOrigen.setCellValueFactory(new PropertyValueFactory<>("usuarioOrigen"));
         colDestino.setCellValueFactory(new PropertyValueFactory<>("usuarioDestino"));
         colMonto.setCellValueFactory(new PropertyValueFactory<>("monto"));
         colFecha.setCellValueFactory(new PropertyValueFactory<>("fechaEjecucion"));
 
-        tablaTransacciones.getItems().setAll(gestorTransacciones.getTransacciones());
+        // Convertir ListaEnlazada a ObservableList
+        ObservableList<TransaccionProgramada> lista = FXCollections.observableArrayList();
+        for (TransaccionProgramada t : gestorTransacciones.getTransacciones()) {
+            lista.add(t);
+        }
+        tablaTransacciones.setItems(lista);
 
-        // Inicializar categorías
         cmbCategoria.setItems(FXCollections.observableArrayList(
                 "Alimentos", "Transporte", "Servicios", "Entretenimiento", "Otros"
         ));
@@ -95,12 +100,18 @@ public class TransaccionesProgramadasController {
                     monto,
                     fecha
             );
-            nueva.setCategoria(categoria); // NUEVO
+            nueva.setCategoria(categoria);
 
             gestorTransacciones.agregarTransaccion(nueva);
             lblMensaje.setText("Transacción programada exitosamente.");
             lblMensaje.setStyle("-fx-text-fill: green;");
-            tablaTransacciones.getItems().setAll(gestorTransacciones.getTransacciones());
+
+            // Convertir ListaEnlazada a ObservableList
+            ObservableList<TransaccionProgramada> lista = FXCollections.observableArrayList();
+            for (TransaccionProgramada t : gestorTransacciones.getTransacciones()) {
+                lista.add(t);
+            }
+            tablaTransacciones.setItems(lista);
 
             txtMonto.clear();
             cmbDestinatarios.setValue(null);
@@ -116,5 +127,4 @@ public class TransaccionesProgramadasController {
     private void volverMenu(ActionEvent event) {
         ((Stage) btnVolver.getScene().getWindow()).close();
     }
-
 }

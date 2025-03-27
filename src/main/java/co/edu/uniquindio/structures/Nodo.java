@@ -1,6 +1,8 @@
 package co.edu.uniquindio.structures;
 
-public class Nodo<T> {
+import java.io.Serializable;
+
+public class Nodo<T> implements Serializable {
     private T dato;
     private Nodo<T> siguiente;
 
@@ -9,11 +11,19 @@ public class Nodo<T> {
         this.siguiente = null;
     }
 
-    // Getters
-    public T getDato() { return dato; }
-    public Nodo<T> getSiguiente() { return siguiente; }
+    public T getDato() {
+        return dato;
+    }
 
-    // Setters
-    public void setDato(T dato) { this.dato = dato; }
-    public void setSiguiente(Nodo<T> siguiente) { this.siguiente = siguiente; }
+    public void setDato(T dato) {
+        this.dato = dato;
+    }
+
+    public Nodo<T> getSiguiente() {
+        return siguiente;
+    }
+
+    public void setSiguiente(Nodo<T> siguiente) {
+        this.siguiente = siguiente;
+    }
 }

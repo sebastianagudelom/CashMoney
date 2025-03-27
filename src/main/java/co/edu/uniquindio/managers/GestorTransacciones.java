@@ -3,8 +3,8 @@ package co.edu.uniquindio.managers;
 import co.edu.uniquindio.managers.GestorClientes;
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.Transaccion;
+import co.edu.uniquindio.structures.ListaEnlazada;
 
-import java.util.ArrayList;
 
 public class GestorTransacciones {
 
@@ -13,12 +13,13 @@ public class GestorTransacciones {
      */
     public static void agregarTransaccion(Cliente cliente, Transaccion transaccion) {
         if (cliente.getHistorialTransacciones() == null) {
-            cliente.setHistorialTransacciones(new ArrayList<>());
+            cliente.setHistorialTransacciones(new ListaEnlazada<>());
         }
 
         cliente.agregarTransaccion(transaccion);
-        GestorClientes.guardarClientes(); // mantener persistencia
+        GestorClientes.guardarClientes();
     }
+
 
     /**
      * Registra una transferencia entre dos clientes
@@ -58,6 +59,4 @@ public class GestorTransacciones {
 
         return exito;
     }
-
-
 }

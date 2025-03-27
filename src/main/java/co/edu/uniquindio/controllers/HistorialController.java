@@ -2,6 +2,7 @@ package co.edu.uniquindio.controllers;
 
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.Transaccion;
+import co.edu.uniquindio.structures.ListaEnlazada;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Label;
@@ -24,7 +25,8 @@ public class HistorialController {
     @FXML
     private void exportarPDF() {
         if (clienteActual != null) {
-            ExportadorPDF.exportarHistorial(clienteActual.getHistorialTransacciones(), "Historial_" + clienteActual.getUsuario() + ".pdf");
+            ExportadorPDF.exportarHistorial(clienteActual.getHistorialTransacciones().aListaJava(),
+                    "Historial_" + clienteActual.getUsuario() + ".pdf");
         }
     }
 
@@ -36,10 +38,10 @@ public class HistorialController {
 
         // Asegurar que historial nunca sea null
         if (clienteActual.getHistorialTransacciones() == null) {
-            clienteActual.setHistorialTransacciones(new ArrayList<>());
+            clienteActual.setHistorialTransacciones(new ListaEnlazada<>());
         }
 
-        if (clienteActual.getHistorialTransacciones().isEmpty()) {
+        if (clienteActual.getHistorialTransacciones().estaVacia()) {
             lblMensaje.setText("No hay transacciones registradas.");
             return;
         }
@@ -50,12 +52,8 @@ public class HistorialController {
         }
     }
 
-
-
     @FXML
     private void volverMenu() {
         ((Stage) lblMensaje.getScene().getWindow()).close();
     }
-
-
 }
