@@ -121,6 +121,7 @@ public class ListaEnlazada<T> implements Iterable<T>, Serializable {
             }
         };
     }
+
     public List<T> aListaJava() {
         List<T> lista = new ArrayList<>();
         for (T dato : this) {

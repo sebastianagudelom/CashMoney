@@ -1,7 +1,6 @@
 package co.edu.uniquindio.managers;
 
 import co.edu.uniquindio.exceptions.*;
-import co.edu.uniquindio.managers.GestorClientes;
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.Transaccion;
 import co.edu.uniquindio.structures.ListaEnlazada;
@@ -30,7 +29,6 @@ public class GestorTransacciones {
         agregarTransaccion(destino, recibida);
     }
 
-
     public static boolean retirarSaldo(Cliente cliente, double monto) throws TransaccionInvalidaException {
         if (cliente == null || cliente.getCuenta() == null) {
             throw new TransaccionInvalidaException("El cliente o su cuenta no es válida.");
@@ -45,6 +43,16 @@ public class GestorTransacciones {
         }
 
         cliente.getCuenta().retirar(monto);
+
+        Transaccion retiro = new Transaccion(
+                "Retiro",
+                monto,
+                cliente.getCuenta().getNumeroCuenta(),
+                cliente.getCuenta().getNumeroCuenta(),
+                "Otros"
+        );
+
+        agregarTransaccion(cliente, retiro);
         GestorClientes.guardarClientes();
         return true;
     }
@@ -63,7 +71,18 @@ public class GestorTransacciones {
             throw new TransaccionInvalidaException("No se pudo realizar el depósito.");
         }
 
+        Transaccion deposito = new Transaccion(
+                "Depósito",
+                monto,
+                cliente.getCuenta().getNumeroCuenta(),  // cuentaOrigen
+                cliente.getCuenta().getNumeroCuenta(),  // cuentaDestino
+                "Otros" // categoría por defecto
+        );
+
+        agregarTransaccion(cliente, deposito);
         GestorClientes.guardarClientes();
         return true;
     }
+
+
 }

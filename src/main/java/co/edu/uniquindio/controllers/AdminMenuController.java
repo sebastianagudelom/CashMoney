@@ -6,7 +6,13 @@ import co.edu.uniquindio.models.Transaccion;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class AdminMenuController {
 
@@ -84,6 +90,21 @@ public class AdminMenuController {
             );
         } else {
             lblMensaje.setText("Selecciona un cliente para ver transacciones");
+        }
+    }
+
+    @FXML
+    private void abrirReversiones() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/ReversionesAdmin.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Solicitudes de Reversión");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

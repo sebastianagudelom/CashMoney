@@ -21,8 +21,10 @@
             <Label layoutX="120.0" layoutY="30.0" text="Consulta de Saldo" styleClass="saludo-label" />
 
             <Label layoutX="60.0" layoutY="120.0" text="Saldo actual disponible:" styleClass="label" />
+            <Label fx:id="lblSaldo" layoutX="270.0" layoutY="120.0" text="- -" styleClass="saludo-label"/>
 
-            <Label fx:id="lblSaldo" layoutX="270.0" layoutY="120.0" text="- -" styleClass="saludo-label" alignment="CENTER_LEFT" />
+            <Label layoutX="60.0" layoutY="170.0" text="Número de cuenta:" styleClass="label" />
+            <Label fx:id="lblNumeroCuenta" layoutX="270.0" layoutY="170.0" text="- -" styleClass="saludo-label"/>
 
             <Button fx:id="btnVolver" layoutX="25.0" layoutY="340.0" prefWidth="80.0" text="Volver" onAction="#volverMenu" styleClass="button" />
          </children>

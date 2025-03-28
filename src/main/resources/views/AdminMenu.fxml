@@ -2,8 +2,8 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-
 <?import java.lang.String?>
+
 <AnchorPane xmlns="http://javafx.com/javafx/20.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="co.edu.uniquindio.controllers.AdminMenuController"
@@ -36,13 +36,17 @@
                     </columns>
                 </TableView>
 
-                <Button layoutX="50" layoutY="300" prefWidth="180" prefHeight="40"
+                <Button layoutX="30" layoutY="300" prefWidth="130" prefHeight="40"
                         text="Eliminar Cliente" styleClass="button"
                         onAction="#eliminarCliente"/>
 
-                <Button layoutX="260" layoutY="300" prefWidth="180" prefHeight="40"
+                <Button layoutX="180" layoutY="300" prefWidth="150" prefHeight="40"
                         text="Ver Transacciones" styleClass="button"
                         onAction="#verTransacciones"/>
+
+                <Button layoutX="350" layoutY="300" prefWidth="130" prefHeight="40"
+                        text="Solicitudes de Reversión" styleClass="button"
+                        onAction="#abrirReversiones"/>
 
                 <Button layoutX="150" layoutY="350" prefWidth="180" prefHeight="40"
                         text="Cerrar sesión" styleClass="button"

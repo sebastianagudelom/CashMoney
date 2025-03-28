@@ -49,7 +49,7 @@ public class GestorClientes {
                                                    double monto, String categoria)
             throws TransaccionInvalidaException, CuentaNoEncontradaException {
 
-        Cliente origen = buscarClientePorCuenta(cuentaOrigen); // puede lanzar CuentaNoEncontradaException
+        Cliente origen = buscarClientePorCuenta(cuentaOrigen);
         Cliente destino = buscarClientePorCuenta(cuentaDestino);
 
         if (cuentaOrigen.equals(cuentaDestino)) {
@@ -60,14 +60,15 @@ public class GestorClientes {
             throw new TransaccionInvalidaException("El monto debe ser mayor que cero.");
         }
 
-        // Validación de saldo y ejecución
-        GestorTransacciones.retirarSaldo(origen, monto); // puede lanzar TransaccionInvalidaException
+        GestorTransacciones.retirarSaldo(origen, monto);
         GestorTransacciones.depositarSaldo(destino, monto);
 
-        Transaccion enviada = new Transaccion("Transferencia Enviada", monto, cuentaDestino);
+        Transaccion enviada = new Transaccion("Transferencia Enviada", monto, cuentaOrigen, cuentaDestino, categoria);
+        enviada.setCuentaOrigen(cuentaOrigen);
         enviada.setCategoria(categoria);
 
-        Transaccion recibida = new Transaccion("Transferencia Recibida", monto, cuentaOrigen);
+        Transaccion recibida = new Transaccion("Transferencia Recibida", monto, cuentaOrigen, cuentaDestino, categoria);
+        recibida.setCuentaOrigen(cuentaOrigen);
         recibida.setCategoria(categoria);
 
         GestorTransacciones.registrarTransferencia(origen, destino, enviada, recibida);

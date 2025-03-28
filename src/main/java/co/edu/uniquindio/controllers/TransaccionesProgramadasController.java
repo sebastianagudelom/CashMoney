@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+
 import java.time.LocalDate;
 
 public class TransaccionesProgramadasController {
@@ -24,12 +25,14 @@ public class TransaccionesProgramadasController {
     @FXML private TableColumn<TransaccionProgramada, String> colOrigen, colDestino;
     @FXML private TableColumn<TransaccionProgramada, Double> colMonto;
     @FXML private TableColumn<TransaccionProgramada, LocalDate> colFecha;
+
     private GestorTransaccionesProgramadas gestorTransacciones;
     private Cliente usuarioActual;
 
     public void setCliente(Cliente cliente) {
         this.usuarioActual = cliente;
         cargarDestinatarios();
+        cargarTransaccionesDelUsuario();
     }
 
     @FXML
@@ -40,13 +43,6 @@ public class TransaccionesProgramadasController {
         colDestino.setCellValueFactory(new PropertyValueFactory<>("usuarioDestino"));
         colMonto.setCellValueFactory(new PropertyValueFactory<>("monto"));
         colFecha.setCellValueFactory(new PropertyValueFactory<>("fechaEjecucion"));
-
-        // Convertir ListaEnlazada a ObservableList
-        ObservableList<TransaccionProgramada> lista = FXCollections.observableArrayList();
-        for (TransaccionProgramada t : gestorTransacciones.getTransacciones()) {
-            lista.add(t);
-        }
-        tablaTransacciones.setItems(lista);
 
         cmbCategoria.setItems(FXCollections.observableArrayList(
                 "Alimentos", "Transporte", "Servicios", "Entretenimiento", "Otros"
@@ -61,6 +57,17 @@ public class TransaccionesProgramadasController {
                 cmbDestinatarios.getItems().add(c.getUsuario());
             }
         }
+    }
+
+    private void cargarTransaccionesDelUsuario() {
+        ObservableList<TransaccionProgramada> transaccionesUsuario = FXCollections.observableArrayList();
+        for (TransaccionProgramada t : gestorTransacciones.getTransacciones()) {
+            if (t.getUsuarioOrigen().equals(usuarioActual.getUsuario()) ||
+                    t.getUsuarioDestino().equals(usuarioActual.getUsuario())) {
+                transaccionesUsuario.add(t);
+            }
+        }
+        tablaTransacciones.setItems(transaccionesUsuario);
     }
 
     @FXML
@@ -105,12 +112,7 @@ public class TransaccionesProgramadasController {
             lblMensaje.setText("Transacción programada exitosamente.");
             lblMensaje.setStyle("-fx-text-fill: green;");
 
-            // Convertir ListaEnlazada a ObservableList
-            ObservableList<TransaccionProgramada> lista = FXCollections.observableArrayList();
-            for (TransaccionProgramada t : gestorTransacciones.getTransacciones()) {
-                lista.add(t);
-            }
-            tablaTransacciones.setItems(lista);
+            cargarTransaccionesDelUsuario();
 
             txtMonto.clear();
             cmbDestinatarios.setValue(null);

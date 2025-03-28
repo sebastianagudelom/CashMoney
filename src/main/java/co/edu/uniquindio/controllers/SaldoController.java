@@ -9,27 +9,27 @@ import javafx.stage.Stage;
 public class SaldoController {
 
     @FXML private Label lblSaldo;
+    @FXML private Label lblNumeroCuenta;
     private Cliente clienteActual;
 
-    // Método para recibir el cliente que ha iniciado sesión
     public void setCliente(Cliente cliente) {
         this.clienteActual = cliente;
-        actualizarSaldo(); // Mostrar el saldo actual al abrir la ventana
+        actualizarSaldo(); // Mostrar datos al abrir
     }
 
-    // Método para actualizar el saldo en la vista
     @FXML
     private void actualizarSaldo() {
         if (clienteActual != null) {
             lblSaldo.setText("$" + String.format("%.2f", clienteActual.getCuenta().getSaldo()));
+            lblNumeroCuenta.setText(clienteActual.getNumeroCuenta());
         } else {
             lblSaldo.setText("No disponible");
+            lblNumeroCuenta.setText("No disponible");
         }
     }
 
-    // Método para volver al menú
     @FXML
     private void volverMenu(ActionEvent event) {
-        ((Stage) lblSaldo.getScene().getWindow()).close(); // Cierra la ventana actual
+        ((Stage) lblSaldo.getScene().getWindow()).close();
     }
 }

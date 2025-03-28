@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.cell.*?>
+<?import java.lang.String?>
+
+<AnchorPane styleClass="fondo-menu" prefHeight="480.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/20.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.uniquindio.controllers.ReversionesAdminController">
+
+    <stylesheets>
+        <String fx:value="/styles/styles.css"/>
+    </stylesheets>
+
+    <children>
+        <AnchorPane layoutX="50.0" layoutY="30.0" prefWidth="500.0" prefHeight="420.0" styleClass="tarjeta">
+            <children>
+
+                <Label layoutX="125.0" layoutY="20.0" text="Solicitudes de Reversión" styleClass="saludo-label" />
+
+                <Label fx:id="lblDetalle" layoutX="25.0" layoutY="55.0" prefWidth="450.0"
+                       wrapText="true" styleClass="label" text="Detalles de la solicitud aparecerán aquí" />
+
+                <TableView fx:id="tablaReversiones" layoutX="25.0" layoutY="90.0" prefHeight="190.0" prefWidth="450.0">
+                    <columns>
+                        <TableColumn fx:id="colNombreOrigen" text="Origen" prefWidth="100"/>
+                        <TableColumn fx:id="colCuentaOrigen" text="Cta Origen" prefWidth="80"/>
+                        <TableColumn fx:id="colNombreDestino" text="Destino" prefWidth="100"/>
+                        <TableColumn fx:id="colCuentaDestino" text="Cta Destino" prefWidth="80"/>
+                        <TableColumn fx:id="colMonto" text="Monto" prefWidth="70"/>
+                        <TableColumn fx:id="colFecha" text="Fecha" prefWidth="100"/>
+                    </columns>
+                </TableView>
+
+                <Button fx:id="btnAceptar" layoutX="80.0" layoutY="300.0" text="Aceptar"
+                        onAction="#aceptarSolicitud" styleClass="button"/>
+                <Button fx:id="btnRechazar" layoutX="200.0" layoutY="300.0" text="Rechazar"
+                        onAction="#rechazarSolicitud" styleClass="button"/>
+                <Button fx:id="btnVolver" layoutX="320.0" layoutY="300.0" text="Volver"
+                        onAction="#volverMenu" styleClass="button"/>
+
+                <Label fx:id="lblMensaje" layoutX="25.0" layoutY="340.0" prefWidth="450.0"
+                       alignment="CENTER" textAlignment="CENTER" styleClass="label" wrapText="true" />
+
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
