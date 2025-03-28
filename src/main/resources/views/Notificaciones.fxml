@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<?import java.lang.String?>
+<AnchorPane xmlns="http://javafx.com/javafx/20.0.1"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.uniquindio.controllers.NotificacionesController"
+            prefWidth="500.0" prefHeight="400.0" styleClass="fondo-menu">
+
+    <stylesheets>
+        <String fx:value="/styles/styles.css"/>
+    </stylesheets>
+
+    <children>
+        <AnchorPane layoutX="25.0" layoutY="25.0" prefWidth="450.0" prefHeight="350.0" styleClass="tarjeta">
+            <children>
+                <Label layoutX="120.0" layoutY="20.0" text="Notificaciones" styleClass="saludo-label" />
+
+                <ListView fx:id="listaNotificaciones" layoutX="25.0" layoutY="60.0"
+                          prefWidth="400.0" prefHeight="200.0" />
+
+                <Label fx:id="lblMensaje" layoutX="25.0" layoutY="270.0" prefWidth="400.0"
+                       wrapText="true" styleClass="label" />
+
+                <Button layoutX="180.0" layoutY="300.0" text="Volver"
+                        fx:id="btnVolver" onAction="#volver" styleClass="button" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

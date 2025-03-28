@@ -2,6 +2,7 @@ package co.edu.uniquindio.managers;
 
 import co.edu.uniquindio.exceptions.*;
 import co.edu.uniquindio.models.*;
+import co.edu.uniquindio.structures.ListaCircular;
 import co.edu.uniquindio.structures.ListaEnlazada;
 import co.edu.uniquindio.utils.SeguridadUtil;
 import java.io.*;
@@ -228,11 +229,16 @@ public class GestorClientes {
             for (Cliente c : listaClientes) {
                 if (c.getCuenta() == null) {
                     c.setCuenta(new Cuenta());
-                } else if (c.getCuenta().getNumeroCuenta() == null || c.getCuenta().getNumeroCuenta().
-                        isEmpty()) {
+                } else if (c.getCuenta().getNumeroCuenta() == null || c.getCuenta().getNumeroCuenta().isEmpty()) {
                     c.getCuenta().setNumeroCuenta(c.getCuenta().getNumeroCuenta());
                 }
+
+                // 💥 Asegurar que la lista circular de notificaciones esté inicializada
+                if (c.getNotificaciones() == null) {
+                    c.setNotificaciones(new ListaCircular<>());
+                }
             }
+
             cargarSistemaPuntos();
             guardarClientes();
         } catch (IOException | ClassNotFoundException e) {

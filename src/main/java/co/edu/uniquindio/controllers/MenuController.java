@@ -202,6 +202,26 @@ public class MenuController {
     }
 
     @FXML
+    private void irANotificaciones(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Notificaciones.fxml"));
+            Parent root = loader.load();
+
+            NotificacionesController controller = loader.getController();
+            controller.setCliente(clienteActual);
+
+            Stage stage = new Stage();
+            stage.setTitle("Notificaciones");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al abrir la ventana de notificaciones.");
+        }
+    }
+
+
+    @FXML
     private void irALogin(ActionEvent event) {
         cambiarVentana(event, "/views/Login.fxml");
     }

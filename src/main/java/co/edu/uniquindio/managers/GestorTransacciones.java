@@ -44,6 +44,7 @@ public class GestorTransacciones {
 
         cliente.getCuenta().retirar(monto);
 
+        // Crear y registrar la transacción de retiro
         Transaccion retiro = new Transaccion(
                 "Retiro",
                 monto,
@@ -53,9 +54,16 @@ public class GestorTransacciones {
         );
 
         agregarTransaccion(cliente, retiro);
+
+        // Agregar notificación si el saldo restante es bajo
+        if (cliente.getCuenta().getSaldo() < 10000) {
+            cliente.agregarNotificacion("⚠️ Tu saldo es inferior a $10.000.");
+        }
+
         GestorClientes.guardarClientes();
         return true;
     }
+
 
     public static boolean depositarSaldo(Cliente cliente, double monto) throws TransaccionInvalidaException {
         if (cliente == null || cliente.getCuenta() == null) {
@@ -71,6 +79,7 @@ public class GestorTransacciones {
             throw new TransaccionInvalidaException("No se pudo realizar el depósito.");
         }
 
+        // Registrar la transacción de depósito
         Transaccion deposito = new Transaccion(
                 "Depósito",
                 monto,
@@ -80,9 +89,14 @@ public class GestorTransacciones {
         );
 
         agregarTransaccion(cliente, deposito);
+
+        // Notificación automática
+        cliente.agregarNotificacion("💰 Has recibido un depósito exitoso de $" + monto);
+
         GestorClientes.guardarClientes();
         return true;
     }
+
 
 
 }

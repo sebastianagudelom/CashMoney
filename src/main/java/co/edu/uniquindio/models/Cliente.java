@@ -1,6 +1,9 @@
 package co.edu.uniquindio.models;
 
+import co.edu.uniquindio.structures.ListaCircular;
 import co.edu.uniquindio.structures.ListaEnlazada;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,12 +11,26 @@ import java.util.List;
 import java.util.Set;
 
 public class Cliente implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     private String nombre, identificacion, correo, usuario, clave, ciudad;
     private Cuenta cuenta;
     private Set<String> cuentasInscritas;
-    // DESPUÉS
     private ListaEnlazada<Transaccion> historialTransacciones;
+    private ListaCircular<Notificacion> notificaciones = new ListaCircular<>();
+
+    public ListaCircular<Notificacion> getNotificaciones() {
+        return notificaciones;
+    }
+
+    public void setNotificaciones(ListaCircular<Notificacion> notificaciones) {
+        this.notificaciones = notificaciones;
+    }
+
+    public void agregarNotificacion(String mensaje) {
+        notificaciones.agregar(new Notificacion(mensaje));
+    }
+
 
 
     // Setters
@@ -40,6 +57,7 @@ public class Cliente implements Serializable {
         this.cuentasInscritas = new HashSet<>();
         this.historialTransacciones = new ListaEnlazada<>();
         this.cuenta = new Cuenta();
+        this.notificaciones = new ListaCircular<>();
     }
 
     // Getters
