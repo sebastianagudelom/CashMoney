@@ -5,6 +5,7 @@ import co.edu.uniquindio.models.*;
 import co.edu.uniquindio.structures.ListaCircular;
 import co.edu.uniquindio.structures.ListaEnlazada;
 import co.edu.uniquindio.utils.SeguridadUtil;
+
 import java.io.*;
 
 public class GestorClientes {
@@ -21,31 +22,27 @@ public class GestorClientes {
     public static SistemaPuntos getSistemaPuntos() {
         return sistemaPuntos;
     }
+
     public static ListaEnlazada<Cliente> getListaClientes() {
         return listaClientes;
     }
 
-    // Método para registrar un nuevo cliente
     public static boolean registrarCliente(String nombre, String identificacion, String correo,
                                            String usuario, String clave, String ciudad) {
         try {
             verificarDuplicados(usuario, correo, identificacion);
-
             String claveEncriptada = SeguridadUtil.encriptar(clave);
-            Cliente nuevoCliente = new Cliente(nombre, identificacion, correo, usuario, claveEncriptada,
-                    ciudad);
+            Cliente nuevoCliente = new Cliente(nombre, identificacion, correo, usuario, claveEncriptada, ciudad);
             listaClientes.agregar(nuevoCliente);
             guardarClientes();
             System.out.println("Cliente registrado: " + nuevoCliente);
             return true;
-
         } catch (UsuarioYaExisteException e) {
             System.out.println("Error: " + e.getMessage());
             return false;
         }
     }
 
-    // Transfiere el saldo por la cuenta
     public static boolean transferirSaldoPorCuenta(String cuentaOrigen, String cuentaDestino,
                                                    double monto, String categoria)
             throws TransaccionInvalidaException, CuentaNoEncontradaException {
@@ -65,12 +62,7 @@ public class GestorClientes {
         GestorTransacciones.depositarSaldo(destino, monto);
 
         Transaccion enviada = new Transaccion("Transferencia Enviada", monto, cuentaOrigen, cuentaDestino, categoria);
-        enviada.setCuentaOrigen(cuentaOrigen);
-        enviada.setCategoria(categoria);
-
         Transaccion recibida = new Transaccion("Transferencia Recibida", monto, cuentaOrigen, cuentaDestino, categoria);
-        recibida.setCuentaOrigen(cuentaOrigen);
-        recibida.setCategoria(categoria);
 
         GestorTransacciones.registrarTransferencia(origen, destino, enviada, recibida);
         guardarClientes();
@@ -78,7 +70,6 @@ public class GestorClientes {
         return true;
     }
 
-    // Inscribe cuentas para un cliente
     public static boolean inscribirCuentaParaCliente(Cliente cliente, String numeroCuenta) {
         if (cliente.getCuentasInscritas() == null) {
             cliente.setCuentasInscritas(new java.util.HashSet<>());
@@ -93,7 +84,6 @@ public class GestorClientes {
         return true;
     }
 
-    // Busca el cliente por el número de cuenta
     public static Cliente buscarClientePorCuenta(String numeroCuenta) throws CuentaNoEncontradaException {
         for (Cliente cliente : listaClientes) {
             if (cliente.getCuenta().getNumeroCuenta().equals(numeroCuenta)) {
@@ -103,8 +93,6 @@ public class GestorClientes {
         throw new CuentaNoEncontradaException("No se encontró la cuenta con número: " + numeroCuenta);
     }
 
-
-    // Verifica el usuario y la clave para login
     public static Cliente verificarUsuario(String usuario, String claveIngresada) {
         String claveEncriptada = SeguridadUtil.encriptar(claveIngresada);
         for (Cliente cliente : listaClientes) {
@@ -115,7 +103,6 @@ public class GestorClientes {
         return null;
     }
 
-    // Busca si existe el usuario
     public static Cliente buscarClientePorUsuario(String usuario) throws ClienteNoEncontradoException {
         for (Cliente c : listaClientes) {
             if (c.getUsuario().equals(usuario)) {
@@ -125,7 +112,6 @@ public class GestorClientes {
         throw new ClienteNoEncontradoException("El cliente con usuario '" + usuario + "' no existe.");
     }
 
-    // Verifica si antes de registrar hay clientes que tengan el usuario, correo o identificacion
     public static void verificarDuplicados(String usuario, String correo, String identificacion)
             throws UsuarioYaExisteException {
         for (Cliente c : listaClientes) {
@@ -154,7 +140,6 @@ public class GestorClientes {
             return false;
         }
     }
-
 
     public static boolean actualizarCliente(String usuario, String nuevoNombre, String nuevaIdentificacion,
                                             String nuevoCorreo, String nuevoUsuario, String nuevaClave,
@@ -186,11 +171,9 @@ public class GestorClientes {
         }
 
         try {
-            // Si lo encuentra, entonces el nuevo ya existe, no es válido
             buscarClientePorUsuario(nuevoUsuario);
             return false;
         } catch (ClienteNoEncontradoException e) {
-            // No lo encontró: está disponible
             return true;
         }
     }
@@ -226,6 +209,7 @@ public class GestorClientes {
     public static void cargarClientes() {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(ARCHIVO_CLIENTES))) {
             listaClientes = (ListaEnlazada<Cliente>) in.readObject();
+
             for (Cliente c : listaClientes) {
                 if (c.getCuenta() == null) {
                     c.setCuenta(new Cuenta());
@@ -233,9 +217,12 @@ public class GestorClientes {
                     c.getCuenta().setNumeroCuenta(c.getCuenta().getNumeroCuenta());
                 }
 
-                // 💥 Asegurar que la lista circular de notificaciones esté inicializada
                 if (c.getNotificaciones() == null) {
                     c.setNotificaciones(new ListaCircular<>());
+                }
+
+                if (c.getMonederos() == null) {
+                    c.setMonederos(new ListaEnlazada<>());
                 }
             }
 

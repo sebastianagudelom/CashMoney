@@ -220,6 +220,24 @@ public class MenuController {
         }
     }
 
+    @FXML
+    private void irAMonederos(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Monederos.fxml"));
+            Parent root = loader.load();
+
+            MonederosController controller = loader.getController();
+            controller.setCliente(clienteActual);
+
+            Stage stage = new Stage();
+            stage.setTitle("Monederos");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al abrir la ventana de monederos.");
+        }
+    }
 
     @FXML
     private void irALogin(ActionEvent event) {

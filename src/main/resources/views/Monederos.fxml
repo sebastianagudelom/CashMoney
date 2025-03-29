@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+
+<AnchorPane prefHeight="480.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/20.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.uniquindio.controllers.MonederosController">
+
+    <stylesheets>
+        <String fx:value="/styles/styles.css"/>
+    </stylesheets>
+
+    <children>
+        <VBox spacing="10" alignment="CENTER" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
+              AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0">
+
+            <Label text="Mis Monederos" styleClass="titulo-label"/>
+
+            <TableView fx:id="tablaMonederos" prefHeight="200">
+                <columns>
+                    <TableColumn fx:id="colNombre" text="Nombre"/>
+                    <TableColumn fx:id="colSaldo" text="Saldo"/>
+                    <TableColumn fx:id="colMeta" text="Meta"/>
+                    <TableColumn fx:id="colDescripcion" text="Descripción"/>
+                    <!-- Columna de color eliminada visualmente -->
+                </columns>
+            </TableView>
+
+            <HBox spacing="10" alignment="CENTER">
+                <TextField fx:id="txtNombre" promptText="Nombre del Monedero"/>
+                <TextField fx:id="txtMeta" promptText="Meta de ahorro"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER">
+                <TextField fx:id="txtDescripcion" promptText="Descripción"/>
+                <ComboBox fx:id="cmbColor" promptText="Color"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER">
+                <TextField fx:id="txtMonto" promptText="Monto a agregar"/>
+                <Button text="Agregar Dinero" onAction="#agregarDinero"/>
+            </HBox>
+
+            <HBox spacing="15" alignment="CENTER">
+                <Button text="Agregar" onAction="#agregarMonedero"/>
+                <Button text="Eliminar" onAction="#eliminarMonedero"/>
+                <Button text="Retirar a Cuenta" onAction="#retirarAMonedaPrincipal"/>
+                <Button fx:id="btnVolver" text="Volver" onAction="#volver"/>
+            </HBox>
+        </VBox>
+    </children>
+</AnchorPane>

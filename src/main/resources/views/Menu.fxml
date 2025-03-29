@@ -38,16 +38,19 @@
                     prefHeight="60.0" prefWidth="90.0" wrapText="true" text="Consulta de saldos"/>
 
             <!-- Fila 3 -->
-            <Button fx:id="btnTransaccionesProgramadas" layoutX="150.0" layoutY="240.0"
+            <Button fx:id="btnTransaccionesProgramadas" layoutX="40.0" layoutY="240.0"
                     onAction="#irATransaccionesProgramadas" prefHeight="60.0" prefWidth="200.0"
                     wrapText="true" text="Transacciones Programadas"/>
+            <Button fx:id="btnMonederos" layoutX="260.0" layoutY="240.0"
+                    onAction="#irAMonederos" prefHeight="60.0" prefWidth="190.0"
+                    wrapText="true" text="Monederos"/>
 
             <!-- Fila 4 -->
             <Button fx:id="btnAnalisis" layoutX="150.0" layoutY="320.0"
                     onAction="#irAAnalisis" prefHeight="60.0" prefWidth="200.0"
                     wrapText="true" text="Análisis de Gasto"/>
 
-            <!-- Fila 5: Notificaciones -->
+            <!-- Fila 5 -->
             <Button fx:id="btnNotificaciones" layoutX="150.0" layoutY="390.0"
                     onAction="#irANotificaciones" prefHeight="30.0" prefWidth="200.0"
                     wrapText="true" text="Ver Notificaciones"/>
