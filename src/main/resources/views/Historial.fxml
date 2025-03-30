@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import java.lang.String?>
 
 <AnchorPane styleClass="fondo-menu" prefHeight="480.0" prefWidth="600.0"
@@ -14,23 +15,32 @@
    </stylesheets>
 
    <children>
+
+      <!-- Barra superior con cliente y saldo -->
+      <HBox spacing="10" alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0" styleClass="barra-superior">
+         <children>
+            <Label fx:id="lblCliente" text="Cliente actual:" styleClass="barra-label"/>
+            <Label fx:id="lblSaldo" text="Saldo:" styleClass="barra-label"/>
+         </children>
+      </HBox>
+
       <!-- Tarjeta contenedora -->
-      <AnchorPane layoutX="50.0" layoutY="30.0" prefWidth="500.0" prefHeight="420.0" styleClass="tarjeta">
+      <AnchorPane layoutX="50.0" layoutY="60.0" prefWidth="500.0" prefHeight="390.0" styleClass="tarjeta">
          <children>
             <Label layoutX="100.0" layoutY="20.0" text="Historial de Transacciones" styleClass="saludo-label" />
 
             <!-- CheckBox para filtrar transacciones alteradas -->
-            <CheckBox fx:id="chkSoloAlteradas" layoutX="25.0" layoutY="50.0"
+            <CheckBox fx:id="chkSoloAlteradas" layoutX="25.0" layoutY="60.0"
                       text="Mostrar solo alteradas" onAction="#cargarHistorial" />
 
-            <ListView fx:id="listViewTransacciones" layoutX="25.0" layoutY="80.0"
+            <ListView fx:id="listViewTransacciones" layoutX="25.0" layoutY="90.0"
                       prefHeight="200.0" prefWidth="450.0" />
 
-            <Label fx:id="lblMensaje" layoutX="25.0" layoutY="285.0" prefWidth="450.0"
+            <Label fx:id="lblMensaje" layoutX="25.0" layoutY="295.0" prefWidth="450.0"
                    alignment="CENTER" styleClass="label" textAlignment="CENTER" wrapText="true" />
 
             <!-- Botón nuevo: Solicitar Reversión -->
-            <Button fx:id="btnSolicitarReversion" layoutX="180.0" layoutY="325.0"
+            <Button fx:id="btnSolicitarReversion" layoutX="180.0" layoutY="330.0"
                     prefWidth="140.0" text="Solicitar Reversión" onAction="#solicitarReversion"
                     styleClass="button" />
 

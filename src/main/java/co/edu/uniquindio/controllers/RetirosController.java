@@ -6,27 +6,32 @@ import co.edu.uniquindio.managers.GestorClientes;
 import co.edu.uniquindio.managers.GestorTransacciones;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import java.io.IOException;
 
 public class RetirosController {
 
-    @FXML private Label lblSaldo, lblMensaje;
+    @FXML private Label lblMensaje, lblCliente, lblSaldo;
     @FXML private TextField txtMonto;
     private Cliente clienteActual;
 
     public void setCliente(Cliente cliente) {
         this.clienteActual = cliente;
-        actualizarSaldo();
+        lblCliente.setText("Cliente actual: " + cliente.getNombre());
+        lblSaldo.setText("Saldo: $" + String.format("%.2f", cliente.getCuenta().getSaldo()));
     }
 
-    private void actualizarSaldo() {
+    private void actualizarBarraSuperior() {
         if (clienteActual != null) {
-            lblSaldo.setText("$" + String.format("%.2f", clienteActual.getCuenta().getSaldo()));
-        } else {
-            lblSaldo.setText("No disponible");
+            lblCliente.setText("Cliente actual: " + clienteActual.getNombre());
+            lblSaldo.setText("Saldo: $" + String.format("%.2f", clienteActual.getCuenta().getSaldo()));
         }
     }
 
@@ -43,10 +48,8 @@ public class RetirosController {
                 throw new TransaccionInvalidaException("Cliente no encontrado.");
             }
 
-            // Intenta retirar (esto lanza la excepción si no hay saldo)
             GestorTransacciones.retirarSaldo(clienteActual, monto);
 
-            // Calcular puntos
             int puntos = (int) (monto / 100) * 2;
             String rangoAnterior = GestorClientes.getSistemaPuntos()
                     .consultarRango(clienteActual.getIdentificacion()).name();
@@ -57,7 +60,6 @@ public class RetirosController {
             String nuevoRango = GestorClientes.getSistemaPuntos()
                     .consultarRango(clienteActual.getIdentificacion()).name();
 
-            // Mostrar alerta si cambia de rango
             if (!rangoAnterior.equals(nuevoRango)) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("¡Nuevo Rango!");
@@ -68,7 +70,7 @@ public class RetirosController {
 
             lblMensaje.setText("Retiro exitoso. Puntos ganados: " + puntos);
             lblMensaje.setStyle("-fx-text-fill: green;");
-            actualizarSaldo();
+            actualizarBarraSuperior();
 
         } catch (NumberFormatException e) {
             lblMensaje.setText("Ingrese un número válido.");
@@ -79,9 +81,21 @@ public class RetirosController {
         }
     }
 
-
     @FXML
     private void volverMenu(ActionEvent event) {
-        ((Stage) lblSaldo.getScene().getWindow()).close();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TransaccionesMenu.fxml"));
+            Parent root = loader.load();
+
+            TransaccionesMenuController controller = loader.getController();
+            controller.setCliente(clienteActual);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al volver al menú de transacciones.");
+        }
     }
 }

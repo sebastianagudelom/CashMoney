@@ -7,8 +7,14 @@ import co.edu.uniquindio.structures.ListaEnlazada;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.*;
+
+import java.io.IOException;
 import java.util.*;
 
 public class TransferenciasController {
@@ -17,6 +23,7 @@ public class TransferenciasController {
     @FXML private TextField txtMonto, txtNumeroCuenta;
     @FXML private ComboBox<String> cmbUsuarios;
     @FXML private ComboBox<String> cmbCategoria;
+    @FXML private Label lblCliente, lblSaldoSuperior;
     private final Map<String, String> cuentasMap = new HashMap<>();
     private Cliente clienteActual;
 
@@ -29,18 +36,31 @@ public class TransferenciasController {
     //  Método para recibir el cliente actual
     public void setCliente(Cliente cliente) {
         this.clienteActual = cliente;
+
+        // Barra superior
+        if (lblCliente != null) {
+            lblCliente.setText("Cliente actual: " + cliente.getNombre());
+        }
+        if (lblSaldoSuperior != null) {
+            lblSaldoSuperior.setText("Saldo: $" + String.format("%.2f", cliente.getCuenta().getSaldo()));
+        }
+
         actualizarSaldo();
-        cargarUsuarios(); // Cargar usuarios después de asignar cliente
+        cargarUsuarios();
     }
 
     //  Método para actualizar saldo en pantalla
     private void actualizarSaldo() {
         if (clienteActual != null) {
-            lblSaldo.setText("$" + String.format("%.2f", clienteActual.getCuenta().getSaldo()));
+            String saldoTexto = "$" + String.format("%.2f", clienteActual.getCuenta().getSaldo());
+            if (lblSaldo != null) lblSaldo.setText(saldoTexto);
+            if (lblSaldoSuperior != null) lblSaldoSuperior.setText("Saldo: " + saldoTexto);
         } else {
-            lblSaldo.setText("No disponible");
+            if (lblSaldo != null) lblSaldo.setText("No disponible");
+            if (lblSaldoSuperior != null) lblSaldoSuperior.setText("Saldo: No disponible");
         }
     }
+
 
     // Método para cargar las cuentas inscritas
     private void cargarUsuarios() {
@@ -179,6 +199,20 @@ public class TransferenciasController {
     //  Método para cerrar la ventana
     @FXML
     private void volverMenu(ActionEvent event) {
-        ((Stage) lblSaldo.getScene().getWindow()).close();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TransaccionesMenu.fxml"));
+            Parent root = loader.load();
+
+            TransaccionesMenuController controller = loader.getController();
+            controller.setCliente(clienteActual);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al volver al menú de transacciones.");
+        }
     }
+
 }

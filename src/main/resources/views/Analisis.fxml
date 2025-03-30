@@ -3,9 +3,8 @@
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.String?>
 
+<?import java.lang.String?>
 <AnchorPane xmlns="http://javafx.com/javafx/20.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="co.edu.uniquindio.controllers.AnalisisController"
@@ -19,21 +18,26 @@
     <children>
         <AnchorPane layoutX="50.0" layoutY="30.0" prefWidth="500.0" prefHeight="420.0" styleClass="tarjeta">
             <children>
+                <VBox spacing="20" alignment="CENTER" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+                      AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
 
-                <Label layoutX="140" layoutY="15" text="Análisis de Gastos" styleClass="saludo-label"/>
+                    <Label text="Análisis de Gastos" styleClass="titulo-transacciones"/>
 
-                <BarChart fx:id="graficoBarras" layoutX="25.0" layoutY="50.0" prefHeight="150.0" prefWidth="450.0">
-                    <xAxis>
-                        <CategoryAxis label="Categoría"/>
-                    </xAxis>
-                    <yAxis>
-                        <NumberAxis label="Monto"/>
-                    </yAxis>
-                </BarChart>
+                    <BarChart fx:id="graficoBarras" prefHeight="150.0" prefWidth="450.0">
+                        <xAxis>
+                            <CategoryAxis label="Categoría"/>
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="Monto"/>
+                        </yAxis>
+                    </BarChart>
 
-                <Pane fx:id="graficoNodos" layoutX="25.0" layoutY="210.0" prefHeight="140.0" prefWidth="450.0" style="-fx-border-color: gray;"/>
+                    <Pane fx:id="graficoNodos"
+                          prefHeight="70.0" prefWidth="450.0"
+                          style="-fx-border-color: gray; -fx-background-color: #ffffff; -fx-background-radius: 10;" />
 
-                <Button fx:id="btnVolver" layoutX="25.0" layoutY="360.0" prefWidth="80.0" text="Volver" onAction="#volverMenu" styleClass="button"/>
+                    <Button fx:id="btnVolver" text="Volver" onAction="#volverMenu" styleClass="boton-volver"/>
+                </VBox>
             </children>
         </AnchorPane>
     </children>

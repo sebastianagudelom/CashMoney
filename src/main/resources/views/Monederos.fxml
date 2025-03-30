@@ -5,6 +5,7 @@
 <?import java.lang.String?>
 
 <AnchorPane prefHeight="480.0" prefWidth="600.0"
+            styleClass="fondo-menu"
             xmlns="http://javafx.com/javafx/20.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="co.edu.uniquindio.controllers.MonederosController">
@@ -14,42 +15,45 @@
     </stylesheets>
 
     <children>
-        <VBox spacing="10" alignment="CENTER" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
-              AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0">
+        <AnchorPane layoutX="20.0" layoutY="20.0" prefWidth="560.0" prefHeight="440.0" styleClass="tarjeta">
+            <children>
+                <VBox spacing="12" alignment="CENTER" AnchorPane.topAnchor="15.0" AnchorPane.bottomAnchor="15.0"
+                      AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
 
-            <Label text="Mis Monederos" styleClass="titulo-label"/>
+                    <Label text="Mis Monederos" styleClass="titulo-transacciones"/>
 
-            <TableView fx:id="tablaMonederos" prefHeight="200">
-                <columns>
-                    <TableColumn fx:id="colNombre" text="Nombre"/>
-                    <TableColumn fx:id="colSaldo" text="Saldo"/>
-                    <TableColumn fx:id="colMeta" text="Meta"/>
-                    <TableColumn fx:id="colDescripcion" text="Descripción"/>
-                    <!-- Columna de color eliminada visualmente -->
-                </columns>
-            </TableView>
+                    <TableView fx:id="tablaMonederos" prefHeight="160.0">
+                        <columns>
+                            <TableColumn fx:id="colNombre" text="Nombre"/>
+                            <TableColumn fx:id="colSaldo" text="Saldo"/>
+                            <TableColumn fx:id="colMeta" text="Meta"/>
+                            <TableColumn fx:id="colDescripcion" text="Descripción"/>
+                        </columns>
+                    </TableView>
 
-            <HBox spacing="10" alignment="CENTER">
-                <TextField fx:id="txtNombre" promptText="Nombre del Monedero"/>
-                <TextField fx:id="txtMeta" promptText="Meta de ahorro"/>
-            </HBox>
+                    <HBox spacing="10" alignment="CENTER">
+                        <TextField fx:id="txtNombre" promptText="Nombre del Monedero" styleClass="text-field"/>
+                        <TextField fx:id="txtMeta" promptText="Meta de ahorro" styleClass="text-field"/>
+                    </HBox>
 
-            <HBox spacing="10" alignment="CENTER">
-                <TextField fx:id="txtDescripcion" promptText="Descripción"/>
-                <ComboBox fx:id="cmbColor" promptText="Color"/>
-            </HBox>
+                    <HBox spacing="10" alignment="CENTER">
+                        <TextField fx:id="txtDescripcion" promptText="Descripción" styleClass="text-field"/>
+                        <ComboBox fx:id="cmbColor" promptText="Color" styleClass="combo-box"/>
+                    </HBox>
 
-            <HBox spacing="10" alignment="CENTER">
-                <TextField fx:id="txtMonto" promptText="Monto a agregar"/>
-                <Button text="Agregar Dinero" onAction="#agregarDinero"/>
-            </HBox>
+                    <HBox spacing="10" alignment="CENTER">
+                        <TextField fx:id="txtMonto" promptText="Monto a agregar" styleClass="text-field"/>
+                        <Button text="Agregar Dinero" onAction="#agregarDinero" styleClass="button"/>
+                    </HBox>
 
-            <HBox spacing="15" alignment="CENTER">
-                <Button text="Agregar" onAction="#agregarMonedero"/>
-                <Button text="Eliminar" onAction="#eliminarMonedero"/>
-                <Button text="Retirar a Cuenta" onAction="#retirarAMonedaPrincipal"/>
-                <Button fx:id="btnVolver" text="Volver" onAction="#volver"/>
-            </HBox>
-        </VBox>
+                    <HBox spacing="15" alignment="CENTER">
+                        <Button text="Agregar" onAction="#agregarMonedero" styleClass="button"/>
+                        <Button text="Eliminar" onAction="#eliminarMonedero" styleClass="button"/>
+                        <Button text="Retirar a Cuenta" onAction="#retirarAMonedaPrincipal" styleClass="button"/>
+                        <Button fx:id="btnVolver" text="Volver" onAction="#volver" styleClass="boton-volver"/>
+                    </HBox>
+                </VBox>
+            </children>
+        </AnchorPane>
     </children>
 </AnchorPane>

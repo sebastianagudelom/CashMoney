@@ -15,42 +15,47 @@
    </stylesheets>
 
    <children>
-      <AnchorPane layoutX="50.0" layoutY="30.0" prefWidth="500.0" prefHeight="420.0" styleClass="tarjeta">
+
+      <!-- Barra superior con información del cliente -->
+      <HBox spacing="10" alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0" styleClass="barra-superior">
+         <children>
+            <Label fx:id="lblCliente" text="Cliente actual:" styleClass="barra-label" />
+            <Label fx:id="lblSaldoSuperior" text="Saldo:" styleClass="barra-label" />
+         </children>
+      </HBox>
+
+      <AnchorPane layoutX="50.0" layoutY="60.0" prefWidth="500.0" prefHeight="390.0" styleClass="tarjeta">
          <children>
 
             <!-- Título -->
             <Label layoutX="170.0" layoutY="20.0" text="Transferencias" styleClass="saludo-label"/>
 
-            <!-- Saldo -->
-            <Label layoutX="30.0" layoutY="70.0" text="Saldo actual" styleClass="label"/>
-            <Label fx:id="lblSaldo" layoutX="30.0" layoutY="95.0" styleClass="label"/>
-
             <!-- Destinatario -->
-            <Label layoutX="180.0" layoutY="70.0" text="Destinatario" styleClass="label"/>
-            <ComboBox fx:id="cmbUsuarios" layoutX="180.0" layoutY="95.0" promptText="Seleccione" prefWidth="140.0" styleClass="combo-box"/>
+            <Label layoutX="30.0" layoutY="70.0" text="Destinatario" styleClass="label"/>
+            <ComboBox fx:id="cmbUsuarios" layoutX="30.0" layoutY="95.0" promptText="Seleccione" prefWidth="140.0" styleClass="combo-box"/>
 
             <!-- Monto -->
-            <Label layoutX="340.0" layoutY="70.0" text="Monto a transferir" styleClass="label"/>
-            <TextField fx:id="txtMonto" layoutX="340.0" layoutY="95.0" promptText="Ingrese monto" styleClass="text-field" prefWidth="130.0"/>
+            <Label layoutX="190.0" layoutY="70.0" text="Monto a transferir" styleClass="label"/>
+            <TextField fx:id="txtMonto" layoutX="190.0" layoutY="95.0" promptText="Ingrese monto" styleClass="text-field" prefWidth="130.0"/>
 
             <!-- Categoría -->
-            <Label layoutX="30.0" layoutY="130.0" text="Categoría" styleClass="label"/>
-            <ComboBox fx:id="cmbCategoria" layoutX="30.0" layoutY="155.0" prefWidth="200.0" promptText="Seleccione categoría" styleClass="combo-box"/>
+            <Label layoutX="340.0" layoutY="70.0" text="Categoría" styleClass="label"/>
+            <ComboBox fx:id="cmbCategoria" layoutX="340.0" layoutY="95.0" prefWidth="130.0" promptText="Seleccione categoría" styleClass="combo-box"/>
 
             <!-- Botón transferir -->
-            <Button fx:id="btnTransferir" layoutX="340.0" layoutY="155.0" text="Transferir" onAction="#realizarTransferencia" styleClass="button"/>
+            <Button fx:id="btnTransferir" layoutX="200.0" layoutY="140.0" text="Transferir" onAction="#realizarTransferencia" styleClass="button"/>
 
             <!-- Mensaje de estado -->
-            <Label fx:id="lblMensaje" layoutX="30.0" layoutY="200.0" prefWidth="440.0" textAlignment="CENTER" styleClass="label"/>
+            <Label fx:id="lblMensaje" layoutX="30.0" layoutY="190.0" prefWidth="440.0" textAlignment="CENTER" styleClass="label"/>
 
             <!-- Inscribir cuentas -->
-            <Label layoutX="30.0" layoutY="240.0" text="Inscribir cuentas nuevas" styleClass="label"/>
-            <TextField fx:id="txtNumeroCuenta" layoutX="30.0" layoutY="265.0" promptText="Número de cuenta" styleClass="text-field" prefWidth="200.0"/>
-            <Button fx:id="btnInscribir" layoutX="240.0" layoutY="265.0" text="Inscribir" onAction="#inscribirCuenta" styleClass="button"/>
-            <Label fx:id="lblInscripcionMensaje" layoutX="30.0" layoutY="300.0" prefWidth="440.0" styleClass="label"/>
+            <Label layoutX="30.0" layoutY="230.0" text="Inscribir cuentas nuevas" styleClass="label"/>
+            <TextField fx:id="txtNumeroCuenta" layoutX="30.0" layoutY="255.0" promptText="Número de cuenta" styleClass="text-field" prefWidth="200.0"/>
+            <Button fx:id="btnInscribir" layoutX="240.0" layoutY="255.0" text="Inscribir" onAction="#inscribirCuenta" styleClass="button"/>
+            <Label fx:id="lblInscripcionMensaje" layoutX="30.0" layoutY="290.0" prefWidth="440.0" styleClass="label"/>
 
             <!-- Volver -->
-            <Button fx:id="btnVolver" layoutX="30.0" layoutY="350.0" text="Volver" onAction="#volverMenu" styleClass="button"/>
+            <Button fx:id="btnVolver" layoutX="30.0" layoutY="340.0" text="Volver" onAction="#volverMenu" styleClass="button"/>
 
          </children>
       </AnchorPane>

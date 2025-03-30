@@ -14,21 +14,27 @@
    </stylesheets>
 
    <children>
-      <AnchorPane layoutX="50.0" layoutY="30.0" prefWidth="500.0" prefHeight="420.0" styleClass="tarjeta">
+
+      <!-- Barra superior -->
+      <HBox spacing="10" alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0" styleClass="barra-superior">
          <children>
-            <Label text="Realizar retiro" layoutX="160.0" layoutY="20.0" styleClass="saludo-label"/>
+            <Label fx:id="lblCliente" text="Cliente actual:" styleClass="barra-label" />
+            <Label fx:id="lblSaldo" text="Saldo:" styleClass="barra-label" />
+         </children>
+      </HBox>
 
-            <Label text="Saldo disponible" layoutX="60.0" layoutY="80.0" styleClass="label"/>
-            <Label fx:id="lblSaldo" layoutX="60.0" layoutY="110.0" prefWidth="150.0" alignment="CENTER" textAlignment="CENTER" styleClass="label"/>
+      <AnchorPane layoutX="50.0" layoutY="60.0" prefWidth="500.0" prefHeight="390.0" styleClass="tarjeta">
+         <children>
+            <Label text="Realizar Retiro" layoutX="160.0" layoutY="20.0" styleClass="saludo-label"/>
 
-            <Label text="Monto a retirar" layoutX="290.0" layoutY="80.0" styleClass="label"/>
-            <TextField fx:id="txtMonto" layoutX="290.0" layoutY="110.0" promptText="Ingrese el monto" styleClass="text-field" maxWidth="140.0"/>
+            <Label text="Monto a retirar" layoutX="60.0" layoutY="90.0" styleClass="label"/>
+            <TextField fx:id="txtMonto" layoutX="200.0" layoutY="85.0" promptText="Ingrese el monto" styleClass="text-field" maxWidth="140.0"/>
 
-            <Button fx:id="btnRetirar" layoutX="200.0" layoutY="180.0" text="Retirar" onAction="#realizarRetiro" styleClass="button"/>
+            <Button fx:id="btnRetirar" layoutX="200.0" layoutY="140.0" text="Retirar" onAction="#realizarRetiro" styleClass="button"/>
 
-            <Label fx:id="lblMensaje" layoutX="60.0" layoutY="240.0" prefWidth="380.0" textAlignment="CENTER" alignment="CENTER" wrapText="true" styleClass="label"/>
+            <Label fx:id="lblMensaje" layoutX="60.0" layoutY="200.0" prefWidth="380.0" textAlignment="CENTER" alignment="CENTER" wrapText="true" styleClass="label"/>
 
-            <Button fx:id="btnVolver" layoutX="60.0" layoutY="290.0" text="Volver" onAction="#volverMenu" styleClass="button"/>
+            <Button fx:id="btnVolver" layoutX="60.0" layoutY="260.0" text="Volver" onAction="#volverMenu" styleClass="button"/>
          </children>
       </AnchorPane>
    </children>

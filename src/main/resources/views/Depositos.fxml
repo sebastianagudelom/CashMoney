@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.*?>
 <?import java.lang.String?>
 
 <AnchorPane styleClass="fondo-menu" prefHeight="480.0" prefWidth="600.0"
@@ -15,10 +14,19 @@
    </stylesheets>
 
    <children>
-      <!-- Tarjeta contenedora -->
-      <AnchorPane layoutX="50.0" layoutY="30.0" prefWidth="500.0" prefHeight="420.0" styleClass="tarjeta">
+
+      <!-- Barra superior con información del cliente -->
+      <HBox spacing="10" alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0" styleClass="barra-superior">
          <children>
-            <Label layoutX="150.0" layoutY="20.0" text="Depósito de dinero" styleClass="saludo-label" />
+            <Label fx:id="lblCliente" text="Cliente actual:" styleClass="barra-label" />
+            <Label fx:id="lblSaldo" text="Saldo:" styleClass="barra-label" />
+         </children>
+      </HBox>
+
+      <!-- Tarjeta contenedora -->
+      <AnchorPane layoutX="50.0" layoutY="60.0" prefWidth="500.0" prefHeight="390.0" styleClass="tarjeta">
+         <children>
+            <Label layoutX="130.0" layoutY="20.0" text="Depósito de Dinero" styleClass="titulo-transacciones" />
 
             <Label layoutX="70.0" layoutY="90.0" text="Ingrese el monto a depositar:" styleClass="label" />
             <TextField fx:id="txtMonto" layoutX="270.0" layoutY="85.0" prefWidth="150.0" promptText="Monto" styleClass="text-field"/>
@@ -27,7 +35,7 @@
 
             <Label fx:id="lblMensaje" layoutX="25.0" layoutY="190.0" prefWidth="450.0" alignment="CENTER" styleClass="label" textAlignment="CENTER" wrapText="true" />
 
-            <Button fx:id="btnVolver" layoutX="25.0" layoutY="350.0" prefWidth="80.0" text="Volver" onAction="#volverMenu" styleClass="button" />
+            <Button fx:id="btnVolver" layoutX="25.0" layoutY="320.0" prefWidth="80.0" text="Volver" onAction="#volverMenu" styleClass="button" />
          </children>
       </AnchorPane>
    </children>

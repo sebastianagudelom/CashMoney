@@ -8,10 +8,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class TransaccionesProgramadasController {
@@ -25,12 +30,19 @@ public class TransaccionesProgramadasController {
     @FXML private TableColumn<TransaccionProgramada, String> colOrigen, colDestino;
     @FXML private TableColumn<TransaccionProgramada, Double> colMonto;
     @FXML private TableColumn<TransaccionProgramada, LocalDate> colFecha;
+    @FXML private Label lblCliente, lblSaldo;
 
     private GestorTransaccionesProgramadas gestorTransacciones;
     private Cliente usuarioActual;
 
     public void setCliente(Cliente cliente) {
         this.usuarioActual = cliente;
+
+        if (lblCliente != null && lblSaldo != null) {
+            lblCliente.setText("Cliente actual: " + cliente.getNombre());
+            lblSaldo.setText("Saldo: $" + String.format("%.2f", cliente.getCuenta().getSaldo()));
+        }
+
         cargarDestinatarios();
         cargarTransaccionesDelUsuario();
     }
@@ -126,6 +138,20 @@ public class TransaccionesProgramadasController {
 
     @FXML
     private void volverMenu(ActionEvent event) {
-        ((Stage) btnVolver.getScene().getWindow()).close();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TransaccionesMenu.fxml"));
+            Parent root = loader.load();
+
+            TransaccionesMenuController controller = loader.getController();
+            controller.setCliente(usuarioActual);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al volver al menú de transacciones.");
+        }
     }
+
 }

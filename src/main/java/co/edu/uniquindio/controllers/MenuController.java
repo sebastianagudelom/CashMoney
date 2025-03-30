@@ -11,10 +11,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
 public class MenuController {
     private Cliente clienteActual;
+
     @FXML
     private Label lblSaludo;
 
@@ -27,63 +29,20 @@ public class MenuController {
     }
 
     @FXML
-    private void irADepositos(ActionEvent event) {
-        if (clienteActual == null) {
-            System.out.println("Error: No hay usuario activo.");
-            return;
-        }
+    private void irAMenuTransacciones(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Depositos.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TransaccionesMenu.fxml"));
             Parent root = loader.load();
 
-            // Obtener el controlador de la nueva ventana
-            DepositosController depositosController = loader.getController();
-            depositosController.setCliente(clienteActual);
+            TransaccionesMenuController controller = loader.getController();
+            controller.setCliente(clienteActual);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void irARetiros(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Retiros.fxml"));
-            Parent root = loader.load();
-
-            RetirosController retirosController = loader.getController();
-            retirosController.setCliente(clienteActual);
-
-            Stage stage = new Stage();
-            stage.setTitle("Realizar Retiro");
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al abrir la ventana de retiro.");
-        }
-    }
-
-    @FXML
-    private void irATransferencias(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Transferencias.fxml"));
-            Parent root = loader.load();
-
-            // Obtener el controlador y pasar el cliente actual
-            TransferenciasController transferenciasController = loader.getController();
-            transferenciasController.setCliente(clienteActual);
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Transferencias");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al abrir la ventana de transferencias.");
+            System.out.println("Error al abrir el menú de transacciones.");
         }
     }
 
@@ -125,25 +84,6 @@ public class MenuController {
     }
 
     @FXML
-    private void irAConsultaHistorial(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Historial.fxml"));
-            Parent root = loader.load();
-
-            HistorialController historialController = loader.getController();
-            historialController.setCliente(clienteActual);
-
-            Stage stage = new Stage();
-            stage.setTitle("Historial de Transacciones");
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al abrir el historial.");
-        }
-    }
-
-    @FXML
     private void irAPuntos(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Puntos.fxml"));
@@ -158,25 +98,6 @@ public class MenuController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void irATransaccionesProgramadas(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TransaccionesProgramadas.fxml"));
-            Parent root = loader.load();
-
-            TransaccionesProgramadasController controller = loader.getController();
-            controller.setCliente(clienteActual);
-
-            Stage stage = new Stage();
-            stage.setTitle("Transacciones Programadas");
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al abrir la ventana de transacciones programadas.");
         }
     }
 

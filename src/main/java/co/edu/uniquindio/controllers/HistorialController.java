@@ -3,11 +3,18 @@ package co.edu.uniquindio.controllers;
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.Transaccion;
 import co.edu.uniquindio.structures.ListaEnlazada;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import co.edu.uniquindio.services.ExportadorPDF;
 import co.edu.uniquindio.managers.GestorReversiones;
+
+import java.io.IOException;
 
 public class HistorialController {
 
@@ -15,6 +22,8 @@ public class HistorialController {
     @FXML private Label lblMensaje;
     @FXML private CheckBox chkSoloAlteradas;
     @FXML private Button btnSolicitarReversion;
+    @FXML private Label lblCliente, lblSaldo;
+
     private Cliente clienteActual;
 
     @FXML
@@ -43,11 +52,13 @@ public class HistorialController {
         });
     }
 
-
     public void setCliente(Cliente cliente) {
         this.clienteActual = cliente;
+        if (lblCliente != null) lblCliente.setText("Cliente actual: " + cliente.getNombre());
+        if (lblSaldo != null) lblSaldo.setText("Saldo: $" + String.format("%.2f", cliente.getCuenta().getSaldo()));
         cargarHistorial();
     }
+
 
     @FXML
     private void exportarPDF() {
@@ -114,7 +125,21 @@ public class HistorialController {
     }
 
     @FXML
-    private void volverMenu() {
-        ((Stage) lblMensaje.getScene().getWindow()).close();
+    private void volverMenu(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TransaccionesMenu.fxml"));
+            Parent root = loader.load();
+
+            TransaccionesMenuController controller = loader.getController();
+            controller.setCliente(clienteActual);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al volver al menú de transacciones.");
+        }
     }
+
 }
