@@ -1,30 +1,34 @@
 package co.edu.uniquindio.managers;
 
+import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.NodoPuntos;
 import co.edu.uniquindio.models.RangoCliente;
+
 import java.io.Serializable;
 import java.util.HashMap;
 
 public class SistemaPuntos implements Serializable {
 
     private NodoPuntos raiz;
-    private final HashMap<String, Integer> tablaPuntos;
+
+    private final HashMap<String, Integer> tablaPuntos = new HashMap<>();
 
     public SistemaPuntos() {
         this.raiz = null;
-        this.tablaPuntos = new HashMap<>();
     }
 
     public void reemplazarPor(SistemaPuntos otro) {
         this.raiz = otro.raiz;
-        this.tablaPuntos.clear();
-        this.tablaPuntos.putAll(otro.tablaPuntos);
+        tablaPuntos.clear();
+        tablaPuntos.putAll(otro.tablaPuntos);
     }
 
     public void agregarPuntos(String cedula, int puntosGanados) {
         int total = tablaPuntos.getOrDefault(cedula, 0) + puntosGanados;
         tablaPuntos.put(cedula, total);
         raiz = insertarNodo(raiz, cedula, total);
+
+        GestorClientes.guardarSistemaPuntos();
     }
 
     private NodoPuntos insertarNodo(NodoPuntos actual, String cedula, int puntos) {
@@ -36,7 +40,6 @@ public class SistemaPuntos implements Serializable {
         } else {
             actual.setCedula(cedula);
         }
-
         return actual;
     }
 
@@ -48,4 +51,18 @@ public class SistemaPuntos implements Serializable {
         int puntos = consultarPuntos(cedula);
         return RangoCliente.calcularRango(puntos);
     }
+
+    // Método para restar puntos por cédula
+    public void restarPuntos(String identificacion, int puntos) {
+        Integer puntosActuales = tablaPuntos.get(identificacion);
+
+        if (puntosActuales == null || puntosActuales < puntos) {
+            throw new IllegalArgumentException("Puntos insuficientes para realizar el canje.");
+        }
+
+        tablaPuntos.put(identificacion, puntosActuales - puntos);
+        GestorClientes.guardarSistemaPuntos();
+    }
+
+
 }

@@ -53,4 +53,11 @@ public class Monedero implements Serializable {
     public void setMeta(double meta) { this.meta = meta; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
     public void setColorHex(String colorHex) { this.colorHex = colorHex; }
+
+    @Override
+    public String toString() {
+        String nombreSeguro = (nombre != null) ? nombre : "Monedero";
+        return String.format("%s (Saldo: %.2f)", nombreSeguro, saldo);
+    }
+
 }

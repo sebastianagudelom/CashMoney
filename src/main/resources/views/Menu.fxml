@@ -28,9 +28,10 @@
 
             <!-- Fila 3 -->
             <Button fx:id="btnNotificaciones" layoutX="150.0" layoutY="240.0" onAction="#irANotificaciones" prefHeight="30.0" prefWidth="200.0" text="Ver Notificaciones" wrapText="true" />
+            <Button fx:id="btnCanjePuntos" layoutX="150.0" layoutY="280.0" onAction="#irACanjePuntos" prefHeight="30.0" prefWidth="200.0" text="Canjear Puntos" wrapText="true" />
 
             <!-- Botón salir -->
-            <Button fx:id="btnSalir" layoutX="410.0" layoutY="280.0" onAction="#irALogin" prefHeight="30.0" prefWidth="60.0" text="Salir" />
+            <Button fx:id="btnSalir" layoutX="410.0" layoutY="320.0" onAction="#irALogin" prefHeight="30.0" prefWidth="60.0" text="Salir" />
          </children>
       </AnchorPane>
    </children>

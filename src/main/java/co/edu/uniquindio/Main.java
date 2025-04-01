@@ -38,6 +38,7 @@ public class Main extends Application {
         }
 
         GestorClientes.cargarClientes(); // Cargar clientes antes de iniciar
+        GestorClientes.cargarSistemaPuntos(); // Cargar los puntos antes de iniciar
         GestorClientes.imprimirClientes(); // Para ver los clientes cargados
         launch(args);
     }

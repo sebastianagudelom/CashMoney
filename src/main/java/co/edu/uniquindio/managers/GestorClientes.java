@@ -15,10 +15,6 @@ public class GestorClientes {
     private static final String ARCHIVO_PUNTOS = "src/main/resources/data/puntos.dat";
     private static final SistemaPuntos sistemaPuntos = new SistemaPuntos();
 
-    private GestorClientes() {
-        cargarClientes();
-    }
-
     public static SistemaPuntos getSistemaPuntos() {
         return sistemaPuntos;
     }
@@ -178,7 +174,7 @@ public class GestorClientes {
         }
     }
 
-    private static void guardarSistemaPuntos() {
+    public static void guardarSistemaPuntos() {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(ARCHIVO_PUNTOS))) {
             out.writeObject(sistemaPuntos);
         } catch (IOException e) {
@@ -192,10 +188,9 @@ public class GestorClientes {
         } catch (IOException e) {
             System.out.println("Error al guardar los clientes: " + e.getMessage());
         }
-        guardarSistemaPuntos();
     }
 
-    private static void cargarSistemaPuntos() {
+    public static void cargarSistemaPuntos() {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(ARCHIVO_PUNTOS))) {
             SistemaPuntos cargado = (SistemaPuntos) in.readObject();
             if (cargado != null) {
@@ -226,7 +221,6 @@ public class GestorClientes {
                 }
             }
 
-            cargarSistemaPuntos();
             guardarClientes();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("No se encontraron clientes guardados.");

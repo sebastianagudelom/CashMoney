@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+
+<AnchorPane prefHeight="480.0" prefWidth="600.0"
+            styleClass="fondo-menu"
+            xmlns="http://javafx.com/javafx/20.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.uniquindio.controllers.CanjePuntosController">
+
+    <stylesheets>
+        <String fx:value="/styles/styles.css"/>
+    </stylesheets>
+
+    <children>
+        <AnchorPane layoutX="20.0" layoutY="20.0" prefWidth="560.0" prefHeight="440.0" styleClass="tarjeta">
+            <children>
+                <VBox spacing="20" alignment="CENTER" AnchorPane.topAnchor="15.0" AnchorPane.bottomAnchor="15.0"
+                      AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+
+                    <Label text="Canje de Puntos" styleClass="titulo-transacciones"/>
+
+                    <Label fx:id="labelPuntos" text="Puntos actuales: 0" styleClass="barra-label"/>
+
+                    <ComboBox fx:id="comboCanje" promptText="Selecciona una opción de canje" styleClass="combo-box"
+                              prefWidth="300"/>
+
+                    <ComboBox fx:id="comboMonederos" promptText="Selecciona un monedero" styleClass="combo-box"
+                              prefWidth="300"/>
+
+                    <HBox spacing="20" alignment="CENTER">
+                        <Button fx:id="btnCanjear" text="Canjear" styleClass="boton-transaccion"/>
+                        <Button fx:id="btnVolver" text="Volver" onAction="#volver" styleClass="boton-volver"/>
+                    </HBox>
+                </VBox>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
