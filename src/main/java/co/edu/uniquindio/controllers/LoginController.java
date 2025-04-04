@@ -1,5 +1,6 @@
 package co.edu.uniquindio.controllers;
 
+import co.edu.uniquindio.exceptions.VistaCargaException;
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.managers.GestorClientes;
 import co.edu.uniquindio.managers.GestorAdministradores; // <--- Agrega esto
@@ -32,7 +33,11 @@ public class LoginController {
 
         // Validación modo administrador
         if (GestorAdministradores.verificarCredenciales(usuario, contrasena)) {
-            cambiarVentanaAdmin(event, "/views/AdminMenu.fxml");
+            try {
+                cambiarVentanaAdmin(event);
+            } catch (VistaCargaException e) {
+                throw new RuntimeException(e);
+            }
             return;
         }
 
@@ -42,15 +47,19 @@ public class LoginController {
         if (clienteLogeado != null) {
             System.out.println("Inicio de sesion correcto" + " Usuario: " + clienteLogeado.getUsuario() +
                     " Clave: " + clienteLogeado.getClave() + " Nombre: " + clienteLogeado.getNombre());
-            cambiarVentanaCliente(event, "/views/Menu.fxml");
+            try {
+                cambiarVentanaCliente(event);
+            } catch (VistaCargaException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             lblMensaje.setText("Usuario o contraseña incorrectos.");
         }
     }
 
-    private void cambiarVentanaCliente(ActionEvent event, String rutaFXML) {
+    private void cambiarVentanaCliente(ActionEvent event) throws VistaCargaException {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Menu.fxml"));
             Parent root = loader.load();
 
             MenuController menuController = loader.getController();
@@ -60,27 +69,25 @@ public class LoginController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al cargar la ventana: " + rutaFXML);
+            throw new VistaCargaException("Error al abrir la vista de Menu");
         }
     }
 
-    private void cambiarVentanaAdmin(ActionEvent event, String rutaFXML) {
+    private void cambiarVentanaAdmin(ActionEvent event) throws VistaCargaException {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/AdminMenu.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al cargar la ventana de administrador.");
+            throw new VistaCargaException("Error al abrir la vista de AdminMenu");
         }
     }
 
     @FXML
-    private void irARegistro(ActionEvent event) {
+    private void irARegistro(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Registro.fxml"));
             Parent root = loader.load();
@@ -89,8 +96,7 @@ public class LoginController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al cargar la ventana de registro.");
+            throw new VistaCargaException("Error al abrir la vista de Registro");
         }
     }
 }

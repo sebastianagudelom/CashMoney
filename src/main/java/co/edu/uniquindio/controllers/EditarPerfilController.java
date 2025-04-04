@@ -1,5 +1,6 @@
 package co.edu.uniquindio.controllers;
 
+import co.edu.uniquindio.exceptions.VistaCargaException;
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.managers.GestorClientes;
 import javafx.event.ActionEvent;
@@ -65,7 +66,11 @@ public class EditarPerfilController {
                     stage.close();
 
                     // Redirigir a la pantalla de login
-                    abrirLogin();
+                    try {
+                        abrirLogin();
+                    } catch (VistaCargaException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             });
 
@@ -109,7 +114,7 @@ public class EditarPerfilController {
         }
     }
 
-    private void abrirLogin() {
+    private void abrirLogin() throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
             Parent root = loader.load();
@@ -119,8 +124,7 @@ public class EditarPerfilController {
             loginStage.setScene(new Scene(root));
             loginStage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-        }
+            throw new VistaCargaException("Error al abrir la vista de Login");        }
     }
 
     @FXML

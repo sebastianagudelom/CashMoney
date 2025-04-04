@@ -13,7 +13,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.*;
-
 import java.io.IOException;
 import java.util.*;
 
@@ -198,7 +197,7 @@ public class TransferenciasController {
 
     //  Método para cerrar la ventana
     @FXML
-    private void volverMenu(ActionEvent event) {
+    private void volverMenu(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TransaccionesMenu.fxml"));
             Parent root = loader.load();
@@ -210,8 +209,8 @@ public class TransferenciasController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al volver al menú de transacciones.");
+            throw new VistaCargaException("Error al volver al Menu de transacciones");
+
         }
     }
 

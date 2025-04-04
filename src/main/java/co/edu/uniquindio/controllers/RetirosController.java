@@ -1,6 +1,7 @@
 package co.edu.uniquindio.controllers;
 
 import co.edu.uniquindio.exceptions.TransaccionInvalidaException;
+import co.edu.uniquindio.exceptions.VistaCargaException;
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.managers.GestorClientes;
 import co.edu.uniquindio.managers.GestorTransacciones;
@@ -82,7 +83,7 @@ public class RetirosController {
     }
 
     @FXML
-    private void volverMenu(ActionEvent event) {
+    private void volverMenu(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TransaccionesMenu.fxml"));
             Parent root = loader.load();
@@ -94,8 +95,7 @@ public class RetirosController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al volver al menú de transacciones.");
+            throw new VistaCargaException("Error al abrir la vista de Menu de transacciones");
         }
     }
 }

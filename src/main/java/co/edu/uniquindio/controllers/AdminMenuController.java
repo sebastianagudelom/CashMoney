@@ -1,5 +1,6 @@
 package co.edu.uniquindio.controllers;
 
+import co.edu.uniquindio.exceptions.VistaCargaException;
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.managers.GestorClientes;
 import co.edu.uniquindio.models.Transaccion;
@@ -94,7 +95,7 @@ public class AdminMenuController {
     }
 
     @FXML
-    private void abrirReversiones() {
+    private void abrirReversiones() throws VistaCargaException{
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/ReversionesAdmin.fxml"));
             Parent root = loader.load();
@@ -104,19 +105,19 @@ public class AdminMenuController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new VistaCargaException("Error al abrir la vista de solicitud de reversiones");
         }
     }
 
     @FXML
-    private void cerrarSesion() {
+    private void cerrarSesion() throws VistaCargaException{
         javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("/views/Login.fxml"));
         try {
             javafx.scene.Parent root = loader.load();
             javafx.stage.Stage stage = (javafx.stage.Stage) tablaClientes.getScene().getWindow();
             stage.setScene(new javafx.scene.Scene(root));
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new VistaCargaException("Error al abrir la vista de Login");
         }
     }
 }

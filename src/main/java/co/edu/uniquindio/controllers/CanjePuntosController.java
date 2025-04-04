@@ -7,15 +7,9 @@ import co.edu.uniquindio.models.Monedero;
 import co.edu.uniquindio.structures.ListaEnlazada;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import java.io.IOException;
 
 public class CanjePuntosController {
 
@@ -59,8 +53,8 @@ public class CanjePuntosController {
             return;
         }
 
-        int puntosRequeridos = 0;
-        int bono = 0;
+        int puntosRequeridos;
+        int bono;
 
         switch (opcionSeleccionada) {
             case "500 puntos → +10" -> { puntosRequeridos = 500; bono = 10; }

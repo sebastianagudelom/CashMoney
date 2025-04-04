@@ -1,5 +1,6 @@
 package co.edu.uniquindio.controllers;
 
+import co.edu.uniquindio.exceptions.VistaCargaException;
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.Transaccion;
 import co.edu.uniquindio.structures.ListaEnlazada;
@@ -100,7 +101,7 @@ public class HistorialController {
         }
 
 
-        lblMensaje.setText(""); // Limpiar mensaje si todo va bien
+        lblMensaje.setText(""); //Limpiar mensaje si funciona
     }
 
     @FXML
@@ -125,7 +126,7 @@ public class HistorialController {
     }
 
     @FXML
-    private void volverMenu(ActionEvent event) {
+    private void volverMenu(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TransaccionesMenu.fxml"));
             Parent root = loader.load();
@@ -137,8 +138,7 @@ public class HistorialController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al volver al menú de transacciones.");
+            throw new VistaCargaException("Error al abrir la vista de Menu");
         }
     }
 

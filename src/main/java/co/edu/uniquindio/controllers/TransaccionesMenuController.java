@@ -1,5 +1,6 @@
 package co.edu.uniquindio.controllers;
 
+import co.edu.uniquindio.exceptions.VistaCargaException;
 import co.edu.uniquindio.models.Cliente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,7 +27,7 @@ public class TransaccionesMenuController {
     }
 
     @FXML
-    private void irADepositos(ActionEvent event) {
+    private void irADepositos(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Depositos.fxml"));
             Parent root = loader.load();
@@ -39,13 +40,12 @@ public class TransaccionesMenuController {
             stage.show();
 
         } catch (IOException e) {
-            System.err.println("Error al cargar la vista de depósitos.");
-            e.printStackTrace();
+            throw new VistaCargaException("Error al abrir la vista de Depositos");
         }
     }
 
     @FXML
-    private void irARetiros(ActionEvent event) {
+    private void irARetiros(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Retiros.fxml"));
             Parent root = loader.load();
@@ -58,13 +58,13 @@ public class TransaccionesMenuController {
             stage.show();
 
         } catch (IOException e) {
-            System.err.println("Error al cargar la vista de retiros.");
-            e.printStackTrace();
+            throw new VistaCargaException("Error al abrir la vista de Retiros");
+
         }
     }
 
     @FXML
-    private void irATransferencias(ActionEvent event) {
+    private void irATransferencias(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Transferencias.fxml"));
             Parent root = loader.load();
@@ -77,13 +77,12 @@ public class TransaccionesMenuController {
             stage.show();
 
         } catch (IOException e) {
-            System.err.println("Error al cargar la vista de transferencias.");
-            e.printStackTrace();
+            throw new VistaCargaException("Error al abrir la vista de Transferencias");
         }
     }
 
     @FXML
-    private void irATransaccionesProgramadas(ActionEvent event) {
+    private void irATransaccionesProgramadas(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TransaccionesProgramadas.fxml"));
             Parent root = loader.load();
@@ -96,13 +95,12 @@ public class TransaccionesMenuController {
             stage.show();
 
         } catch (IOException e) {
-            System.err.println("Error al cargar la vista de transacciones programadas.");
-            e.printStackTrace();
+            throw new VistaCargaException("Error al abrir la vista de Transacciones programadas");
         }
     }
 
     @FXML
-    private void irAConsultaHistorial(ActionEvent event) {
+    private void irAConsultaHistorial(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Historial.fxml"));
             Parent root = loader.load();
@@ -115,13 +113,12 @@ public class TransaccionesMenuController {
             stage.show();
 
         } catch (IOException e) {
-            System.err.println("Error al cargar la vista de historial.");
-            e.printStackTrace();
+            throw new VistaCargaException("Error al abrir la vista de Historial de Transacciones");
         }
     }
 
     @FXML
-    private void irAMenu(ActionEvent event) {
+    private void irAMenu(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Menu.fxml"));
             Parent root = loader.load();
@@ -134,8 +131,8 @@ public class TransaccionesMenuController {
             stage.show();
 
         } catch (IOException e) {
-            System.err.println("Error al volver al menú principal.");
-            e.printStackTrace();
+            throw new VistaCargaException("Error al abrir la vista de Menu");
+
         }
     }
 }

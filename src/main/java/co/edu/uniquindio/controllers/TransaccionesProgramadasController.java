@@ -1,5 +1,6 @@
 package co.edu.uniquindio.controllers;
 
+import co.edu.uniquindio.exceptions.VistaCargaException;
 import co.edu.uniquindio.managers.GestorClientes;
 import co.edu.uniquindio.managers.GestorTransaccionesProgramadas;
 import co.edu.uniquindio.models.TransaccionProgramada;
@@ -137,7 +138,7 @@ public class TransaccionesProgramadasController {
     }
 
     @FXML
-    private void volverMenu(ActionEvent event) {
+    private void volverMenu(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TransaccionesMenu.fxml"));
             Parent root = loader.load();
@@ -149,8 +150,8 @@ public class TransaccionesProgramadasController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al volver al menú de transacciones.");
+            throw new VistaCargaException("Error al volver al Menu de transacciones");
+
         }
     }
 

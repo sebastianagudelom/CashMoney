@@ -1,5 +1,6 @@
 package co.edu.uniquindio.controllers;
 
+import co.edu.uniquindio.exceptions.VistaCargaException;
 import co.edu.uniquindio.managers.GestorClientes;
 import co.edu.uniquindio.services.CorreoService;
 import javafx.event.ActionEvent;
@@ -60,7 +61,11 @@ public class RegistroController {
 
                 if (registroExitoso) {
                     lblMensaje.setText("Registro exitoso para: " + nombre);
-                    cambiarEscena("/views/Login.fxml", "Iniciar Sesión");
+                    try {
+                        cambiarEscena();
+                    } catch (VistaCargaException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else {
                     lblMensaje.setText("El usuario, correo o identificacion ya existen. Intente con otro.");
                 }
@@ -74,13 +79,17 @@ public class RegistroController {
 
     @FXML
     private void onVolverAction(ActionEvent event) {
-        cambiarEscena("/views/Login.fxml",
-                "Iniciar Sesión");
+        try {
+            cambiarEscena(
+            );
+        } catch (VistaCargaException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private void cambiarEscena(String rutaFXML, String tituloVentana) {
+    private void cambiarEscena() throws VistaCargaException {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) btnRegistrarse.getScene().getWindow();
@@ -89,12 +98,11 @@ public class RegistroController {
                 return;
             }
 
-            stage.setTitle(tituloVentana);
+            stage.setTitle("Iniciar Sesión");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al cambiar de escena a: " + rutaFXML);
+            throw new VistaCargaException("Error al abrir la vista de Login");
         }
     }
 }

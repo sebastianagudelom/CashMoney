@@ -1,5 +1,6 @@
 package co.edu.uniquindio.controllers;
 
+import co.edu.uniquindio.exceptions.VistaCargaException;
 import co.edu.uniquindio.models.AnalizadorGastos;
 import co.edu.uniquindio.models.Cliente;
 import javafx.fxml.FXML;
@@ -109,7 +110,7 @@ public class AnalisisController {
     }
 
     @FXML
-    private void volverMenu() {
+    private void volverMenu() throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Menu.fxml"));
             Parent root = loader.load();
@@ -121,8 +122,7 @@ public class AnalisisController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error al volver al menú.");
+            throw new VistaCargaException("Error al abrir la vista de Menu");
         }
     }
 }

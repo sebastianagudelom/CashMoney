@@ -13,16 +13,14 @@ public class PuntosController {
     @FXML
     private Label lblNombre, lblPuntos, lblRango;
     private Cliente clienteActual;
-    private SistemaPuntos sistemaPuntos;
 
     public void inicializar(Cliente cliente, SistemaPuntos sistema) {
         this.clienteActual = cliente;
-        this.sistemaPuntos = sistema;
 
         lblNombre.setText("Hola, " + cliente.getNombre());
 
-        int puntos = sistemaPuntos.consultarPuntos(cliente.getIdentificacion());
-        RangoCliente rango = sistemaPuntos.consultarRango(cliente.getIdentificacion());
+        int puntos = sistema.consultarPuntos(cliente.getIdentificacion());
+        RangoCliente rango = sistema.consultarRango(cliente.getIdentificacion());
 
         lblPuntos.setText("Puntos acumulados: " + puntos);
         lblRango.setText("Rango actual: " + rango.name());
@@ -32,5 +30,13 @@ public class PuntosController {
     private void volverAlMenu(ActionEvent event) {
         Stage stage = (Stage) lblNombre.getScene().getWindow();
         stage.close();
+    }
+
+    public Cliente getClienteActual() {
+        return clienteActual;
+    }
+
+    public void setClienteActual(Cliente clienteActual) {
+        this.clienteActual = clienteActual;
     }
 }

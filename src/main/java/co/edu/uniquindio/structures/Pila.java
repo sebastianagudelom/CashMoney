@@ -34,7 +34,7 @@ public class Pila<T> implements Iterable<T> {
         return elementos.isEmpty();
     }
 
-    public int tamaño() {
+    public int tamano() {
         return elementos.size();
     }
 

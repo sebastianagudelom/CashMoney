@@ -45,11 +45,6 @@ public class GestorMonederos {
         return null;
     }
 
-    public boolean puedeRetirar(Cliente cliente, String nombre) {
-        Monedero m = buscarMonederoPorNombre(cliente, nombre);
-        return m != null && m.getSaldo() >= m.getMeta();
-    }
-
     public boolean retirarAMonederoPrincipal(Cliente cliente, String nombre) {
         Monedero m = buscarMonederoPorNombre(cliente, nombre);
         if (m != null && m.getSaldo() >= m.getMeta()) {
@@ -62,14 +57,5 @@ public class GestorMonederos {
 
     public List<Monedero> obtenerTodos(Cliente cliente) {
         return cliente.getMonederos().aListaJava();
-    }
-
-    public void registrarTransferenciaAutomatica(Monedero monedero, double cantidad) {
-        grafoMonederos.agregarArista("CuentaPrincipal", monedero.getNombre(), String.valueOf(cantidad));
-        monedero.setSaldo(monedero.getSaldo() + cantidad);
-    }
-
-    public GrafoDirigido<String> getGrafoMonederos() {
-        return grafoMonederos;
     }
 }
