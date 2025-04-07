@@ -25,15 +25,19 @@ public class GestorTransaccionesProgramadas {
 
     public void ejecutarTransacciones() {
         LocalDate hoy = LocalDate.now();
-        Iterator<TransaccionProgramada> iterador = transacciones.iterator();
+        ListaEnlazada<TransaccionProgramada> transaccionesEjecutadas = new ListaEnlazada<>();
 
-        while (iterador.hasNext()) {
-            TransaccionProgramada t = iterador.next();
+        for (TransaccionProgramada t : transacciones) {
             if (!t.getFechaEjecucion().isAfter(hoy)) {
                 realizarTransferencia(t);
-                iterador.remove();
+                transaccionesEjecutadas.agregar(t);
             }
         }
+
+        for (TransaccionProgramada t : transaccionesEjecutadas) {
+            transacciones.eliminar(t);
+        }
+
         guardarTransacciones();
     }
 
@@ -47,7 +51,6 @@ public class GestorTransaccionesProgramadas {
 
         } catch (ClienteNoEncontradoException | TransaccionInvalidaException e) {
             System.out.println("Error al ejecutar transferencia programada: " + e.getMessage());
-            // También puedes guardar un log o actualizar estado de la transacción si lo deseas
         }
     }
 
