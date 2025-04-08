@@ -7,7 +7,6 @@ import co.edu.uniquindio.models.TransaccionProgramada;
 import co.edu.uniquindio.structures.ListaEnlazada;
 import java.io.*;
 import java.time.LocalDate;
-import java.util.Iterator;
 
 public class GestorTransaccionesProgramadas {
 
