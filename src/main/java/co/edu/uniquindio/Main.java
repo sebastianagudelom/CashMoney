@@ -14,11 +14,17 @@ import java.util.Objects;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // Cargar el archivo FXML
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/views/Login.fxml")));
+
+        // Configurar la escena
         primaryStage.setTitle("CashMoney");
-        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setScene(new Scene(root, 600, 400)); // O el tamaño que prefieras
         primaryStage.setMinWidth(400);
         primaryStage.setMinHeight(480);
+
+
+        // Mostrar la ventana
         primaryStage.show();
     }
 
@@ -30,9 +36,11 @@ public class Main extends Application {
         } catch (Exception e) {
             System.out.println("No se pudo cambiar el ícono del dock: " + e.getMessage());
         }
-        GestorClientes.cargarClientes();
-        GestorClientes.cargarSistemaPuntos();
-        GestorClientes.imprimirClientes();
+
+        GestorClientes.cargarClientes(); // Cargar clientes antes de iniciar
+        GestorClientes.cargarSistemaPuntos(); // Cargar los puntos antes de iniciar
+        GestorClientes.imprimirClientes(); // Para ver los clientes cargados
         launch(args);
     }
+
 }
