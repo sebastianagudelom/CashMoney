@@ -80,6 +80,7 @@ public class MenuController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Error al abrir la ventana de editar perfil.");
         }
     }
 
@@ -98,6 +99,7 @@ public class MenuController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Error al abrir la ventana de puntos.");
         }
     }
 
@@ -119,6 +121,7 @@ public class MenuController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Error al abrir la ventana de analisis.");
         }
     }
 

@@ -31,7 +31,6 @@ public class LoginController {
         String usuario = txtUsuario.getText();
         String contrasena = txtClave.getText();
 
-        // Validación modo administrador
         if (GestorAdministradores.verificarCredenciales(usuario, contrasena)) {
             try {
                 cambiarVentanaAdmin(event);
@@ -41,7 +40,6 @@ public class LoginController {
             return;
         }
 
-        // Validación de cliente normal
         clienteLogeado = GestorClientes.verificarUsuario(usuario, contrasena);
 
         if (clienteLogeado != null) {

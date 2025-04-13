@@ -101,7 +101,7 @@ public class HistorialController {
         }
 
 
-        lblMensaje.setText(""); //Limpiar mensaje si funciona
+        lblMensaje.setText("");
     }
 
     @FXML

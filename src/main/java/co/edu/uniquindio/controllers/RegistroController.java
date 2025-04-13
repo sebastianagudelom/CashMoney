@@ -38,10 +38,8 @@ public class RegistroController {
             return;
         }
 
-        // Generar código aleatorio
         int codigoVerificacion = new Random().nextInt(900000) + 100000;
 
-        // Enviar el código
         CorreoService.enviarCorreo(correo, "Código de verificación",
                 "Tu código de verificación para CashMoney es: " + codigoVerificacion);
 

@@ -44,7 +44,6 @@ public class MonederosController {
         colMeta.setCellValueFactory(new PropertyValueFactory<>("meta"));
         colDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
 
-        // Establecer colores disponibles
         coloresDisponibles.put("Rojo", "#FF5733");
         coloresDisponibles.put("Azul", "#33C1FF");
         coloresDisponibles.put("Verde", "#33FF57");
@@ -166,10 +165,8 @@ public class MonederosController {
             return;
         }
 
-        // Descontar de la cuenta principal
         cliente.getCuenta().retirar(monto);
 
-        // Agregar al monedero
         seleccionado.agregarSaldo(monto);
 
         GestorClientes.guardarClientes();

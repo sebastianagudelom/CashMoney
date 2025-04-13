@@ -25,7 +25,7 @@ public class EditarPerfilController {
 
     public void setCliente(Cliente cliente) {
         this.clienteActual = cliente;
-        cargarDatosCliente(); // Cargar la información del cliente actual
+        cargarDatosCliente();
     }
 
     private void cargarDatosCliente() {
@@ -94,7 +94,6 @@ public class EditarPerfilController {
         String nuevaClave = txtClave.getText().trim();
         String nuevaCiudad = txtCiudad.getText().trim();
 
-        // Llamar a GestorClientes para actualizar solo los valores ingresados
         boolean actualizado = GestorClientes.actualizarCliente(
                 clienteActual.getUsuario(),
                 nuevoNombre.isEmpty() ? null : nuevoNombre,
@@ -129,6 +128,6 @@ public class EditarPerfilController {
 
     @FXML
     private void volverMenu(ActionEvent event) {
-        ((Stage) txtNombre.getScene().getWindow()).close(); // Cierra la ventana actual
+        ((Stage) txtNombre.getScene().getWindow()).close();
     }
 }

@@ -5,6 +5,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Notificacion implements Serializable {
+
+    /*
+    NO MOVER NI POR EL HPTAS ESAS COSAS Y PONER FINAL
+     */
     private String mensaje;
     private String fecha;
 

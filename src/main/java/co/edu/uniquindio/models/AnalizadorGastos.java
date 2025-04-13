@@ -11,22 +11,6 @@ import java.util.Map;
 
 public class AnalizadorGastos {
 
-    /*
-    public static GrafoGastos construirGrafo(Cliente cliente) {
-        GrafoGastos grafo = new GrafoGastos();
-
-        for (Transaccion t : cliente.getHistorialTransacciones()) {
-            if (t.getTipo().equalsIgnoreCase("Transferencia Enviada")) {
-                String categoria = "Transferencias";
-                grafo.agregarRelacion(cliente.getUsuario(), categoria, t.getMonto());
-            }
-            // Si usas más tipos: retiros, depósitos, etc. puedes añadirlos aquí como nodos destino.
-        }
-
-        return grafo;
-    }
-     */
-
     public static Map<String, Double> obtenerGastosPorCategoria(Cliente cliente) {
         Map<String, Double> gastosPorCategoria = new HashMap<>();
 

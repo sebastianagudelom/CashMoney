@@ -1,7 +1,6 @@
 package co.edu.uniquindio.models;
 
 import co.edu.uniquindio.utils.SeguridadUtil;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -17,7 +16,7 @@ public class Transaccion implements Serializable {
     }
     public void setRevertida(boolean revertida) { this.revertida = revertida; }
 
-    // Constructor completo
+    // Constructor
     public Transaccion(String tipo, double monto, String cuentaOrigen, String cuentaDestino, String categoria) {
         this.tipo = tipo;
         this.monto = monto;
@@ -27,7 +26,6 @@ public class Transaccion implements Serializable {
         this.fecha = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         generarHashVerificacion();
     }
-
 
     public String getCuentaOrigen() { return cuentaOrigen; }
 
@@ -47,8 +45,6 @@ public class Transaccion implements Serializable {
     public void setCuentaDestino(String cuentaDestino) { this.cuentaDestino = cuentaDestino; generarHashVerificacion(); }
     public void setFecha(String fecha) { this.fecha = fecha; generarHashVerificacion(); }
     public void setCategoria(String categoria) { this.categoria = categoria; generarHashVerificacion(); }
-
-
 
     public void generarHashVerificacion() {
         String datos = tipo + monto + cuentaDestino + categoria + fecha;

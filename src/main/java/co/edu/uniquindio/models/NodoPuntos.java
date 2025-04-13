@@ -7,7 +7,6 @@ public class NodoPuntos implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    // En NodoPuntos.java
     private String cedula;
     private NodoPuntos izquierdo;
     private NodoPuntos derecho;

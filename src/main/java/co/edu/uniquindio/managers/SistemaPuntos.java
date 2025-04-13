@@ -1,9 +1,7 @@
 package co.edu.uniquindio.managers;
 
-import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.NodoPuntos;
 import co.edu.uniquindio.models.RangoCliente;
-
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -52,7 +50,6 @@ public class SistemaPuntos implements Serializable {
         return RangoCliente.calcularRango(puntos);
     }
 
-    // Método para restar puntos por cédula
     public void restarPuntos(String identificacion, int puntos) {
         Integer puntosActuales = tablaPuntos.get(identificacion);
 
@@ -63,6 +60,4 @@ public class SistemaPuntos implements Serializable {
         tablaPuntos.put(identificacion, puntosActuales - puntos);
         GestorClientes.guardarSistemaPuntos();
     }
-
-
 }

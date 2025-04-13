@@ -14,7 +14,7 @@ public class SaldoController {
 
     public void setCliente(Cliente cliente) {
         this.clienteActual = cliente;
-        actualizarSaldo(); // Mostrar datos al abrir
+        actualizarSaldo();
     }
 
     @FXML

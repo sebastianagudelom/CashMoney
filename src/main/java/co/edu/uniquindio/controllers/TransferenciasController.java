@@ -32,7 +32,6 @@ public class TransferenciasController {
                 "Servicios", "Entretenimiento", "Otros"));
     }
 
-    //  Método para recibir el cliente actual
     public void setCliente(Cliente cliente) {
         this.clienteActual = cliente;
 
@@ -48,7 +47,6 @@ public class TransferenciasController {
         cargarUsuarios();
     }
 
-    //  Método para actualizar saldo en pantalla
     private void actualizarSaldo() {
         if (clienteActual != null) {
             String saldoTexto = "$" + String.format("%.2f", clienteActual.getCuenta().getSaldo());
@@ -60,8 +58,6 @@ public class TransferenciasController {
         }
     }
 
-
-    // Método para cargar las cuentas inscritas
     private void cargarUsuarios() {
         if (clienteActual == null || clienteActual.getCuentasInscritas() == null) {
             System.out.println("Error: clienteActual es null o no tiene cuentas inscritas.");
@@ -82,20 +78,16 @@ public class TransferenciasController {
             if (!c.getUsuario().equals(clienteActual.getUsuario()) &&
                     clienteActual.getCuentasInscritas().contains(c.getCuenta().getNumeroCuenta())) {
 
-                // Formato: Nombre - Últimos 4 dígitos de la cuenta
                 String cuentaFormato = c.getNombre() + " - " + c.getCuenta().getNumeroCuenta().
                         substring(c.getCuenta().getNumeroCuenta().length() - 4);
 
-                // Guardar la relación en el mapa
                 cuentasMap.put(cuentaFormato, c.getCuenta().getNumeroCuenta());
 
-                // Agregar el formato al ComboBox
                 cmbUsuarios.getItems().add(cuentaFormato);
             }
         }
     }
 
-    // Método para inscribir una cuenta
     @FXML
     private void inscribirCuenta() {
         String numeroCuenta = txtNumeroCuenta.getText().trim();
@@ -123,7 +115,6 @@ public class TransferenciasController {
         }
     }
 
-    //  Método para realizar la transferencia
     @FXML
     private void realizarTransferencia() {
         try {
@@ -195,7 +186,6 @@ public class TransferenciasController {
         }
     }
 
-    //  Método para cerrar la ventana
     @FXML
     private void volverMenu(ActionEvent event) throws VistaCargaException {
         try {
@@ -213,5 +203,4 @@ public class TransferenciasController {
 
         }
     }
-
 }

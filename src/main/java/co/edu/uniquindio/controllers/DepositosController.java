@@ -27,7 +27,6 @@ public class DepositosController {
         lblSaldo.setText("Saldo: $" + String.format("%.2f", cliente.getCuenta().getSaldo()));
     }
 
-    // Métodos para realizar un depósito
     @FXML
     private void realizarDeposito() {
         if (clienteActual == null) {
@@ -76,7 +75,7 @@ public class DepositosController {
         }
     }
 
-    // Método para volver al menú
+    // Metodo para regresar al menu
     @FXML
     private void volverMenu(ActionEvent event) throws VistaCargaException {
         try {

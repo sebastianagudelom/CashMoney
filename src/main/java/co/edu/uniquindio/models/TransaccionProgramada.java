@@ -11,6 +11,7 @@ public class TransaccionProgramada implements Serializable {
     private double monto;
     private LocalDate fechaEjecucion;
 
+    // Constructor
     public TransaccionProgramada(String usuarioOrigen, String usuarioDestino, double monto, LocalDate fechaEjecucion) {
         this.usuarioOrigen = usuarioOrigen;
         this.usuarioDestino = usuarioDestino;
