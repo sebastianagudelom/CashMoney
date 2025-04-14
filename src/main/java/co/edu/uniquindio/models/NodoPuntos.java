@@ -3,7 +3,7 @@ package co.edu.uniquindio.models;
 import java.io.Serial;
 import java.io.Serializable;
 
-public class NodoPuntos implements Serializable {
+public class NodoPuntos implements Serializable, Comparable<NodoPuntos> {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -12,8 +12,17 @@ public class NodoPuntos implements Serializable {
     private NodoPuntos derecho;
     private int puntos;
 
-    // Getters y Setters
-    public String getCedula() { return cedula; }
+    public NodoPuntos(String cedula, int puntos) {
+        this.cedula = cedula;
+        this.puntos = puntos;
+        this.izquierdo = null;
+        this.derecho = null;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
     public void setCedula(String cedula) {
         this.cedula = cedula;
     }
@@ -42,11 +51,14 @@ public class NodoPuntos implements Serializable {
         this.puntos = puntos;
     }
 
-
-    public NodoPuntos(String cedula, int puntos) {
-        this.cedula = cedula;
-        this.puntos = puntos;
-        this.izquierdo = null;
-        this.derecho = null;
+    @Override
+    public int compareTo(NodoPuntos otro) {
+        // Ordena primero por puntos (ascendente)
+        int cmp = Integer.compare(this.puntos, otro.puntos);
+        // Si los puntos son iguales, compara por cedula para garantizar unicidad en el orden
+        if(cmp == 0) {
+            cmp = this.cedula.compareTo(otro.cedula);
+        }
+        return cmp;
     }
 }

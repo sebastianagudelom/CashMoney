@@ -16,7 +16,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.time.LocalDate;
 
@@ -63,11 +62,17 @@ public class TransaccionesProgramadasController {
     }
 
     private void cargarDestinatarios() {
-        if (usuarioActual == null) return;
-
+        if (usuarioActual == null || usuarioActual.getCuentasInscritas() == null) {
+            return;
+        }
+        cmbDestinatarios.getItems().clear();
         for (Cliente c : GestorClientes.getListaClientes()) {
-            if (!c.getUsuario().equals(usuarioActual.getUsuario())) {
-                cmbDestinatarios.getItems().add(c.getUsuario());
+            if (!c.getUsuario().equals(usuarioActual.getUsuario())
+                    && usuarioActual.getCuentasInscritas().contains(c.getCuenta().getNumeroCuenta())) {
+
+                String cuentaFormato = c.getNombre() + " - " +
+                        c.getCuenta().getNumeroCuenta().substring(c.getCuenta().getNumeroCuenta().length() - 4);
+                cmbDestinatarios.getItems().add(cuentaFormato);
             }
         }
     }
@@ -151,8 +156,6 @@ public class TransaccionesProgramadasController {
             stage.show();
         } catch (IOException e) {
             throw new VistaCargaException("Error al volver al Menu de transacciones");
-
         }
     }
-
 }

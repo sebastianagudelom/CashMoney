@@ -2,21 +2,22 @@ package co.edu.uniquindio.managers;
 
 import co.edu.uniquindio.models.NodoPuntos;
 import co.edu.uniquindio.models.RangoCliente;
+import co.edu.uniquindio.structures.ArbolBinarioBusqueda;
 import java.io.Serializable;
 import java.util.HashMap;
 
 public class SistemaPuntos implements Serializable {
 
-    private NodoPuntos raiz;
-
-    private final HashMap<String, Integer> tablaPuntos = new HashMap<>();
+    private ArbolBinarioBusqueda<NodoPuntos> arbolPuntos;
+    private final HashMap<String, Integer> tablaPuntos;
 
     public SistemaPuntos() {
-        this.raiz = null;
+        tablaPuntos = new HashMap<>();
+        arbolPuntos = new ArbolBinarioBusqueda<>();
     }
 
     public void reemplazarPor(SistemaPuntos otro) {
-        this.raiz = otro.raiz;
+        this.arbolPuntos = otro.arbolPuntos;
         tablaPuntos.clear();
         tablaPuntos.putAll(otro.tablaPuntos);
     }
@@ -24,21 +25,12 @@ public class SistemaPuntos implements Serializable {
     public void agregarPuntos(String cedula, int puntosGanados) {
         int total = tablaPuntos.getOrDefault(cedula, 0) + puntosGanados;
         tablaPuntos.put(cedula, total);
-        raiz = insertarNodo(raiz, cedula, total);
-
-        GestorClientes.guardarSistemaPuntos();
-    }
-
-    private NodoPuntos insertarNodo(NodoPuntos actual, String cedula, int puntos) {
-        if (actual == null) return new NodoPuntos(cedula, puntos);
-        if (puntos < actual.getPuntos()) {
-            actual.setIzquierdo(insertarNodo(actual.getIzquierdo(), cedula, puntos));
-        } else if (puntos > actual.getPuntos()) {
-            actual.setDerecho(insertarNodo(actual.getDerecho(), cedula, puntos));
-        } else {
-            actual.setCedula(cedula);
+        NodoPuntos nuevoNodo = new NodoPuntos(cedula, total);
+        if (arbolPuntos.buscar(nuevoNodo)) {
+            arbolPuntos.eliminar(nuevoNodo);
         }
-        return actual;
+        arbolPuntos.insertar(nuevoNodo);
+        GestorClientes.guardarSistemaPuntos();
     }
 
     public int consultarPuntos(String cedula) {
@@ -52,12 +44,16 @@ public class SistemaPuntos implements Serializable {
 
     public void restarPuntos(String identificacion, int puntos) {
         Integer puntosActuales = tablaPuntos.get(identificacion);
-
         if (puntosActuales == null || puntosActuales < puntos) {
             throw new IllegalArgumentException("Puntos insuficientes para realizar el canje.");
         }
-
-        tablaPuntos.put(identificacion, puntosActuales - puntos);
+        int total = puntosActuales - puntos;
+        tablaPuntos.put(identificacion, total);
+        NodoPuntos nodoActualizado = new NodoPuntos(identificacion, total);
+        if (arbolPuntos.buscar(nodoActualizado)) {
+            arbolPuntos.eliminar(nodoActualizado);
+        }
+        arbolPuntos.insertar(nodoActualizado);
         GestorClientes.guardarSistemaPuntos();
     }
 }
