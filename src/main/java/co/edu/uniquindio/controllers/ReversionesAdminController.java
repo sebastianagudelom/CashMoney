@@ -18,7 +18,6 @@ public class ReversionesAdminController {
 
     @FXML private Label lblDetalle;
     @FXML private Button btnAceptar, btnVolver, btnRechazar;
-
     @FXML private TableView<Transaccion> tablaReversiones;
     @FXML private TableColumn<Transaccion, String> colNombreOrigen;
     @FXML private TableColumn<Transaccion, String> colCuentaOrigen;
@@ -39,11 +38,9 @@ public class ReversionesAdminController {
                 return new SimpleStringProperty("¿?");
             }
         });
-
         colCuentaOrigen.setCellValueFactory(data ->
                 new SimpleStringProperty(data.getValue().getCuentaOrigen())
         );
-
         colNombreDestino.setCellValueFactory(data -> {
             try {
                 Cliente c = GestorClientes.buscarClientePorCuenta(data.getValue().getCuentaDestino());
@@ -52,17 +49,13 @@ public class ReversionesAdminController {
                 return new SimpleStringProperty("¿?");
             }
         });
-
         colCuentaDestino.setCellValueFactory(data ->
                 new SimpleStringProperty(data.getValue().getCuentaDestino())
         );
-
         colMonto.setCellValueFactory(new PropertyValueFactory<>("monto"));
-
         colFecha.setCellValueFactory(data ->
                 new SimpleStringProperty(data.getValue().getFecha().toString())
         );
-
         cargarSiguienteSolicitud();
     }
 
@@ -74,10 +67,8 @@ public class ReversionesAdminController {
             btnRechazar.setDisable(true);
             return;
         }
-
         transaccionActual = GestorReversiones.getInstance().verUltimaSolicitud();
         lblDetalle.setText(transaccionActual.toString());
-
         ObservableList<Transaccion> lista = FXCollections.observableArrayList();
         lista.add(transaccionActual);
         tablaReversiones.setItems(lista);
@@ -97,14 +88,10 @@ public class ReversionesAdminController {
                 return;
             }
 
-            // Realizar la reversión
             GestorTransacciones.retirarSaldo(destino, transaccionActual.getMonto());
             GestorTransacciones.depositarSaldo(origen, transaccionActual.getMonto());
 
-            // Marcar transacción enviada como revertida
             transaccionActual.setRevertida(true);
-
-            // Buscar y marcar la transacción recibida en el historial del destino
             for (Transaccion t : destino.getHistorialTransacciones()) {
                 if (t.getTipo().equals("Transferencia Recibida")
                         && t.getMonto() == transaccionActual.getMonto()
@@ -116,17 +103,19 @@ public class ReversionesAdminController {
                 }
             }
 
+            int puntosARestar = (int) ((transaccionActual.getMonto() / 100) * 3);
+            GestorClientes.getSistemaPuntos().restarPuntos(origen.getIdentificacion(), puntosARestar);
+
             GestorClientes.guardarClientes();
 
             mostrarAlerta("Reversión realizada",
-                    "La transacción fue revertida correctamente.",
+                    "La transacción fue revertida correctamente. Se descontaron " + puntosARestar + " puntos.",
                     Alert.AlertType.INFORMATION);
 
         } catch (Exception e) {
             mostrarAlerta("Error", "No se pudo realizar la reversión: " + e.getMessage(),
                     Alert.AlertType.ERROR);
         }
-
         cargarSiguienteSolicitud();
     }
 
