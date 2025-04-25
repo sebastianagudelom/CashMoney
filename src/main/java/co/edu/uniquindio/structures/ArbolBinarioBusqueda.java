@@ -1,8 +1,17 @@
 package co.edu.uniquindio.structures;
 
-public class ArbolBinarioBusqueda<T extends Comparable<T>> {
+import java.io.Serial;
+import java.io.Serializable;
 
-    private class Nodo {
+public class ArbolBinarioBusqueda<T extends Comparable<T>> implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    private class Nodo implements Serializable {
+        @Serial
+        private static final long serialVersionUID = 1L;
+
         T dato;
         Nodo izquierdo;
         Nodo derecho;
