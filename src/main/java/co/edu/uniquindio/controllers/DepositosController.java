@@ -60,6 +60,14 @@ public class DepositosController {
                 alert.showAndWait();
             }
 
+            if (clienteActual.getCuenta().getSaldo() < 10000) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Saldo bajo");
+                alert.setHeaderText(clienteActual.getNombre() + " su saldo es bajo");
+                alert.setContentText("En este momento su saldo es menor a 10.000");
+                alert.showAndWait();
+            }
+
             lblSaldo.setText("Saldo: $" + String.format("%.2f", clienteActual.getCuenta().getSaldo()));
 
             lblMensaje.setText("Depósito exitoso. Puntos ganados: " + puntos);

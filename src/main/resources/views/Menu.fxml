@@ -5,7 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="480.0" prefWidth="600.0" styleClass="fondo-menu" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.controllers.MenuController">
+<AnchorPane prefHeight="480.0" prefWidth="600.0" styleClass="fondo-menu" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.controllers.MenuController">
 
    <stylesheets>
       <String fx:value="/styles/styles.css" />
@@ -14,24 +14,24 @@
    <children>
       <AnchorPane layoutX="50.0" layoutY="30.0" prefHeight="420.0" prefWidth="500.0" styleClass="tarjeta">
          <children>
-            <Label fx:id="lblSaludo" layoutX="25.0" layoutY="20.0" styleClass="saludo-label" text="Bienvenido, ¿Qué desea hacer hoy?" />
+            <Label fx:id="lblSaludo" layoutX="24.0" layoutY="60.0" styleClass="saludo-label" text="Bienvenido, ¿Qué desea hacer hoy?" />
 
             <!-- Fila 1 -->
-            <Button fx:id="btnTransacciones" alignment="CENTER" contentDisplay="CENTER" layoutX="40.0" layoutY="80.0" onAction="#irAMenuTransacciones" prefHeight="60.0" prefWidth="130.0" text="Menú de Transacciones" wrapText="true" />
-            <Button fx:id="btnPuntos" layoutX="190.0" layoutY="80.0" onAction="#irAPuntos" prefHeight="60.0" prefWidth="130.0" text="Puntos" />
-            <Button fx:id="btnEditarPerfil" layoutX="340.0" layoutY="80.0" onAction="#irEditarPerfil" prefHeight="60.0" prefWidth="130.0" text="Editar Perfil" />
+            <Button fx:id="btnTransacciones" alignment="CENTER" contentDisplay="CENTER" layoutX="35.0" layoutY="122.0" onAction="#irAMenuTransacciones" prefHeight="60.0" prefWidth="130.0" text="Menú de Transacciones" wrapText="true" />
+            <Button fx:id="btnPuntos" layoutX="185.0" layoutY="122.0" onAction="#irAPuntos" prefHeight="60.0" prefWidth="130.0" text="Puntos" />
+            <Button fx:id="btnEditarPerfil" layoutX="335.0" layoutY="122.0" onAction="#irEditarPerfil" prefHeight="60.0" prefWidth="130.0" text="Editar Perfil" />
 
             <!-- Fila 2 -->
-            <Button fx:id="btnConsultaSaldos" layoutX="40.0" layoutY="160.0" onAction="#irAConsultaSaldos" prefHeight="60.0" prefWidth="130.0" text="Consulta de saldos" wrapText="true" />
-            <Button fx:id="btnMonederos" layoutX="190.0" layoutY="160.0" onAction="#irAMonederos" prefHeight="60.0" prefWidth="130.0" text="Monederos" wrapText="true" />
-            <Button fx:id="btnAnalisis" layoutX="340.0" layoutY="160.0" onAction="#irAAnalisis" prefHeight="60.0" prefWidth="130.0" text="Análisis de Gasto" wrapText="true" />
+            <Button fx:id="btnConsultaSaldos" layoutX="35.0" layoutY="202.0" onAction="#irAConsultaSaldos" prefHeight="60.0" prefWidth="130.0" text="Consulta de saldos" wrapText="true" />
+            <Button fx:id="btnMonederos" layoutX="185.0" layoutY="202.0" onAction="#irAMonederos" prefHeight="60.0" prefWidth="130.0" text="Monederos" wrapText="true" />
+            <Button fx:id="btnAnalisis" layoutX="335.0" layoutY="202.0" onAction="#irAAnalisis" prefHeight="60.0" prefWidth="130.0" text="Análisis de Gasto" wrapText="true" />
 
             <!-- Fila 3 -->
-            <Button fx:id="btnNotificaciones" layoutX="150.0" layoutY="240.0" onAction="#irANotificaciones" prefHeight="30.0" prefWidth="200.0" text="Ver Notificaciones" wrapText="true" />
-            <Button fx:id="btnCanjePuntos" layoutX="150.0" layoutY="280.0" onAction="#irACanjePuntos" prefHeight="30.0" prefWidth="200.0" text="Canjear Puntos" wrapText="true" />
+            <Button fx:id="btnNotificaciones" layoutX="361.0" layoutY="14.0" onAction="#irANotificaciones" prefHeight="30.0" prefWidth="130.0" text="Notificaciones" wrapText="true" />
+            <Button fx:id="btnCanjePuntos" layoutX="185.0" layoutY="281.0" onAction="#irACanjePuntos" prefHeight="60.0" prefWidth="130.0" text="Canjear Puntos" wrapText="true" />
 
             <!-- Botón salir -->
-            <Button fx:id="btnSalir" layoutX="410.0" layoutY="320.0" onAction="#irALogin" prefHeight="30.0" prefWidth="60.0" text="Salir" />
+            <Button fx:id="btnSalir" layoutX="426.0" layoutY="376.0" onAction="#irALogin" prefHeight="30.0" prefWidth="60.0" text="Salir" />
          </children>
       </AnchorPane>
    </children>

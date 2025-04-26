@@ -69,6 +69,20 @@ public class RetirosController {
                 alert.showAndWait();
             }
 
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setTitle("Retiro exitoso");
+            alerta.setHeaderText(clienteActual.getNombre() + " acaba de hacer un retiro");
+            alerta.setContentText("El valor de su retiro fue: " + txtMonto.getText());
+            alerta.showAndWait();
+
+            if (clienteActual.getCuenta().getSaldo() < 10000) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Saldo bajo");
+                alert.setHeaderText(clienteActual.getNombre() + " su saldo es bajo");
+                alert.setContentText("En este momento su saldo es menor a 10.000");
+                alert.showAndWait();
+            }
+
             lblMensaje.setText("Retiro exitoso. Puntos ganados: " + puntos);
             lblMensaje.setStyle("-fx-text-fill: green;");
             actualizarBarraSuperior();
