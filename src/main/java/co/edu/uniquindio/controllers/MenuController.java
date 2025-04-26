@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
@@ -26,6 +27,14 @@ public class MenuController {
 
         GestorTransaccionesProgramadas gestor = new GestorTransaccionesProgramadas();
         gestor.ejecutarTransacciones();
+
+        if (clienteActual.getCuenta().getSaldo() < 10000) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Saldo bajo");
+            alert.setHeaderText(clienteActual.getNombre() + " su saldo es bajo");
+            alert.setContentText("En este momento su saldo es menor a 10.000");
+            alert.showAndWait();
+        }
     }
 
     @FXML

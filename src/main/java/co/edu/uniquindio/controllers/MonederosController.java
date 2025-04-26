@@ -175,6 +175,14 @@ public class MonederosController {
         mostrarAlerta("Éxito", "Saldo agregado al monedero.", Alert.AlertType.INFORMATION);
         actualizarTabla();
         txtMonto.clear();
+
+        if (cliente.getCuenta().getSaldo() < 10000) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Saldo bajo");
+            alert.setHeaderText(cliente.getNombre() + " su saldo es bajo");
+            alert.setContentText("En este momento su saldo es menor a 10.000");
+            alert.showAndWait();
+        }
     }
 
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {

@@ -170,9 +170,24 @@ public class TransferenciasController {
                         alert.showAndWait();
                     }
 
+                    Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                    alerta.setTitle("Transferencia exitoso");
+                    alerta.setHeaderText(clienteActual.getNombre() + " acaba de hacer una transferencia");
+                    alerta.setContentText("El total transferido fue: " + txtMonto.getText());
+                    alerta.showAndWait();
+
+                    actualizarSaldo();
+
+                    if (clienteActual.getCuenta().getSaldo() < 10000) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Saldo bajo");
+                        alert.setHeaderText(clienteActual.getNombre() + " su saldo es bajo");
+                        alert.setContentText("En este momento su saldo es: " + lblSaldoSuperior.getText());
+                        alert.showAndWait();
+                    }
+
                     lblMensaje.setText("Transferencia exitosa. Puntos ganados: " + puntos);
                     lblMensaje.setStyle("-fx-text-fill: green;");
-                    actualizarSaldo();
                 }
 
             } catch (TransaccionInvalidaException | CuentaNoEncontradaException e) {
