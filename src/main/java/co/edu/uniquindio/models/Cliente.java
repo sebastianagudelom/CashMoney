@@ -64,14 +64,10 @@ public class Cliente implements Serializable {
     public void setMonederos(ListaEnlazada<Monedero> monederos) { this.monederos = monederos; }
 
     // Funciones adicionales
-    public void agregarNotificacion(String mensaje) {
-        notificaciones.agregar(new Notificacion(mensaje));
-    }
-
+    public void agregarNotificacion(String mensaje) { notificaciones.agregar(new Notificacion(mensaje)); }
     public void agregarCuentaInscrita(String numeroCuenta) {
         this.cuentasInscritas.add(numeroCuenta);
     }
-
     public void agregarTransaccion(Transaccion transaccion) {
         historialTransacciones.agregar(transaccion);
     }

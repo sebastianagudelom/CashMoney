@@ -11,7 +11,6 @@ public class Administrador implements Serializable {
         this.clave = clave;
     }
 
-    // Getters
     public String getUsuario() { return usuario; }
     public String getClave() { return clave; }
 }

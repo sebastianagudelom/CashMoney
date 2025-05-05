@@ -8,8 +8,8 @@ import java.util.Properties;
 public class CorreoService {
 
     public static void enviarCorreo(String destinatario, String asunto, String contenido) {
-        final String remitente = "cashmoneyvalidator@gmail.com"; // Tu correo
-        final String clave = "fycphgarsalssunu"; // Token de aplicación
+        final String remitente = "cashmoneyvalidator@gmail.com"; // Correo
+        final String clave = "fycphgarsalssunu"; // Token del correo
 
         // Propiedades del servidor SMTP
         Properties props = new Properties();

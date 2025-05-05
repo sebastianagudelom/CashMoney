@@ -11,7 +11,6 @@ public class SeguridadUtil {
 
     /**
      * Encripta una cadena usando SHA-256.
-     *
      * @param clave La contraseña original en texto plano.
      * @return La contraseña encriptada en formato hexadecimal.
      */
@@ -33,7 +32,6 @@ public class SeguridadUtil {
 
     /**
      * Convierte un arreglo de bytes a una cadena hexadecimal.
-     *
      * @param bytes Arreglo de bytes a convertir.
      * @return Cadena hexadecimal representando los bytes.
      */
