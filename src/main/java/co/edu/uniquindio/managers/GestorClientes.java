@@ -5,7 +5,6 @@ import co.edu.uniquindio.models.*;
 import co.edu.uniquindio.structures.ListaCircular;
 import co.edu.uniquindio.structures.ListaEnlazada;
 import co.edu.uniquindio.utils.SeguridadUtil;
-
 import java.io.*;
 
 public class GestorClientes {

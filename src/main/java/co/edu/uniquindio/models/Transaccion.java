@@ -27,10 +27,6 @@ public class Transaccion implements Serializable {
         generarHashVerificacion();
     }
 
-    public String getCuentaOrigen() { return cuentaOrigen; }
-
-    public void setCuentaOrigen(String cuentaOrigen) { this.cuentaOrigen = cuentaOrigen; }
-
     // Getters
     public String getTipo() { return tipo; }
     public double getMonto() { return monto; }
@@ -38,6 +34,7 @@ public class Transaccion implements Serializable {
     public String getFecha() { return fecha; }
     public String getCategoria() { return categoria; }
     public String getHashVerificacion() { return hashVerificacion; }
+    public String getCuentaOrigen() { return cuentaOrigen; }
 
     // Setters
     public void setTipo(String tipo) { this.tipo = tipo; generarHashVerificacion(); }
@@ -45,6 +42,7 @@ public class Transaccion implements Serializable {
     public void setCuentaDestino(String cuentaDestino) { this.cuentaDestino = cuentaDestino; generarHashVerificacion(); }
     public void setFecha(String fecha) { this.fecha = fecha; generarHashVerificacion(); }
     public void setCategoria(String categoria) { this.categoria = categoria; generarHashVerificacion(); }
+    public void setCuentaOrigen(String cuentaOrigen) { this.cuentaOrigen = cuentaOrigen; }
 
     public void generarHashVerificacion() {
         String datos = tipo + monto + cuentaDestino + categoria + fecha;

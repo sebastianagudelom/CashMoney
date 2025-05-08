@@ -3,7 +3,6 @@ package co.edu.uniquindio.models;
 import co.edu.uniquindio.exceptions.CuentaNoEncontradaException;
 import co.edu.uniquindio.managers.GestorClientes;
 import co.edu.uniquindio.structures.GrafoGastos;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +15,7 @@ public class AnalizadorGastos {
 
         for (Transaccion t : cliente.getHistorialTransacciones()) {
             if (t.getTipo().equalsIgnoreCase("Transferencia Enviada")) {
-                String categoria = t.getCategoria(); // Asumimos que la referencia es la categoría
+                String categoria = t.getCategoria();
                 gastosPorCategoria.put(categoria,
                         gastosPorCategoria.getOrDefault(categoria, 0.0) + t.getMonto());
             }
@@ -43,7 +42,6 @@ public class AnalizadorGastos {
                     }
 
                 } catch (CuentaNoEncontradaException e) {
-                    // Puedes registrar el error o ignorarlo si no afecta al grafo
                     System.out.println("Cuenta no encontrada en grafo: " + e.getMessage());
                 }
             }

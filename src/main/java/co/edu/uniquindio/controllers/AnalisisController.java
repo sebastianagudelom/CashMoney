@@ -18,7 +18,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,9 +63,9 @@ public class AnalisisController {
         double altoPane = graficoNodos.getPrefHeight();
 
         int totalNodos = grafo.size();
-        double radio = 14; // Más pequeño aún
+        double radio = 14;
         double espacioHorizontal = anchoPane / (totalNodos + 1);
-        double yCentro = altoPane / 2 - 10; // Bien centrado
+        double yCentro = altoPane / 2 - 10;
 
         Map<String, double[]> posiciones = new HashMap<>();
         int index = 0;
@@ -83,7 +82,7 @@ public class AnalisisController {
             Text label = new Text(nodo);
             label.setStyle("-fx-font-size: 10px; -fx-fill: #2c3e50; -fx-font-weight: bold;");
             label.setX(x - nodo.length() * 3.5);
-            label.setY(y + radio + 10); // Debajo pero DENTRO del pane
+            label.setY(y + radio + 10);
 
             graficoNodos.getChildren().addAll(circle, label);
             posiciones.put(nodo, new double[]{x, y});

@@ -19,42 +19,34 @@ public class TransaccionProgramada implements Serializable, Comparable<Transacci
         this.fechaEjecucion = fechaEjecucion;
     }
 
+    // Setters
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
-
     public void setUsuarioOrigen(String usuarioOrigen) {
         this.usuarioOrigen = usuarioOrigen;
     }
-
     public void setUsuarioDestino(String usuarioDestino) {
         this.usuarioDestino = usuarioDestino;
     }
-
     public void setMonto(double monto) {
         this.monto = monto;
     }
-
     public void setFechaEjecucion(LocalDate fechaEjecucion) {
         this.fechaEjecucion = fechaEjecucion;
     }
 
-    public String getUsuarioOrigen() {
-        return usuarioOrigen;
-    }
-
+    // Getters
+    public String getUsuarioOrigen() { return usuarioOrigen; }
     public String getUsuarioDestino() {
         return usuarioDestino;
     }
-
     public double getMonto() {
         return monto;
     }
-
     public LocalDate getFechaEjecucion() {
         return fechaEjecucion;
     }
-
     public String getCategoria() {
         return categoria;
     }
@@ -67,12 +59,9 @@ public class TransaccionProgramada implements Serializable, Comparable<Transacci
 
     @Override
     public int compareTo(TransaccionProgramada otra) {
-        // Ordena por fecha de ejecución (la más antigua tiene mayor prioridad)
         int cmp = this.fechaEjecucion.compareTo(otra.fechaEjecucion);
-        // Si las fechas son iguales, desempata por monto
         if(cmp == 0) {
             cmp = Double.compare(this.monto, otra.monto);
-            // Y, si aún son iguales, desempata por usuarioOrigen
             if(cmp == 0) {
                 cmp = this.usuarioOrigen.compareTo(otra.usuarioOrigen);
             }

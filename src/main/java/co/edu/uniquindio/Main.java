@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
@@ -32,11 +31,9 @@ public class Main extends Application {
         } catch (Exception e) {
             System.out.println("No se pudo cambiar el ícono del dock: " + e.getMessage());
         }
-
         GestorClientes.cargarClientes();
         GestorClientes.cargarSistemaPuntos();
         GestorClientes.imprimirClientes();
         launch(args);
     }
-
 }

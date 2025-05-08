@@ -16,7 +16,6 @@ public class ListaEnlazada<T> implements Iterable<T>, Serializable {
         tamanio = 0;
     }
 
-    // Agrega al final de la lista
     public void agregar(T dato) {
         Nodo<T> nuevoNodo = new Nodo<>(dato);
         if (cabeza == null) {
@@ -31,7 +30,6 @@ public class ListaEnlazada<T> implements Iterable<T>, Serializable {
         tamanio++;
     }
 
-    // Agrega al inicio de la lista
     public void agregarInicio(T dato) {
         Nodo<T> nuevoNodo = new Nodo<>(dato);
         nuevoNodo.setSiguiente(cabeza);
@@ -39,7 +37,6 @@ public class ListaEnlazada<T> implements Iterable<T>, Serializable {
         tamanio++;
     }
 
-    // Elimina el primer nodo que contiene el dato
     public boolean eliminar(T dato) {
         if (cabeza == null) return false;
 
@@ -62,7 +59,6 @@ public class ListaEnlazada<T> implements Iterable<T>, Serializable {
         return false;
     }
 
-    // Obtiene el dato en la posición indicada
     public T obtener(int indice) {
         if (indice < 0 || indice >= tamanio) {
             throw new IndexOutOfBoundsException("Índice fuera de rango");
@@ -74,23 +70,19 @@ public class ListaEnlazada<T> implements Iterable<T>, Serializable {
         return actual.getDato();
     }
 
-    // Vacía la lista
     public void limpiar() {
         cabeza = null;
         tamanio = 0;
     }
 
-    // Retorna el tamaño
     public int getTamanio() {
         return tamanio;
     }
 
-    // Verifica si la lista está vacía
     public boolean estaVacia() {
         return tamanio == 0;
     }
 
-    // Imprime todos los elementos
     public void imprimir() {
         Nodo<T> actual = cabeza;
         while (actual != null) {
@@ -99,7 +91,6 @@ public class ListaEnlazada<T> implements Iterable<T>, Serializable {
         }
     }
 
-    // Permite recorrer con for-each
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {

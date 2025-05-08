@@ -43,7 +43,6 @@ public class RegistroController {
         CorreoService.enviarCorreo(correo, "Código de verificación",
                 "Tu código de verificación para CashMoney es: " + codigoVerificacion);
 
-        // Mostrar input dialog para el código
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Verificación de correo");
         dialog.setHeaderText("Hemos enviado un código a tu correo.");

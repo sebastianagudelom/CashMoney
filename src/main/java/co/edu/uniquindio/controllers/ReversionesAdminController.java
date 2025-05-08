@@ -54,7 +54,7 @@ public class ReversionesAdminController {
         );
         colMonto.setCellValueFactory(new PropertyValueFactory<>("monto"));
         colFecha.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().getFecha().toString())
+                new SimpleStringProperty(data.getValue().getFecha())
         );
         cargarSiguienteSolicitud();
     }

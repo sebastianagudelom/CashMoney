@@ -40,13 +40,13 @@ public class AdminMenuController {
 
     @FXML
     private void initialize() {
-        // Configurar columnas de clientes
+        // columnas de clientes
         colNombre.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getNombre()));
         colUsuario.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getUsuario()));
         colCorreo.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getCorreo()));
         colCiudad.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getCiudad()));
 
-        // Configurar columnas de transacciones
+        // columnas de transacciones
         colTipo.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getTipo()));
         colMonto.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getMonto()));
         colReferencia.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getCategoria()));
@@ -63,7 +63,6 @@ public class AdminMenuController {
 
         tablaClientes.setItems(clientes);
     }
-
 
     @FXML
     private void eliminarCliente() {

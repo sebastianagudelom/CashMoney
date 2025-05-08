@@ -14,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import co.edu.uniquindio.services.ExportadorPDF;
 import co.edu.uniquindio.managers.GestorReversiones;
-
 import java.io.IOException;
 
 public class HistorialController {
@@ -60,7 +59,6 @@ public class HistorialController {
         cargarHistorial();
     }
 
-
     @FXML
     private void exportarPDF() {
         if (clienteActual != null) {
@@ -99,8 +97,6 @@ public class HistorialController {
                 listViewTransacciones.getItems().add(texto);
             }
         }
-
-
         lblMensaje.setText("");
     }
 
@@ -141,5 +137,4 @@ public class HistorialController {
             throw new VistaCargaException("Error al abrir la vista de Menu");
         }
     }
-
 }

@@ -53,7 +53,6 @@ public class EditarPerfilController {
         boolean eliminado = GestorClientes.eliminarCliente(nombreUsuario);
 
         if (eliminado) {
-            // Mostrar alerta de confirmación
             Alert alerta = new Alert(Alert.AlertType.INFORMATION);
             alerta.setTitle("Cuenta Eliminada");
             alerta.setHeaderText("Cuenta eliminada con éxito");
@@ -61,11 +60,9 @@ public class EditarPerfilController {
 
             alerta.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
-                    // Cerrar la ventana actual
                     Stage stage = (Stage) lblMensaje.getScene().getWindow();
                     stage.close();
 
-                    // Redirigir a la pantalla de login
                     try {
                         abrirLogin();
                     } catch (VistaCargaException e) {

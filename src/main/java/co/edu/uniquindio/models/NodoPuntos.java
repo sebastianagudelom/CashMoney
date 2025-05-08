@@ -53,9 +53,7 @@ public class NodoPuntos implements Serializable, Comparable<NodoPuntos> {
 
     @Override
     public int compareTo(NodoPuntos otro) {
-        // Ordena primero por puntos (ascendente)
         int cmp = Integer.compare(this.puntos, otro.puntos);
-        // Si los puntos son iguales, compara por cedula para garantizar unicidad en el orden
         if(cmp == 0) {
             cmp = this.cedula.compareTo(otro.cedula);
         }

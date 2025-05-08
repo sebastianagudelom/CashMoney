@@ -113,10 +113,6 @@ public class MenuController {
 
     @FXML
     private void irAAnalisis(ActionEvent event) {
-        if (clienteActual == null) {
-            System.out.println("Error: No hay usuario activo.");
-            return;
-        }
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Analisis.fxml"));
             Parent root = loader.load();

@@ -16,13 +16,10 @@ public class SeguridadUtil {
      */
     public static String encriptar(String clave) {
         try {
-            // Obtener una instancia de MessageDigest para SHA-256
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
 
-            // Aplicar el algoritmo a los bytes de la clave
             byte[] hash = digest.digest(clave.getBytes(StandardCharsets.UTF_8));
 
-            // Convertir el hash en una cadena hexadecimal
             return bytesAHex(hash);
 
         } catch (NoSuchAlgorithmException e) {

@@ -7,9 +7,6 @@ import co.edu.uniquindio.structures.ListaEnlazada;
 
 public class GestorTransacciones {
 
-    /**
-     * Agrega una transacción al historial del cliente
-     */
     public static void agregarTransaccion(Cliente cliente, Transaccion transaccion) {
         if (cliente.getHistorialTransacciones() == null) {
             cliente.setHistorialTransacciones(new ListaEnlazada<>());
@@ -19,9 +16,6 @@ public class GestorTransacciones {
         GestorClientes.guardarClientes();
     }
 
-    /**
-     * Registra una transferencia entre dos clientes
-     */
     public static void registrarTransferencia(Cliente origen, Cliente destino,
                                               Transaccion enviada, Transaccion recibida) {
         agregarTransaccion(origen, enviada);
@@ -61,7 +55,6 @@ public class GestorTransacciones {
         return true;
     }
 
-
     public static boolean depositarSaldo(Cliente cliente, double monto) throws TransaccionInvalidaException {
         if (cliente == null || cliente.getCuenta() == null) {
             throw new TransaccionInvalidaException("Cliente o cuenta no válida para depósito.");
@@ -91,7 +84,4 @@ public class GestorTransacciones {
         GestorClientes.guardarClientes();
         return true;
     }
-
-
-
 }

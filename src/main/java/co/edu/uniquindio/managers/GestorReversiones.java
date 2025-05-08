@@ -33,18 +33,15 @@ public class GestorReversiones {
      * @param t Transacción que se desea revertir
      */
     public void solicitarReversion(Cliente cliente, Transaccion t) {
-        // Aseguramos que la transacción tenga el campo cuentaOrigen
         if (t.getCuentaOrigen() == null || t.getCuentaOrigen().isBlank()) {
             t.setCuentaOrigen(cliente.getCuenta().getNumeroCuenta());
         }
 
-        // Guardamos nuevamente todos los datos relevantes (por seguridad)
         t.setCuentaDestino(t.getCuentaDestino());
         t.setCategoria(t.getCategoria());
         t.setTipo(t.getTipo());
         t.setFecha(t.getFecha());
 
-        // Agregar a la pila
         pilaReversiones.push(t);
     }
 
