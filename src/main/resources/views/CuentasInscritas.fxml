@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+
+<AnchorPane styleClass="fondo-menu" prefHeight="480.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.uniquindio.controllers.CuentasInscritasController">
+
+    <stylesheets>
+        <String fx:value="/styles/styles.css"/>
+    </stylesheets>
+
+    <children>
+        <!-- Barra superior -->
+        <HBox spacing="10" alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0" styleClass="barra-superior">
+            <children>
+                <Label fx:id="lblCliente" text="Cliente actual:" styleClass="barra-label" />
+            </children>
+        </HBox>
+
+        <!-- Contenedor principal -->
+        <AnchorPane layoutX="50.0" layoutY="60.0" prefWidth="500.0" prefHeight="390.0" styleClass="tarjeta">
+            <children>
+                <Label layoutX="140.0" layoutY="20.0" text="Cuentas Inscritas" styleClass="titulo-transacciones" />
+
+                <ListView fx:id="listCuentasInscritas" layoutX="25.0" layoutY="70.0" prefWidth="450.0" prefHeight="250.0"/>
+
+                <Button fx:id="btnCerrar" layoutX="25.0" layoutY="340.0" prefWidth="80.0"
+                        text="Cerrar" onAction="#cerrarVentana" styleClass="boton-volver" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

@@ -117,7 +117,7 @@ public class TransaccionesMenuController {
     }
 
     @FXML
-    private void irAInscripcionCuentas() {
+    private void irAInscripcionCuentas(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/InscripcionCuentas.fxml"));
             Parent root = loader.load();
@@ -130,8 +130,25 @@ public class TransaccionesMenuController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al abrir la inscripcion de cuentas.");
+            throw new VistaCargaException("Error al abrir la vista de inscribir cuentas");
+        }
+    }
+
+    @FXML
+    private void irACuentasInscritas(ActionEvent event) throws VistaCargaException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/CuentasInscritas.fxml"));
+            Parent root = loader.load();
+
+            CuentasInscritasController controller = loader.getController();
+            controller.setCliente(clienteActual);
+
+            Stage stage = new Stage();
+            stage.setTitle("Cuentas inscritas");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+           throw new VistaCargaException("Error al abrir la vista de cuentas inscritas");
         }
     }
 
@@ -150,7 +167,6 @@ public class TransaccionesMenuController {
 
         } catch (IOException e) {
             throw new VistaCargaException("Error al abrir la vista de Menu");
-
         }
     }
 }

@@ -1,9 +1,11 @@
 package co.edu.uniquindio.models;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Random;
 
 public class Cuenta implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     private String numeroCuenta;
     private double saldo;

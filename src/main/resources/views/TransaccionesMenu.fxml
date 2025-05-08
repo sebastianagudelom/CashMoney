@@ -1,62 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane styleClass="fondo-menu" prefHeight="480.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/20.0.1"
+<AnchorPane prefHeight="480.0" prefWidth="600.0" styleClass="fondo-menu" xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="co.edu.uniquindio.controllers.TransaccionesMenuController">
 
     <stylesheets>
-        <String fx:value="/styles/styles.css"/>
+        <String fx:value="/styles/styles.css" />
     </stylesheets>
 
     <children>
         <!-- Barra superior con información del cliente -->
-        <HBox spacing="10" alignment="CENTER_LEFT" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
-            <Label fx:id="lblClienteInfo" text="Cliente actual: Nombre    Saldo: $0.00" styleClass="barra-superior"/>
+        <HBox alignment="CENTER_LEFT" spacing="10" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
+            <Label fx:id="lblClienteInfo" styleClass="barra-superior" text="Cliente actual: Nombre    Saldo: $0.00" />
         </HBox>
 
-        <VBox spacing="15" alignment="CENTER" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0"
-              AnchorPane.topAnchor="50.0" AnchorPane.bottomAnchor="30.0">
+        <VBox alignment="CENTER" spacing="15" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
 
-            <Label text="Menú de Transacciones" styleClass="titulo-transacciones"/>
+            <Label styleClass="titulo-transacciones" text="Menú de Transacciones" />
 
-            <HBox spacing="10" alignment="CENTER">
-                <Button fx:id="btnDepositos" text="Depósitos" onAction="#irADepositos"
-                        prefWidth="150.0" prefHeight="50.0" styleClass="boton-transaccion"/>
-                <Button fx:id="btnRetiros" text="Retiros" onAction="#irARetiros"
-                        prefWidth="150.0" prefHeight="50.0" styleClass="boton-transaccion"/>
+            <HBox alignment="CENTER" spacing="10">
+                <Button fx:id="btnDepositos" onAction="#irADepositos" prefHeight="50.0" prefWidth="150.0" styleClass="boton-transaccion" text="Depósitos" />
+                <Button fx:id="btnRetiros" onAction="#irARetiros" prefHeight="50.0" prefWidth="150.0" styleClass="boton-transaccion" text="Retiros" />
             </HBox>
 
-            <HBox spacing="10" alignment="CENTER">
-                <Button fx:id="btnTransferencias" text="Transferencias" onAction="#irATransferencias"
-                        prefWidth="310.0" prefHeight="50.0" styleClass="boton-transaccion"/>
+            <HBox alignment="CENTER" spacing="10">
+                <Button fx:id="btnTransferencias" onAction="#irATransferencias" prefHeight="50.0" prefWidth="310.0" styleClass="boton-transaccion" text="Transferencias" />
             </HBox>
 
-            <HBox spacing="10" alignment="CENTER">
-                <Button fx:id="btnTransaccionesProgramadas" text="Transacciones Programadas"
-                        onAction="#irATransaccionesProgramadas" prefWidth="310.0" prefHeight="50.0"
-                        styleClass="boton-transaccion"/>
+            <HBox alignment="CENTER" spacing="10">
+                <Button fx:id="btnTransaccionesProgramadas" onAction="#irATransaccionesProgramadas" prefHeight="50.0" prefWidth="310.0" styleClass="boton-transaccion" text="Transacciones Programadas" />
             </HBox>
 
-            <HBox spacing="10" alignment="CENTER">
-                <Button fx:id="btnHistorial" text="Historial de Transacciones"
-                        onAction="#irAConsultaHistorial" prefWidth="310.0" prefHeight="50.0"
-                        styleClass="boton-transaccion"/>
+            <HBox alignment="CENTER" spacing="10">
+                <Button fx:id="btnHistorial" onAction="#irAConsultaHistorial" prefHeight="50.0" prefWidth="310.0" styleClass="boton-transaccion" text="Historial de Transacciones" />
             </HBox>
 
-            <HBox spacing="10" alignment="CENTER">
-                <Button fx:id="btnInscribirCuentas" text="Inscribir Cuenta"
-                        onAction="#irAInscripcionCuentas" prefWidth="310.0" prefHeight="50.0"
-                        styleClass="boton-transaccion"/>
+            <HBox alignment="CENTER" spacing="10">
+                <Button fx:id="btnInscribirCuentas" onAction="#irAInscripcionCuentas" prefHeight="50.0" prefWidth="148.0" styleClass="boton-transaccion" text="Inscribir Cuenta" />
+            <Button fx:id="btnCuentasInscritas" onAction="#irACuentasInscritas" prefHeight="50.0" prefWidth="150.0" styleClass="boton-transaccion" text="Cuentas Inscritas" />
             </HBox>
 
-            <HBox spacing="10" alignment="CENTER">
-                <Button fx:id="btnVolverMenu" text="Volver al Menú Principal" onAction="#irAMenu"
-                        prefWidth="310.0" prefHeight="40.0" styleClass="boton-volver"/>
+            <HBox alignment="CENTER" spacing="10">
+                <Button fx:id="btnVolverMenu" onAction="#irAMenu" prefHeight="40.0" prefWidth="310.0" styleClass="boton-volver" text="Volver al Menú Principal" />
             </HBox>
 
         </VBox>

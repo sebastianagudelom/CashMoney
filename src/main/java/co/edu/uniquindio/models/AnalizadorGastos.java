@@ -12,7 +12,6 @@ public class AnalizadorGastos {
 
     public static Map<String, Double> obtenerGastosPorCategoria(Cliente cliente) {
         Map<String, Double> gastosPorCategoria = new HashMap<>();
-
         for (Transaccion t : cliente.getHistorialTransacciones()) {
             if (t.getTipo().equalsIgnoreCase("Transferencia Enviada")) {
                 String categoria = t.getCategoria();
@@ -20,7 +19,6 @@ public class AnalizadorGastos {
                         gastosPorCategoria.getOrDefault(categoria, 0.0) + t.getMonto());
             }
         }
-
         return gastosPorCategoria;
     }
 
@@ -35,11 +33,10 @@ public class AnalizadorGastos {
                 try {
                     Cliente destino = GestorClientes.buscarClientePorCuenta(t.getCuentaDestino());
 
-                    if (destino != null) {
-                        String usuarioDestino = destino.getUsuario();
-                        grafo.get(origen).add(usuarioDestino);
-                        grafo.putIfAbsent(usuarioDestino, new ArrayList<>());
-                    }
+                    //quite el if (destino != null)
+                    String usuarioDestino = destino.getUsuario();
+                    grafo.get(origen).add(usuarioDestino);
+                    grafo.putIfAbsent(usuarioDestino, new ArrayList<>());
 
                 } catch (CuentaNoEncontradaException e) {
                     System.out.println("Cuenta no encontrada en grafo: " + e.getMessage());
