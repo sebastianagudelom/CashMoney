@@ -34,7 +34,6 @@ public class EditarPerfilController {
             txtIdentificacion.setText(clienteActual.getIdentificacion());
             txtCorreo.setText(clienteActual.getCorreo());
             txtUsuario.setText(clienteActual.getUsuario());
-            txtClave.setText(clienteActual.getClave());
             txtCiudad.setText(clienteActual.getCiudad());
         }
     }

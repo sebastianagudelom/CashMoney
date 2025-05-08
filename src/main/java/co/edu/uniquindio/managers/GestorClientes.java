@@ -17,7 +17,6 @@ public class GestorClientes {
     public static SistemaPuntos getSistemaPuntos() {
         return sistemaPuntos;
     }
-
     public static ListaEnlazada<Cliente> getListaClientes() {
         return listaClientes;
     }

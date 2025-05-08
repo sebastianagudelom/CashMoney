@@ -1,5 +1,6 @@
 package co.edu.uniquindio.controllers;
 
+import co.edu.uniquindio.exceptions.VistaCargaException;
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.managers.GestorClientes;
 import co.edu.uniquindio.managers.GestorTransaccionesProgramadas;
@@ -37,7 +38,7 @@ public class MenuController {
     }
 
     @FXML
-    private void irAMenuTransacciones(ActionEvent event) {
+    private void irAMenuTransacciones(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TransaccionesMenu.fxml"));
             Parent root = loader.load();
@@ -49,13 +50,12 @@ public class MenuController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al abrir el menú de transacciones.");
+            throw new VistaCargaException("Error al abrir la vista de menu de transacciones");
         }
     }
 
     @FXML
-    private void irAConsultaSaldos(ActionEvent event) {
+    private void irAConsultaSaldos(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Saldo.fxml"));
             Parent root = loader.load();
@@ -68,13 +68,12 @@ public class MenuController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al abrir la ventana de consulta de saldo.");
+            throw new VistaCargaException("Error al abrir la vista de consulta de saldo");
         }
     }
 
     @FXML
-    private void irEditarPerfil(ActionEvent event) {
+    private void irEditarPerfil(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/EditarPerfil.fxml"));
             Parent root = loader.load();
@@ -87,13 +86,12 @@ public class MenuController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al abrir la ventana de editar perfil.");
+            throw new VistaCargaException("Error al abrir la vista de editar perfil");
         }
     }
 
     @FXML
-    private void irAPuntos(ActionEvent event) {
+    private void irAPuntos(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Puntos.fxml"));
             Parent root = loader.load();
@@ -106,13 +104,12 @@ public class MenuController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al abrir la ventana de puntos.");
+            throw new VistaCargaException("Error al abrir la vista de puntos");
         }
     }
 
     @FXML
-    private void irAAnalisis(ActionEvent event) {
+    private void irAAnalisis(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Analisis.fxml"));
             Parent root = loader.load();
@@ -124,13 +121,12 @@ public class MenuController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al abrir la ventana de analisis.");
+            throw new VistaCargaException("Error al abrir la vista de analisis de gastos");
         }
     }
 
     @FXML
-    private void irANotificaciones(ActionEvent event) {
+    private void irANotificaciones(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Notificaciones.fxml"));
             Parent root = loader.load();
@@ -143,13 +139,12 @@ public class MenuController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al abrir la ventana de notificaciones.");
+            throw new VistaCargaException("Error al abrir la vista de notificaciones");
         }
     }
 
     @FXML
-    private void irAMonederos(ActionEvent event) {
+    private void irAMonederos(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Monederos.fxml"));
             Parent root = loader.load();
@@ -162,13 +157,12 @@ public class MenuController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al abrir la ventana de monederos.");
+            throw new VistaCargaException("Error al abrir la vista de monederos");
         }
     }
 
     @FXML
-    private void irACanjePuntos(ActionEvent event) {
+    private void irACanjePuntos(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/CanjePuntos.fxml"));
             Parent root = loader.load();
@@ -181,19 +175,14 @@ public class MenuController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al abrir la ventana de canje de puntos.");
+            throw new VistaCargaException("Error al abrir la vista de canje de puntos");
         }
     }
 
     @FXML
-    private void irALogin(ActionEvent event) {
-        cambiarVentana(event, "/views/Login.fxml");
-    }
-
-    private void cambiarVentana(ActionEvent event, String rutaFXML) {
+    private void irALogin(ActionEvent event) throws VistaCargaException {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(rutaFXML));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
             Parent root = fxmlLoader.load();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -201,8 +190,7 @@ public class MenuController {
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al cargar la ventana: " + rutaFXML);
+            throw new VistaCargaException("Error al abrir la vista de login");
         }
     }
 }
