@@ -88,32 +88,6 @@ public class TransferenciasController {
         }
     }
 
-    @FXML
-    private void inscribirCuenta() {
-        String numeroCuenta = txtNumeroCuenta.getText().trim();
-
-        if (numeroCuenta.isEmpty()) {
-            lblInscripcionMensaje.setText("Ingrese un número de cuenta válido.");
-            return;
-        }
-
-        try {
-            Cliente destino = GestorClientes.buscarClientePorCuenta(numeroCuenta);
-
-            if (GestorClientes.inscribirCuentaParaCliente(clienteActual, numeroCuenta)) {
-                lblInscripcionMensaje.setText("Cuenta inscrita con éxito.");
-                lblInscripcionMensaje.setStyle("-fx-text-fill: green;");
-                cargarUsuarios(); // Actualizar la lista de destinatarios inscritos
-            } else {
-                lblInscripcionMensaje.setText("La cuenta ya está inscrita.");
-                lblInscripcionMensaje.setStyle("-fx-text-fill: red;");
-            }
-
-        } catch (CuentaNoEncontradaException e) {
-            lblInscripcionMensaje.setText(e.getMessage());
-            lblInscripcionMensaje.setStyle("-fx-text-fill: red;");
-        }
-    }
 
     @FXML
     private void realizarTransferencia() {

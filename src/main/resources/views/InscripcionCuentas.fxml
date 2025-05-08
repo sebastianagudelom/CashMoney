@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+
+<AnchorPane styleClass="fondo-menu" prefHeight="480.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.uniquindio.controllers.InscripcionCuentasController">
+
+   <stylesheets>
+      <String fx:value="/styles/styles.css"/>
+   </stylesheets>
+
+   <children>
+
+      <!-- Barra superior con información del cliente -->
+      <HBox spacing="10" alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0" styleClass="barra-superior">
+         <children>
+            <Label fx:id="lblCliente" text="Cliente actual:" styleClass="barra-label" />
+            <Label fx:id="lblSaldo" text="Saldo:" styleClass="barra-label" />
+         </children>
+      </HBox>
+
+      <!-- Tarjeta contenedora -->
+      <AnchorPane layoutX="50.0" layoutY="60.0" prefWidth="500.0" prefHeight="390.0" styleClass="tarjeta">
+         <children>
+            <Label layoutX="130.0" layoutY="20.0" text="Inscripción de Cuenta" styleClass="titulo-transacciones" />
+
+            <Label layoutX="70.0" layoutY="90.0" text="Número de cuenta a inscribir:" styleClass="label" />
+            <TextField fx:id="txtNumeroCuenta" layoutX="270.0" layoutY="85.0" prefWidth="150.0" promptText="Número de cuenta" styleClass="text-field"/>
+
+            <Button fx:id="btnInscribir" layoutX="200.0" layoutY="140.0" text="Inscribir" onAction="#inscribirCuenta" styleClass="button"/>
+
+            <Label fx:id="lblInscripcionMensaje" layoutX="25.0" layoutY="190.0" prefWidth="450.0" alignment="CENTER" styleClass="label" textAlignment="CENTER" wrapText="true" />
+
+            <Button fx:id="btnCerrar" layoutX="25.0" layoutY="320.0" prefWidth="80.0" text="Cerrar" onAction="#cerrarVentana" styleClass="boton-volver" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

@@ -49,6 +49,12 @@
             </HBox>
 
             <HBox spacing="10" alignment="CENTER">
+                <Button fx:id="btnInscribirCuentas" text="Inscribir Cuenta"
+                        onAction="#irAInscripcionCuentas" prefWidth="310.0" prefHeight="50.0"
+                        styleClass="boton-transaccion"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER">
                 <Button fx:id="btnVolverMenu" text="Volver al Menú Principal" onAction="#irAMenu"
                         prefWidth="310.0" prefHeight="40.0" styleClass="boton-volver"/>
             </HBox>

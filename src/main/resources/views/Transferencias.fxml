@@ -1,61 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane prefHeight="480.0" prefWidth="600.0"
-            styleClass="fondo-menu"
-            xmlns="http://javafx.com/javafx/20.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane prefHeight="480.0" prefWidth="600.0" styleClass="fondo-menu"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="co.edu.uniquindio.controllers.TransferenciasController">
 
    <stylesheets>
-      <String fx:value="/styles/styles.css"/>
+      <String fx:value="/styles/styles.css" />
    </stylesheets>
 
    <children>
 
       <!-- Barra superior con información del cliente -->
-      <HBox spacing="10" alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0" styleClass="barra-superior">
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0" spacing="10"
+            styleClass="barra-superior">
          <children>
-            <Label fx:id="lblCliente" text="Cliente actual:" styleClass="barra-label" />
-            <Label fx:id="lblSaldoSuperior" text="Saldo:" styleClass="barra-label" />
+            <Label fx:id="lblCliente" styleClass="barra-label" text="Cliente actual:" />
+            <Label fx:id="lblSaldoSuperior" styleClass="barra-label" text="Saldo:" />
          </children>
       </HBox>
 
-      <AnchorPane layoutX="50.0" layoutY="60.0" prefWidth="500.0" prefHeight="390.0" styleClass="tarjeta">
+      <AnchorPane layoutX="50.0" layoutY="60.0" prefHeight="390.0" prefWidth="500.0"
+                  styleClass="tarjeta">
          <children>
 
             <!-- Título -->
-            <Label layoutX="170.0" layoutY="20.0" text="Transferencias" styleClass="saludo-label"/>
+            <Label layoutX="170.0" layoutY="20.0" styleClass="saludo-label" text="Transferencias" />
 
             <!-- Destinatario -->
-            <Label layoutX="30.0" layoutY="70.0" text="Destinatario" styleClass="label"/>
-            <ComboBox fx:id="cmbUsuarios" layoutX="30.0" layoutY="95.0" promptText="Seleccione" prefWidth="140.0" styleClass="combo-box"/>
+            <Label layoutX="108.0" layoutY="109.0" styleClass="label" text="Destinatario" />
+            <ComboBox fx:id="cmbUsuarios" layoutX="227.0" layoutY="105.0" prefHeight="26.0"
+                      prefWidth="166.0" promptText="Seleccione" styleClass="combo-box" />
 
             <!-- Monto -->
-            <Label layoutX="190.0" layoutY="70.0" text="Monto a transferir" styleClass="label"/>
-            <TextField fx:id="txtMonto" layoutX="190.0" layoutY="95.0" promptText="Ingrese monto" styleClass="text-field" prefWidth="130.0"/>
+            <Label layoutX="108.0" layoutY="228.0" styleClass="label" text="Monto a transferir" />
+            <TextField fx:id="txtMonto" layoutX="227.0" layoutY="224.0" prefHeight="26.0"
+                       prefWidth="166.0" promptText="Ingrese monto" styleClass="text-field" />
 
             <!-- Categoría -->
-            <Label layoutX="340.0" layoutY="70.0" text="Categoría" styleClass="label"/>
-            <ComboBox fx:id="cmbCategoria" layoutX="340.0" layoutY="95.0" prefWidth="130.0" promptText="Seleccione categoría" styleClass="combo-box"/>
+            <Label layoutX="108.0" layoutY="169.0" styleClass="label" text="Categoría" />
+            <ComboBox fx:id="cmbCategoria" layoutX="227.0" layoutY="166.0" prefHeight="26.0"
+                      prefWidth="166.0" promptText="Seleccione categoría" styleClass="combo-box" />
 
             <!-- Botón transferir -->
-            <Button fx:id="btnTransferir" layoutX="200.0" layoutY="140.0" text="Transferir" onAction="#realizarTransferencia" styleClass="button"/>
+            <Button fx:id="btnTransferir" layoutX="203.0" layoutY="292.0"
+                    onAction="#realizarTransferencia" styleClass="button" text="Transferir" />
 
             <!-- Mensaje de estado -->
-            <Label fx:id="lblMensaje" layoutX="30.0" layoutY="190.0" prefWidth="440.0" textAlignment="CENTER" styleClass="label"/>
-
-            <!-- Inscribir cuentas -->
-            <Label layoutX="30.0" layoutY="230.0" text="Inscribir cuentas nuevas" styleClass="label"/>
-            <TextField fx:id="txtNumeroCuenta" layoutX="30.0" layoutY="255.0" promptText="Número de cuenta" styleClass="text-field" prefWidth="200.0"/>
-            <Button fx:id="btnInscribir" layoutX="240.0" layoutY="255.0" text="Inscribir" onAction="#inscribirCuenta" styleClass="button"/>
-            <Label fx:id="lblInscripcionMensaje" layoutX="30.0" layoutY="290.0" prefWidth="440.0" styleClass="label"/>
+            <Label fx:id="lblMensaje" layoutX="30.0" layoutY="267.0" prefWidth="440.0"
+                   styleClass="label" textAlignment="CENTER" />
 
             <!-- Volver -->
-            <Button fx:id="btnVolver" layoutX="30.0" layoutY="340.0" text="Volver" onAction="#volverMenu" styleClass="button"/>
+            <Button fx:id="btnVolver" layoutX="30.0" layoutY="340.0" onAction="#volverMenu"
+                    styleClass="button" text="Volver" />
 
          </children>
       </AnchorPane>

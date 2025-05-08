@@ -9,7 +9,7 @@ public class CorreoService {
 
     public static void enviarCorreo(String destinatario, String asunto, String contenido) {
         final String remitente = "cashmoneyvalidator@gmail.com"; // Correo
-        final String clave = "fycphgarsalssunu"; // Token del correo
+        final String clave = "kdyexjpehijfgqtm"; // Token
 
         // Propiedades del servidor SMTP
         Properties props = new Properties();
