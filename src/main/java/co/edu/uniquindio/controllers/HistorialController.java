@@ -54,7 +54,7 @@ public class HistorialController {
 
     public void setCliente(Cliente cliente) {
         this.clienteActual = cliente;
-        if (lblCliente != null) lblCliente.setText("Cliente actual: " + cliente.getNombre());
+        if (lblCliente != null) lblCliente.setText("Cliente actual: " + cliente.getNombre()) ;
         if (lblSaldo != null) lblSaldo.setText("Saldo: $" + String.format("%.2f", cliente.getCuenta().getSaldo()));
         cargarHistorial();
     }
