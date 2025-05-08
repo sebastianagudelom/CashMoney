@@ -31,6 +31,9 @@ public class GestorTransaccionesProgramadas {
         while (!colaTransacciones.esVacia() && !colaTransacciones.verMinimo().getFechaEjecucion().isAfter(hoy)) {
             TransaccionProgramada t = colaTransacciones.extraerMinimo();
             realizarTransferencia(t);
+            System.out.println("Transaccion programada ejecutada" +
+                    "\nUsuario origen: " + t.getUsuarioOrigen() +
+                    " Usuario destino: " + t.getUsuarioDestino());
         }
         guardarTransacciones();
     }
@@ -42,7 +45,7 @@ public class GestorTransaccionesProgramadas {
             GestorTransacciones.retirarSaldo(origen, t.getMonto());
             GestorTransacciones.depositarSaldo(destino, t.getMonto());
         } catch (ClienteNoEncontradoException | TransaccionInvalidaException e) {
-            System.out.println("Error al ejecutar transferencia programada: " + e.getMessage());
+            System.out.println("\nError al ejecutar transferencia programada: " + e.getMessage());
         }
     }
 

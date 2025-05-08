@@ -34,6 +34,7 @@ public class TransaccionesProgramadasController {
 
     private GestorTransaccionesProgramadas gestorTransacciones;
     private Cliente usuarioActual;
+    private String destinatarioActual;
 
     public void setCliente(Cliente cliente) {
         this.usuarioActual = cliente;
@@ -70,7 +71,7 @@ public class TransaccionesProgramadasController {
             if (!c.getUsuario().equals(usuarioActual.getUsuario())
                     && usuarioActual.getCuentasInscritas().contains(c.getCuenta().getNumeroCuenta())) {
 
-                String cuentaFormato = c.getNombre() + " - " +
+                String cuentaFormato = c.getUsuario() + " - " +
                         c.getCuenta().getNumeroCuenta().substring(c.getCuenta().getNumeroCuenta().length() - 4);
                 cmbDestinatarios.getItems().add(cuentaFormato);
             }
@@ -91,6 +92,7 @@ public class TransaccionesProgramadasController {
     @FXML
     private void programarTransaccion() {
         String destinatario = cmbDestinatarios.getValue();
+        destinatarioActual = destinatario.substring(0, destinatario.indexOf(" - "));
         String categoria = cmbCategoria.getValue();
         String montoTexto = txtMonto.getText();
         LocalDate fecha = datePicker.getValue();
@@ -120,7 +122,7 @@ public class TransaccionesProgramadasController {
 
             TransaccionProgramada nueva = new TransaccionProgramada(
                     usuarioActual.getUsuario(),
-                    destinatario,
+                    destinatarioActual,
                     monto,
                     fecha
             );
