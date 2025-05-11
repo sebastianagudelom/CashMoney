@@ -1,15 +1,22 @@
 package co.edu.uniquindio.controllers;
 
+import co.edu.uniquindio.exceptions.VistaCargaException;
 import co.edu.uniquindio.managers.GestorClientes;
 import co.edu.uniquindio.managers.GestorMonederos;
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.models.Monedero;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -201,7 +208,20 @@ public class MonederosController {
     }
 
     @FXML
-    private void volver() {
-        ((Stage) btnVolver.getScene().getWindow()).close();
+    private void volver(ActionEvent event) throws VistaCargaException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Menu.fxml"));
+            Parent root = loader.load();
+
+            MenuController controller = loader.getController();
+            controller.setCliente(cliente);
+
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            throw new VistaCargaException("Error al abrir la vista de Menu");
+        }
     }
 }

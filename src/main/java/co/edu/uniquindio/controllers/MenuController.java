@@ -55,24 +55,6 @@ public class MenuController {
     }
 
     @FXML
-    private void irAConsultaSaldos(ActionEvent event) throws VistaCargaException {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Saldo.fxml"));
-            Parent root = loader.load();
-
-            SaldoController saldoController = loader.getController();
-            saldoController.setCliente(clienteActual);
-
-            Stage stage = new Stage();
-            stage.setTitle("Consulta de Saldo");
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            throw new VistaCargaException("Error al abrir la vista de consulta de saldo");
-        }
-    }
-
-    @FXML
     private void irEditarPerfil(ActionEvent event) throws VistaCargaException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/EditarPerfil.fxml"));
@@ -81,12 +63,28 @@ public class MenuController {
             EditarPerfilController editarPerfilController = loader.getController();
             editarPerfilController.setCliente(clienteActual);
 
-            Stage stage = new Stage();
-            stage.setTitle("Editar Perfil");
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
             throw new VistaCargaException("Error al abrir la vista de editar perfil");
+        }
+    }
+
+    @FXML
+    private void irAConsultaSaldos(ActionEvent event) throws VistaCargaException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Saldo.fxml"));
+            Parent root = loader.load();
+
+            SaldoController saldoController = loader.getController();
+            saldoController.setCliente(clienteActual);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            throw new VistaCargaException("Error al abrir la vista de consulta de saldo");
         }
     }
 
@@ -99,8 +97,7 @@ public class MenuController {
             PuntosController controller = loader.getController();
             controller.inicializar(clienteActual, GestorClientes.getSistemaPuntos());
 
-            Stage stage = new Stage();
-            stage.setTitle("Mis Puntos");
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
@@ -152,8 +149,7 @@ public class MenuController {
             MonederosController controller = loader.getController();
             controller.setCliente(clienteActual);
 
-            Stage stage = new Stage();
-            stage.setTitle("Monederos");
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
@@ -170,8 +166,7 @@ public class MenuController {
             CanjePuntosController controller = loader.getController();
             controller.setCliente(clienteActual);
 
-            Stage stage = new Stage();
-            stage.setTitle("Canje de Puntos");
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {

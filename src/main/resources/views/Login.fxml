@@ -9,14 +9,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="480.0" prefWidth="400.0" styleClass="fondo-menu" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.controllers.LoginController">
+<AnchorPane prefHeight="480.0" prefWidth="400.0" styleClass="fondo-menu" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.controllers.LoginController">
 
    <stylesheets>
       <String fx:value="/styles/styles.css" />
    </stylesheets>
 
    <children>
-      <VBox fx:id="mainVBox" alignment="CENTER" layoutX="50.0" layoutY="40.0" prefWidth="500.0" spacing="15.0">
+      <VBox fx:id="mainVBox" alignment="CENTER" layoutX="52.0" layoutY="43.0" prefWidth="500.0" spacing="15.0">
 
          <children>
 
@@ -34,7 +34,7 @@
 
             <Hyperlink fx:id="linkRegistro" onAction="#irARegistro" styleClass="link-registro" text="¿No tienes cuenta? Regístrate" />
 
-            <Label fx:id="lblMensaje" maxWidth="350" styleClass="label" textAlignment="CENTER" wrapText="true" />
+            <Label fx:id="lblMensaje" alignment="CENTER" contentDisplay="CENTER" maxWidth="350" styleClass="label" wrapText="true" />
          </children>
 
       </VBox>
