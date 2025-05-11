@@ -35,7 +35,6 @@ public class TransferenciasController {
     public void setCliente(Cliente cliente) {
         this.clienteActual = cliente;
 
-        // Barra superior
         if (lblCliente != null) {
             lblCliente.setText("Cliente actual: " + cliente.getNombre());
         }
@@ -87,7 +86,6 @@ public class TransferenciasController {
             }
         }
     }
-
 
     @FXML
     private void realizarTransferencia() {

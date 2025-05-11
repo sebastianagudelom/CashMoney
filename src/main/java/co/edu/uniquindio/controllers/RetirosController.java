@@ -49,7 +49,7 @@ public class RetirosController {
                 throw new TransaccionInvalidaException("Cliente no encontrado.");
             }
 
-            GestorTransacciones.retirarSaldo(clienteActual, monto);
+            GestorTransacciones.retirarSaldoRetiros(clienteActual, monto);
 
             int puntos = (int) (monto / 100) * 2;
             String rangoAnterior = GestorClientes.getSistemaPuntos()

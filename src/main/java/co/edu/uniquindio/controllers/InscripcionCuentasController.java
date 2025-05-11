@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 
 public class InscripcionCuentasController {
 
+    public Label lblCliente, lblSaldo;
     @FXML private TextField txtNumeroCuenta;
     @FXML private Label lblInscripcionMensaje;
     @FXML private Button btnInscribir, btnCerrar;
@@ -19,6 +20,8 @@ public class InscripcionCuentasController {
 
     public void setCliente(Cliente cliente) {
         this.clienteActual = cliente;
+        if (lblCliente != null) lblCliente.setText("Cliente actual: " + cliente.getNombre()) ;
+        if (lblSaldo != null) lblSaldo.setText("Saldo: $" + String.format("%.2f", cliente.getCuenta().getSaldo()));
     }
 
     @FXML

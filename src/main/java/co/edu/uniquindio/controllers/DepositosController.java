@@ -38,7 +38,7 @@ public class DepositosController {
         try {
             double monto = Double.parseDouble(montoTexto);
 
-            GestorTransacciones.depositarSaldo(clienteActual, monto);
+            GestorTransacciones.depositarSaldoDepositos(clienteActual, monto);
 
             int puntos = (int) (monto / 50);
             String rangoAnterior = GestorClientes.getSistemaPuntos()
@@ -83,7 +83,6 @@ public class DepositosController {
         }
     }
 
-    // Metodo para regresar al menu
     @FXML
     private void volverMenu(ActionEvent event) throws VistaCargaException {
         try {
