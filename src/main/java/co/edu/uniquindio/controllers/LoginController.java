@@ -3,8 +3,7 @@ package co.edu.uniquindio.controllers;
 import co.edu.uniquindio.exceptions.VistaCargaException;
 import co.edu.uniquindio.models.Cliente;
 import co.edu.uniquindio.managers.GestorClientes;
-import co.edu.uniquindio.managers.GestorAdministradores; // <--- Agrega esto
-
+import co.edu.uniquindio.managers.GestorAdministradores;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +12,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class LoginController {
