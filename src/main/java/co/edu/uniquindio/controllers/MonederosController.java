@@ -32,7 +32,6 @@ public class MonederosController {
     @FXML private TextField txtMeta;
     @FXML private TextField txtDescripcion;
     @FXML private ComboBox<String> cmbColor;
-    @FXML private TextField txtMonto;
 
     private Cliente cliente;
     private final Map<String, String> coloresDisponibles = new HashMap<>();
@@ -134,6 +133,7 @@ public class MonederosController {
         boolean exito = GestorMonederos.getInstance().retirarAMonederoPrincipal(cliente, monederoSeleccionado.getNombre());
 
         if (exito) {
+            eliminarMonedero();
             GestorClientes.guardarClientes();
             mostrarAlerta("Éxito", "El saldo del monedero fue transferido a tu cuenta principal.", Alert.AlertType.INFORMATION);
         } else {
@@ -143,52 +143,7 @@ public class MonederosController {
         actualizarTabla();
     }
 
-    @FXML
-    private void agregarDinero() {
-        Monedero seleccionado = tablaMonederos.getSelectionModel().getSelectedItem();
 
-        if (seleccionado == null) {
-            mostrarAlerta("Error", "Selecciona un monedero para agregar dinero.", Alert.AlertType.WARNING);
-            return;
-        }
-
-        double monto;
-        try {
-            monto = Double.parseDouble(txtMonto.getText());
-        } catch (NumberFormatException e) {
-            mostrarAlerta("Error", "El monto debe ser un número válido.", Alert.AlertType.ERROR);
-            return;
-        }
-
-        if (monto <= 0) {
-            mostrarAlerta("Error", "El monto debe ser mayor que cero.", Alert.AlertType.ERROR);
-            return;
-        }
-
-        if (cliente.getCuenta().getSaldo() < monto) {
-            mostrarAlerta("Error", "No tienes suficiente saldo en tu cuenta.", Alert.AlertType.ERROR);
-            return;
-        }
-
-        cliente.getCuenta().retirar(monto);
-
-        seleccionado.agregarSaldo(monto);
-
-        GestorClientes.guardarClientes();
-        tablaMonederos.refresh();
-
-        mostrarAlerta("Éxito", "Saldo agregado al monedero.", Alert.AlertType.INFORMATION);
-        actualizarTabla();
-        txtMonto.clear();
-
-        if (cliente.getCuenta().getSaldo() < 10000) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Saldo bajo");
-            alert.setHeaderText(cliente.getNombre() + " su saldo es bajo");
-            alert.setContentText("En este momento su saldo es menor a 10.000");
-            alert.showAndWait();
-        }
-    }
 
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
@@ -203,7 +158,6 @@ public class MonederosController {
         txtMeta.clear();
         txtDescripcion.clear();
         cmbColor.getSelectionModel().clearSelection();
-        txtMonto.clear();
     }
 
     @FXML
@@ -221,6 +175,29 @@ public class MonederosController {
 
         } catch (IOException e) {
             throw new VistaCargaException("Error al abrir la vista de Menu");
+        }
+    }
+    @FXML
+    private void irAAgregarDinero() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DineroMonedero.fxml"));
+            Parent root = loader.load();
+
+            DineroMonederoController controller = loader.getController();
+            Monedero seleccionado = tablaMonederos.getSelectionModel().getSelectedItem();
+            if (seleccionado != null) {
+                controller.setCliente(cliente);
+                controller.setMonedero(seleccionado);
+
+                Stage stage = (Stage) tablaMonederos.getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } else {
+                mostrarAlerta("Error", "Selecciona un monedero para continuar.", Alert.AlertType.WARNING);
+            }
+
+        } catch (IOException e) {
+            mostrarAlerta("Error", "No se pudo abrir la vista de agregar dinero.", Alert.AlertType.ERROR);
         }
     }
 }

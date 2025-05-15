@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.lang.String?>
+<AnchorPane prefHeight="480.0" prefWidth="600.0"
+            styleClass="fondo-menu"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.uniquindio.controllers.DineroMonederoController">
+
+    <stylesheets>
+        <String fx:value="/styles/styles.css"/>
+    </stylesheets>
+
+    <children>
+        <AnchorPane layoutX="20.0" layoutY="20.0" prefWidth="560.0" prefHeight="440.0" styleClass="tarjeta">
+            <children>
+                <VBox spacing="14" alignment="CENTER"
+                      AnchorPane.topAnchor="15.0" AnchorPane.bottomAnchor="15.0"
+                      AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+
+                    <Label text="Agregar Dinero al Monedero" styleClass="titulo-transacciones"/>
+
+                    <Label fx:id="lblNombreMonedero" text="Monedero: ---" styleClass="label"/>
+                    <Label fx:id="lblSaldoActual" text="Saldo actual: ---" styleClass="label"/>
+
+                    <TextField fx:id="txtMontoAgregar" promptText="Monto a agregar" styleClass="text-field"/>
+
+                    <HBox spacing="15" alignment="CENTER">
+                        <Button text="Agregar Dinero" onAction="#agregarDinero" styleClass="button"/>
+                        <Button text="Volver" onAction="#volver" styleClass="boton-volver"/>
+                    </HBox>
+                </VBox>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
