@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+
+<AnchorPane prefHeight="480.0" prefWidth="600.0" styleClass="fondo-menu" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.controllers.TransferenciaMonederosController">
+
+    <stylesheets>
+        <String fx:value="/styles/styles.css"/>
+    </stylesheets>
+
+    <children>
+        <AnchorPane layoutX="20.0" layoutY="20.0" prefHeight="440.0" prefWidth="560.0" styleClass="tarjeta">
+            <children>
+                <VBox alignment="CENTER" spacing="14" AnchorPane.topAnchor="15.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+
+                    <Label text="Transferencia entre Monederos" styleClass="titulo-transacciones"/>
+
+                    <HBox spacing="10" alignment="CENTER">
+                        <Label text="Monedero Origen:" styleClass="label"/>
+                        <ComboBox fx:id="cmbMonederoOrigen" prefWidth="200.0" styleClass="combo-box"/>
+                    </HBox>
+
+                    <HBox spacing="10" alignment="CENTER">
+                        <Label text="Saldo Disponible:" styleClass="label"/>
+                        <Label fx:id="lblSaldoOrigen" text="Saldo disponible: $0.00" styleClass="label"/>
+                    </HBox>
+
+                    <HBox spacing="10" alignment="CENTER">
+                        <Label text="Monedero Destino:" styleClass="label"/>
+                        <ComboBox fx:id="cmbMonederoDestino" prefWidth="200.0" styleClass="combo-box"/>
+                    </HBox>
+
+                    <HBox spacing="10" alignment="CENTER">
+                        <Label text="Saldo Actual:" styleClass="label"/>
+                        <Label fx:id="lblSaldoDestino" text="Saldo actual: $0.00" styleClass="label"/>
+                    </HBox>
+
+                    <HBox spacing="10" alignment="CENTER">
+                        <Label text="Monto a Transferir:" styleClass="label"/>
+                        <TextField fx:id="txtMonto" promptText="Ingrese monto" styleClass="text-field" prefWidth="150.0"/>
+                    </HBox>
+
+                    <HBox alignment="CENTER" spacing="20">
+                        <Button fx:id="btnTransferir" onAction="#transferir" text="Transferir" styleClass="button"/>
+                    </HBox>
+                </VBox>
+                <Button fx:id="btnVolver" layoutX="39.0" layoutY="411.0" onAction="#volver" styleClass="boton-volver" text="Volver"/>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

@@ -7,11 +7,11 @@ public class GrafoDirigido<T> implements Serializable {
 
     private final Map<T, List<Arista<T>>> adyacencias = new HashMap<>();
 
-    private static class Arista<T> implements Serializable {
-        T destino;
-        String peso;
+    public static class Arista<T> implements Serializable {
+        public T destino;
+        public String peso;
 
-        Arista(T destino, String peso) {
+        public Arista(T destino, String peso) {
             this.destino = destino;
             this.peso = peso;
         }
@@ -29,7 +29,20 @@ public class GrafoDirigido<T> implements Serializable {
     public void agregarArista(T origen, T destino, String peso) {
         agregarVertice(origen);
         agregarVertice(destino);
-        adyacencias.get(origen).add(new Arista<>(destino, peso));
+
+        // Verificar si ya existe una arista entre estos vértices
+        for (Arista<T> arista : adyacencias.get(origen)) {
+            if (arista.destino.equals(destino)) {
+                // Actualizar el peso de la arista existente
+                double pesoAnterior = Double.parseDouble(arista.peso.replace(",", "."));
+                double nuevoPeso = Double.parseDouble(peso.replace(",", "."));
+                arista.peso = String.format("%.2f", pesoAnterior + nuevoPeso);
+                return;
+            }
+        }
+
+        // Si no existe, agregar una nueva arista
+        adyacencias.get(origen).add(new Arista<>(destino, peso.replace(",", ".")));
     }
 
     public List<T> obtenerAdyacentes(T vertice) {
@@ -39,6 +52,11 @@ public class GrafoDirigido<T> implements Serializable {
             destinos.add(a.destino);
         }
         return destinos;
+    }
+
+    public List<Arista<T>> obtenerAristasAdyacentes(T vertice) {
+        if (!adyacencias.containsKey(vertice)) return new ArrayList<>();
+        return new ArrayList<>(adyacencias.get(vertice));
     }
 
     public Set<T> obtenerVertices() {
@@ -52,6 +70,16 @@ public class GrafoDirigido<T> implements Serializable {
     public boolean existeArista(T origen, T destino) {
         if (!adyacencias.containsKey(origen)) return false;
         return adyacencias.get(origen).stream().anyMatch(a -> a.destino.equals(destino));
+    }
+
+    public String obtenerPesoArista(T origen, T destino) {
+        if (!adyacencias.containsKey(origen)) return null;
+        for (Arista<T> arista : adyacencias.get(origen)) {
+            if (arista.destino.equals(destino)) {
+                return arista.peso;
+            }
+        }
+        return null;
     }
 
     public void eliminarArista(T origen, T destino) {

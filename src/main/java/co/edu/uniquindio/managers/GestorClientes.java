@@ -128,6 +128,7 @@ public class GestorClientes {
             Cliente cliente = buscarClientePorUsuario(usuario);
             listaClientes.eliminar(cliente);
             guardarClientes();
+            GestorRelacionesMonederos.getInstance().eliminarRelacionesCliente(cliente.getIdentificacion());
             return true;
         } catch (ClienteNoEncontradoException e) {
             System.out.println("Error: " + e.getMessage());

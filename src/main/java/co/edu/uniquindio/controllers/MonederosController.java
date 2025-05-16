@@ -200,4 +200,41 @@ public class MonederosController {
             mostrarAlerta("Error", "No se pudo abrir la vista de agregar dinero.", Alert.AlertType.ERROR);
         }
     }
+
+    @FXML
+    private void irATransferenciaMonederos() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TransferenciaMonederos.fxml"));
+            Parent root = loader.load();
+
+            TransferenciaMonederosController controller = loader.getController();
+            controller.setCliente(cliente);
+
+            Stage stage = (Stage) tablaMonederos.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            mostrarAlerta("Error", "No se pudo abrir la vista de transferencia entre monederos.", Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    private void irAGrafoMonederos() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GrafoMonederos.fxml"));
+            Parent root = loader.load();
+
+            GrafoMonederosController controller = loader.getController();
+            controller.setCliente(cliente);
+
+            Stage stage = new Stage();
+            stage.setTitle("Relaciones entre Monederos");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            mostrarAlerta("Error", "No se pudo abrir la vista del grafo.", Alert.AlertType.ERROR);
+        }
+    }
 }

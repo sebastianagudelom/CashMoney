@@ -11,7 +11,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="480.0" prefWidth="600.0" styleClass="fondo-menu" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.controllers.MonederosController">
+<AnchorPane prefHeight="480.0" prefWidth="600.0" styleClass="fondo-menu"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.uniquindio.controllers.MonederosController">
 
     <stylesheets>
         <String fx:value="/styles/styles.css" />
@@ -20,7 +22,9 @@
     <children>
         <AnchorPane layoutX="20.0" layoutY="20.0" prefHeight="440.0" prefWidth="560.0" styleClass="tarjeta">
             <children>
-                <VBox alignment="CENTER" spacing="12" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+                <VBox alignment="CENTER" layoutX="15.0" layoutY="-8.0" spacing="12"
+                      AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="15.0"
+                      AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="-8.0">
 
                     <Label styleClass="titulo-transacciones" text="Mis Monederos" />
 
@@ -51,9 +55,17 @@
 
                     <HBox alignment="CENTER" spacing="10">
                         <Button onAction="#irAAgregarDinero" styleClass="button" text="Agregar Dinero al monedero" />
+                        <Button onAction="#irATransferenciaMonederos" styleClass="button" text="Transferir entre Monederos" />
                     </HBox>
+
+                    <HBox alignment="CENTER" spacing="10">
+                        <Button onAction="#irAGrafoMonederos" styleClass="button" text="Ver Relaciones entre Monederos" />
+                    </HBox>
+
                 </VBox>
-                  <Button fx:id="btnVolver" layoutX="39.0" layoutY="411.0" onAction="#volver" styleClass="boton-volver" text="Volver" />
+
+                <Button fx:id="btnVolver" layoutX="40.0" layoutY="420.0"
+                        onAction="#volver" styleClass="boton-volver" text="Volver" />
             </children>
         </AnchorPane>
     </children>
