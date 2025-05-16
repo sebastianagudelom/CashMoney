@@ -9,10 +9,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.fxml.FXMLLoader;
-import java.io.IOException;
 import java.util.*;
 
 public class GrafoMonederosController {
@@ -150,35 +146,29 @@ public class GrafoMonederosController {
     }
 
     private void dibujarNodo(GraphicsContext gc, double x, double y, String nombre, Color color) {
-        // Dibujar círculo
         gc.setFill(color);
         gc.fillOval(x - RADIO_NODO, y - RADIO_NODO, 2 * RADIO_NODO, 2 * RADIO_NODO);
 
-        // Borde del círculo
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(2);
         gc.strokeOval(x - RADIO_NODO, y - RADIO_NODO, 2 * RADIO_NODO, 2 * RADIO_NODO);
 
-        // Texto dentro del nodo
         gc.setFill(Color.BLACK);
         gc.setLineWidth(1);
         String nombreCorto = nombre.length() > 10 ? nombre.substring(0, 9) + "..." : nombre;
-        gc.fillText(nombreCorto, x - RADIO_NODO/2, y + 5);
+        gc.fillText(nombreCorto, x - (double) RADIO_NODO /2, y + 5);
     }
 
     private void dibujarFlecha(GraphicsContext gc, double x1, double y1, double x2, double y2, String peso) {
-        // Calcular puntos de inicio y fin ajustados para no tocar los nodos
         double dx = x2 - x1;
         double dy = y2 - y1;
         double length = Math.sqrt(dx*dx + dy*dy);
 
-        // Ajustar para que la flecha no entre en los nodos
         double x1Adj = x1 + dx * RADIO_NODO / length;
         double y1Adj = y1 + dy * RADIO_NODO / length;
         double x2Adj = x2 - dx * RADIO_NODO / length;
         double y2Adj = y2 - dy * RADIO_NODO / length;
 
-        // Dibujar línea
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1.5);
         gc.beginPath();
@@ -186,7 +176,6 @@ public class GrafoMonederosController {
         gc.lineTo(x2Adj, y2Adj);
         gc.stroke();
 
-        // Dibujar punta de flecha
         double headSize = 10;
         double angle = Math.atan2(y2Adj - y1Adj, x2Adj - x1Adj);
         gc.beginPath();
@@ -196,7 +185,6 @@ public class GrafoMonederosController {
         gc.lineTo(x2Adj, y2Adj);
         gc.fill();
 
-        // Dibujar peso de la arista
         gc.setFill(Color.DARKBLUE);
         double midX = (x1Adj + x2Adj) / 2;
         double midY = (y1Adj + y2Adj) / 2;

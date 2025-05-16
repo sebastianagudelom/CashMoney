@@ -143,8 +143,6 @@ public class MonederosController {
         actualizarTabla();
     }
 
-
-
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
         alert.setTitle(titulo);
@@ -177,8 +175,9 @@ public class MonederosController {
             throw new VistaCargaException("Error al abrir la vista de Menu");
         }
     }
+
     @FXML
-    private void irAAgregarDinero() {
+    private void irAAgregarDinero() throws VistaCargaException{
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DineroMonedero.fxml"));
             Parent root = loader.load();
@@ -195,14 +194,12 @@ public class MonederosController {
             } else {
                 mostrarAlerta("Error", "Selecciona un monedero para continuar.", Alert.AlertType.WARNING);
             }
-
         } catch (IOException e) {
-            mostrarAlerta("Error", "No se pudo abrir la vista de agregar dinero.", Alert.AlertType.ERROR);
-        }
+            throw new VistaCargaException("No se pudo abrir la vista de agregar dinero al monedero seleccionado.");        }
     }
 
     @FXML
-    private void irATransferenciaMonederos() {
+    private void irATransferenciaMonederos() throws VistaCargaException{
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/TransferenciaMonederos.fxml"));
             Parent root = loader.load();
@@ -215,12 +212,12 @@ public class MonederosController {
             stage.show();
 
         } catch (IOException e) {
-            mostrarAlerta("Error", "No se pudo abrir la vista de transferencia entre monederos.", Alert.AlertType.ERROR);
+            throw new VistaCargaException("No se pudo abrir la vista de transferencia de monederos.");
         }
     }
 
     @FXML
-    private void irAGrafoMonederos() {
+    private void irAGrafoMonederos() throws VistaCargaException{
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GrafoMonederos.fxml"));
             Parent root = loader.load();
@@ -234,7 +231,7 @@ public class MonederosController {
             stage.show();
 
         } catch (IOException e) {
-            mostrarAlerta("Error", "No se pudo abrir la vista del grafo.", Alert.AlertType.ERROR);
+            throw new VistaCargaException("No se pudo abrir la vista del grafo.");
         }
     }
 }

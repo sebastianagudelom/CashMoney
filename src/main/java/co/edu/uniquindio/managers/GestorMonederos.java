@@ -70,7 +70,6 @@ public class GestorMonederos {
      * @return true si la transferencia se realizó correctamente, false en caso contrario
      */
     public boolean transferirEntreMonederos(Cliente cliente, String nombreOrigen, String nombreDestino, double monto) {
-        // Validar que los monederos existan
         Monedero origen = buscarMonederoPorNombre(cliente, nombreOrigen);
         Monedero destino = buscarMonederoPorNombre(cliente, nombreDestino);
 
