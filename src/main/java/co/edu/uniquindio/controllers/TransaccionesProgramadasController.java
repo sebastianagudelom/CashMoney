@@ -97,7 +97,7 @@ public class TransaccionesProgramadasController {
         String montoTexto = txtMonto.getText();
         LocalDate fecha = datePicker.getValue();
 
-        if (destinatario == null || montoTexto.isBlank() || fecha == null || categoria == null) {
+        if (destinatario.isBlank() || montoTexto.isBlank() || fecha == null || categoria == null) {
             lblMensaje.setText("Todos los campos son obligatorios.");
             return;
         }
