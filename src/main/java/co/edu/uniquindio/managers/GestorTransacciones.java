@@ -112,7 +112,7 @@ public class GestorTransacciones {
         return true;
     }
 
-    public static boolean depositarSaldoDepositos(Cliente cliente, double monto) throws TransaccionInvalidaException {
+    public static void depositarSaldoDepositos(Cliente cliente, double monto) throws TransaccionInvalidaException {
         if (cliente == null || cliente.getCuenta() == null) {
             throw new TransaccionInvalidaException("Cliente o cuenta no válida para depósito.");
         }
@@ -137,6 +137,5 @@ public class GestorTransacciones {
         cliente.agregarNotificacion("💰 Has recibido un depósito exitoso de $" + monto);
 
         GestorClientes.guardarClientes();
-        return true;
     }
 }
